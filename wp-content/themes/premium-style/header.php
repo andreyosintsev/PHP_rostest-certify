@@ -21,7 +21,6 @@
     $template_url   = get_template_directory_uri();
 
     $search_num = $_GET['param'] ?? '';
-
 ?>
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
@@ -49,7 +48,7 @@
 	    <meta property="og:image:width" content="376">
 	    <meta property="og:image:height" content="537">
 	    <meta property="og:type"		content="article">
-	    <meta property="og:url"			content= "<?php echo get_permalink(); ?>">
+	    <meta property="og:url"			content="<?php echo get_permalink(); ?>">
 	    <meta property="og:locale"		content="ru_RU">
 	<?php } ?>
     <!--/OpenGraph-->
@@ -161,7 +160,7 @@
 </div>
 <header class="nav-top">
     <div class="logo">
-        <a class="logo__link" href="home.html" title="<?php bloginfo('name');?>">
+        <a class="logo__link" href="<?php echo $site_url; ?>" title="<?php bloginfo('name');?>">
             <img class="logo__image" src="<?php echo $template_url; ?>/images/logo.svg" alt="<?php echo $site_url ?>">
         </a>
     </div>
@@ -174,7 +173,6 @@
         <input class="search__input" placeholder="<?php echo $search_string; ?>">
         <button class="search__magnifier" id="searchsubmit" type="submit"></button>
     </form>
-
     <nav class="menu-main menu-main_collapseable">
         <ul class="menu-main__items">
             <li class="menu-main__item">

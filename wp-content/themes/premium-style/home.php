@@ -212,4 +212,5 @@
 	</div>
 </div>
 <?php get_sidebar(); ?>
+<div class="clear"></div>
 <?php get_footer(); ?>
