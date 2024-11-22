@@ -1,0 +1,485 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Premium Style v10.6\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2013-12-16 10:53+0200\n"
+"Last-Translator: Игорь <dybabiz@ya.ru>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Poedit 1.6.2\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
+"_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2\n"
+"X-Poedit-Basepath: ../\n"
+"X-Textdomain-Support: yes\n"
+"Language: ru\n"
+"X-Poedit-SearchPath-0: .\n"
+
+# @ gopiplustheme
+#: 404.php:16 breadcrumbs.php:18
+msgid "Home"
+msgstr "Главная"
+
+# @ gopiplustheme
+#: 404.php:18
+msgid "404 Not found"
+msgstr "Ошибка 404. Страница не найдена"
+
+# @ gopiplustheme
+#: 404.php:23
+msgid "404! We couldn't find the page!"
+msgstr "404! Мы не смогли найти страницу!"
+
+# @ gopiplustheme
+#: 404.php:27
+msgid ""
+"The page you've requested <strong>can not be displayed</strong>. We are "
+"working hard to fix all the missing resources."
+msgstr "По данному адресу ничего не найдено. Воспользуйтесь поиском."
+
+# @ gopiplustheme
+#: 404.php:36 functions.php:172
+msgid "Recent Posts"
+msgstr "Последние записи"
+
+# @ gopiplustheme
+#: archive.php:25 home.php:27 index.php:38 search.php:25
+msgid " &laquo;&laquo; Newer Entries "
+msgstr " &laquo;&laquo; Следующие записи "
+
+# @ gopiplustheme
+#: archive.php:28 home.php:30 index.php:41 search.php:28
+msgid " Older Entries &raquo;&raquo; "
+msgstr " Предыдущие записи &raquo;&raquo; "
+
+# @ gopiplustheme
+#: breadcrumbs.php:22
+msgid "Posts Tagged &quot;"
+msgstr "Записи с метками &quot;"
+
+# @ gopiplustheme
+#: breadcrumbs.php:25 breadcrumbs.php:28 breadcrumbs.php:31
+msgid "Posts made in"
+msgstr ""
+
+# @ gopiplustheme
+#: breadcrumbs.php:34
+msgid "Search results for"
+msgstr "Результат поиска для"
+
+# @ gopiplustheme
+#: breadcrumbs.php:49
+msgid "Posts by "
+msgstr ""
+
+# @ gopiplustheme
+#: comments.php:23
+msgid "This post is password protected. Enter the password to view comments."
+msgstr "Пожалуйста, введите пароль для просмотра комментариев."
+
+# @ gopiplustheme
+#: comments.php:32
+msgid "No Responses"
+msgstr "Нет комментариев"
+
+# @ gopiplustheme
+#: comments.php:32
+msgid "One Response"
+msgstr "Один комментарий"
+
+# @ gopiplustheme
+#: comments.php:32
+msgid "% Responses"
+msgstr "% Комментарии"
+
+# @ gopiplustheme
+#: comments.php:33
+msgid "to"
+msgstr "в"
+
+# @ gopiplustheme
+#: comments.php:50
+msgid "Pingbacks/Trackbacks"
+msgstr ""
+
+# @ gopiplustheme
+#: comments.php:57
+msgid "Comments are closed."
+msgstr "Обсуждение закрыто."
+
+# @ gopiplustheme
+#: comments.php:66
+msgid "You must be"
+msgstr "Вы должны"
+
+# @ gopiplustheme
+#: comments.php:68
+msgid "logged in"
+msgstr "войти"
+
+# @ gopiplustheme
+#: comments.php:70
+msgid "to post a comment."
+msgstr "чтобы оставить комментарий."
+
+# @ gopiplustheme
+#: comments.php:76
+msgid "Name"
+msgstr "Имя"
+
+# @ gopiplustheme
+#: comments.php:78
+msgid "E-Mail"
+msgstr ""
+
+# @ gopiplustheme
+#: comments.php:80
+msgid "Website"
+msgstr "Сайт"
+
+# @ gopiplustheme
+#: content.php:16 content.php:23
+#, php-format
+msgid "Permalink to %s"
+msgstr ""
+
+# @ gopiplustheme
+#: footer.php:29
+msgid "Proudly powered by"
+msgstr ""
+
+# @ gopiplustheme
+#: footer.php:30
+msgid "http://wordpress.org/"
+msgstr ""
+
+# @ gopiplustheme
+#: footer.php:30
+msgid "Semantic Personal Publishing Platform"
+msgstr ""
+
+# @ gopiplustheme
+#: footer.php:31 footer.php:35
+#, php-format
+msgid "%s"
+msgstr ""
+
+# @ gopiplustheme
+#: footer.php:33
+msgid "&nbsp;&nbsp;Premium Style Theme by"
+msgstr ""
+
+# @ gopiplustheme
+#: footer.php:34
+msgid "http://www.gopiplus.com/"
+msgstr ""
+
+# @ gopiplustheme
+#: footer.php:34
+msgid "Premium Style Theme"
+msgstr ""
+
+# @ gopiplustheme
+#: functions.php:38
+msgid "Navigation Menu"
+msgstr "Навигация меню"
+
+# @ gopiplustheme
+#: functions.php:107
+#, php-format
+msgid "Page %s"
+msgstr "Страница %s"
+
+# @ gopiplustheme
+#: functions.php:157
+msgid "Related Posts"
+msgstr "Похожие записи"
+
+# @ gopiplustheme
+#: functions.php:206
+msgid "<span class=\"meta-nav\">&laquo;&laquo;</span> Older posts"
+msgstr "<span class=\"meta-nav\">&laquo;&laquo;</span> Предыдущие записи"
+
+# @ gopiplustheme
+#: functions.php:209
+msgid "Newer posts <span class=\"meta-nav\">&raquo;&raquo;</span>"
+msgstr "Следующие записи <span class=\"meta-nav\">&raquo;&raquo;</span>"
+
+# @ gopiplustheme
+#: functions.php:223 functions.php:225
+msgid "Sidebar"
+msgstr "Боковая колонка"
+
+# @ gopiplustheme
+#: functions.php:274
+msgid "at"
+msgstr "в"
+
+# @ gopiplustheme
+#: functions.php:278
+msgid "Direct link to this comment"
+msgstr "Прямая ссылка на этот комментарий"
+
+# @ gopiplustheme
+#: functions.php:280 image.php:35
+msgid "Edit"
+msgstr "Редактировать"
+
+# @ gopiplustheme
+#: functions.php:286
+msgid "Your comment is awaiting moderation."
+msgstr "Спасибо! Ваш комментарий ожидает проверки."
+
+# @ gopiplustheme
+#: functions.php:422 functions.php:428
+msgid "Logo"
+msgstr "Логотип"
+
+# @ gopiplustheme
+#: functions.php:435
+msgid "Social Icons"
+msgstr "Социальные иконки"
+
+# @ gopiplustheme
+#: functions.php:487
+msgid "Display Box Setting"
+msgstr ""
+
+# @ gopiplustheme
+#: functions.php:510
+msgid "Footer Text"
+msgstr "Текст в подвале"
+
+# @ gopiplustheme
+#: functions.php:550
+msgid "Premium Style WordPress Theme"
+msgstr ""
+
+# @ gopiplustheme
+#: functions.php:552
+msgid "Thank You for Selecting Premium Style Theme From"
+msgstr ""
+
+# @ gopiplustheme
+#: functions.php:554
+msgid "gopiplus.com"
+msgstr ""
+
+# @ gopiplustheme
+#: functions.php:555
+msgid "Theme configuration"
+msgstr ""
+
+# @ gopiplustheme
+#: functions.php:556
+msgid "Please click customize link to configure your theme."
+msgstr ""
+
+# @ gopiplustheme
+#: functions.php:557
+msgid "Features of this theme"
+msgstr ""
+
+# @ gopiplustheme
+#: functions.php:559
+msgid "Free theme"
+msgstr ""
+
+# @ gopiplustheme
+#: functions.php:560
+msgid "Highly customizable"
+msgstr ""
+
+# @ gopiplustheme
+#: functions.php:561
+msgid "100% Responsive"
+msgstr ""
+
+# @ gopiplustheme
+#: functions.php:562
+msgid "Valid XHTML5 + CSS"
+msgstr ""
+
+# @ gopiplustheme
+#: functions.php:563
+msgid "Firefox, IE8+, Chrome and Safari compatible"
+msgstr ""
+
+# @ gopiplustheme
+#: functions.php:564
+msgid "WP 3.6+ compatible and Tested up tp 3.8"
+msgstr ""
+
+# @ gopiplustheme
+#: functions.php:565
+msgid "Blog style structure"
+msgstr ""
+
+# @ gopiplustheme
+#: functions.php:566
+msgid "Social Icon settings"
+msgstr ""
+
+# @ gopiplustheme
+#: functions.php:567
+msgid "Option to enable/disable Author Info Box"
+msgstr ""
+
+# @ gopiplustheme
+#: functions.php:568
+msgid "Breadcrumbs links"
+msgstr ""
+
+# @ gopiplustheme
+#: functions.php:569
+msgid "Free 24x5 email support"
+msgstr ""
+
+# @ gopiplustheme
+#: functions.php:571
+msgid "Frequently asked questions"
+msgstr ""
+
+# @ gopiplustheme
+#: functions.php:573
+msgid "How do I install the theme onto my wordpress blog?"
+msgstr ""
+
+# @ gopiplustheme
+#: functions.php:574
+msgid "How to setup Featured image for post?"
+msgstr ""
+
+# @ gopiplustheme
+#: functions.php:575
+msgid "How to Disable and Enable home page slider?"
+msgstr ""
+
+# @ gopiplustheme
+#: functions.php:576
+msgid "How to configure Social Icon in the theme?"
+msgstr ""
+
+# @ gopiplustheme
+#: functions.php:577
+msgid "How to add favicon?"
+msgstr ""
+
+# @ gopiplustheme
+#: functions.php:578
+msgid ""
+"How to Enable and Disable AuthorInfo/Related Box in the single view post?"
+msgstr ""
+
+# @ gopiplustheme
+#: functions.php:581
+msgid "Theme documentation"
+msgstr ""
+
+# @ gopiplustheme
+#: header.php:39
+msgid "Menu"
+msgstr "Меню"
+
+# @ gopiplustheme
+#: header.php:40
+msgid "Skip to content"
+msgstr "Наверх"
+
+# @ gopiplustheme
+#: home.php:38 index.php:49
+msgid "Nothing Found"
+msgstr "Ничего не найдено"
+
+# @ gopiplustheme
+#: home.php:41 index.php:52
+msgid ""
+"Apologies, but no results were found. Perhaps searching will help find a "
+"related post."
+msgstr "По данному адресу ничего не найдено. Воспользуйтесь поиском."
+
+# @ gopiplustheme
+#: image.php:24
+#, php-format
+msgid ""
+"Published <span class=\"entry-date\"><time class=\"entry-date\" datetime="
+"\"%1$s\" pubdate>%2$s</time></span> at <a href=\"%3$s\" title=\"Link to full-"
+"size image\">%4$s &times; %5$s</a> in <a href=\"%6$s\" title=\"Return to %7$s"
+"\" rel=\"gallery\">%7$s</a>"
+msgstr ""
+"Опубликовано <span class=\"entry-date\"><time class=\"entry-date\" datetime="
+"\"%1$s\" pubdate>%2$s</time></span> - <a href=\"%3$s\" title=\"Link to full-"
+"size image\">%4$s &times; %5$s</a> - <a href=\"%6$s\" title=\"Return to %7$s"
+"\" rel=\"gallery\">%7$s</a>"
+
+# @ gopiplustheme
+#: image.php:42
+msgid " &laquo;&laquo; Previous Image"
+msgstr " &laquo;&laquo; Предыдущая картинка"
+
+# @ gopiplustheme
+#: image.php:45
+msgid "Next Image &raquo;&raquo; "
+msgstr "Следующая картинка &raquo;&raquo; "
+
+# @ gopiplustheme
+#: image.php:93 page.php:23 single.php:51 template-fullwidth.php:38
+msgid "Pages:"
+msgstr "Страницы:"
+
+# @ gopiplustheme
+#: searchform.php:14
+msgid "Search this site..."
+msgstr "Поиск по сайту..."
+
+# @ gopiplustheme
+#: single.php:24 template-fullwidth.php:18
+msgid "by "
+msgstr "от"
+
+# @ gopiplustheme
+#: single.php:27 template-fullwidth.php:21
+msgid "posted:"
+msgstr " "
+
+# @ gopiplustheme
+#: single.php:36 template-fullwidth.php:30
+msgid "0 Comment"
+msgstr "0 Комментариев"
+
+# @ default
+#: single.php:36 template-fullwidth.php:30
+msgid "1 Comment"
+msgstr "1 Комментарий"
+
+# @ default
+#: single.php:36 template-fullwidth.php:30
+msgid "% Comments"
+msgstr "% Комментарии"
+
+# @ gopiplustheme
+#: single.php:71 template-fullwidth.php:57
+#, php-format
+msgid "View all posts by %s"
+msgstr "Просмотр всех записей на %s"
+
+# @ gopiplustheme
+#: single.php:72 template-fullwidth.php:58
+msgid "View all posts by "
+msgstr "Просмотр всех записей на "
+
+# @ gopiplustheme
+#: single.php:90 template-fullwidth.php:73
+msgctxt "Previous post link"
+msgid "&laquo;&laquo;"
+msgstr ""
+
+# @ gopiplustheme
+#: single.php:93 template-fullwidth.php:76
+msgctxt "Next post link"
+msgid "&raquo;&raquo;"
+msgstr ""

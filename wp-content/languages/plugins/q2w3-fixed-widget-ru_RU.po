@@ -1,0 +1,155 @@
+# Translation of Plugins - Fixed Widget and Sticky Elements for WordPress - Stable (latest release) in Russian
+# This file is distributed under the same license as the Plugins - Fixed Widget and Sticky Elements for WordPress - Stable (latest release) package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2023-06-04 12:19:54+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : ((n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14)) ? 1 : 2);\n"
+"X-Generator: GlotPress/4.0.0-alpha.4\n"
+"Language: ru\n"
+"Project-Id-Version: Plugins - Fixed Widget and Sticky Elements for WordPress - Stable (latest release)\n"
+
+#. Author of the plugin
+msgid "Advanced Ads"
+msgstr "Продвинутая реклама"
+
+#. Author URI of the plugin
+msgid "https://wpadvancedads.com/fixed-widget-wordpress"
+msgstr "https://wpadvancedads.com/fixed-widget-wordpress"
+
+#: q2w3-fixed-widget.php:436
+msgid "The improved script works best with themes that support flexbox instead of float."
+msgstr "Улучшенный скрипт лучше всего работает с темами, поддерживающими flexbox вместо float."
+
+#: q2w3-fixed-widget.php:434
+msgid "Enable this option to use the completely updated script. It takes care of common issues and layout shifts."
+msgstr "Включите эту опцию, чтобы использовать полностью обновленный скрипт. Он заботится об общих проблемах и изменениях макета."
+
+#: q2w3-fixed-widget.php:431
+msgid "Improved version"
+msgstr "Улучшенная версия"
+
+#: q2w3-fixed-widget.php:491
+msgid "provides many features to manage and optimize your ads and to boost your conversions. It works perfectly with the Fixed Widget plugin."
+msgstr "предоставляет множество функций для управления и оптимизации объявлений и повышения конверсии. Он отлично работает с плагином Fixed Widget."
+
+#: q2w3-fixed-widget.php:481
+msgid "The stop elements will push sticky elements up as soon as they reach them while scrolling."
+msgstr "Стоп-элементы будут вытеснять липкие элементы вверх, как только пользователь достигнет их при прокрутке."
+
+#: q2w3-fixed-widget.php:480
+msgid "The distance fixed elements will keep from the bottom of the window."
+msgstr "Расстояние, на котором фиксированные элементы будут находиться от нижней части окна."
+
+#: q2w3-fixed-widget.php:479
+msgid "The distance fixed elements will keep from the top of the window."
+msgstr "Расстояние, на котором неподвижные элементы будут находиться от верхней части окна."
+
+#: q2w3-fixed-widget.php:464 q2w3-fixed-widget.php:482
+msgid "One entry per line."
+msgstr "Одна запись на строку."
+
+#: q2w3-fixed-widget.php:464 q2w3-fixed-widget.php:482
+msgid "Accepts IDs, Class, and Type selectors."
+msgstr "Принимает селекторы IDs, Class и Type."
+
+#: q2w3-fixed-widget.php:464
+msgid "Add HTML element selectors that should be fixed."
+msgstr "Добавьте селекторы элементов HTML, которые должны быть исправлены."
+
+#: q2w3-fixed-widget.php:454
+msgid "Minimum Screen Height"
+msgstr "Мин. высота экрана"
+
+#: q2w3-fixed-widget.php:453
+msgid "Disable the plugin on small devices. When the browser screen width is less than the specified value, Fixed Widget will not make any elements sticky."
+msgstr "Отключите плагин на маленьких устройствах. Если ширина экрана браузера меньше указанного значения, Fixed Widget не будет делать элементы липкими."
+
+#: q2w3-fixed-widget.php:453
+msgid "Minimum Screen Width"
+msgstr "Мин. ширина экрана"
+
+#. translators: %1$s is an opening a tag, %2ds is a closing one
+#: q2w3-fixed-widget.php:441
+msgid "If you discover any issues then please report them %1$shere%2$s"
+msgstr "Если вы обнаружили какие-либо проблемы, пожалуйста, сообщите о них %1$shere%2$s"
+
+#: q2w3-fixed-widget.php:385
+msgid "Custom Fixed Elements"
+msgstr "Пользовательские фиксированные элементы"
+
+#: q2w3-fixed-widget.php:384 q2w3-fixed-widget.php:481
+msgid "Stop Elements"
+msgstr "Стоп-элементы"
+
+#. Plugin Name of the plugin
+#: q2w3-fixed-widget.php:293 q2w3-fixed-widget.php:391 js/backend.js:1409
+msgid "Fixed Widget"
+msgstr "Fixed Widget"
+
+#: q2w3-fixed-widget.php:537
+msgid "Settings"
+msgstr "Настройки"
+
+#: q2w3-fixed-widget.php:508
+msgid "Install Now"
+msgstr "Установить сейчас"
+
+#: q2w3-fixed-widget.php:505
+msgid "Activate Now"
+msgstr "Активировать сейчас"
+
+#: q2w3-fixed-widget.php:454
+msgid " Works like the Minimum Width option."
+msgstr " Работает аналогично параметру «Отключить ширину»."
+
+#: q2w3-fixed-widget.php:415
+msgid " Note for users of caching plugins. Please, don’t forget to clear the cache after changing options."
+msgstr " Примечание для пользователей плагинов кеширования. Не забывайте очищать кеш после изменения настроек."
+
+#: q2w3-fixed-widget.php:387
+msgid "Documentation and Support"
+msgstr "Документация и поддержка"
+
+#: q2w3-fixed-widget.php:386
+msgid "Recommended Integration"
+msgstr "Рекомендуемая интеграция"
+
+#. Description of the plugin
+msgid "Use the fixed widget plugin to create sticky widgets that stay in the visible screen area when the page is scrolled up or down and boost your conversions."
+msgstr "Используйте плагин фиксированных виджетов для создания липких виджетов, которые остаются в видимой области экрана при прокрутке страницы вверх или вниз и повышают конверсию."
+
+#. Plugin URI of the plugin
+msgid "https://wpadvancedads.com/fixed-widget-wordpress/"
+msgstr "https://wpadvancedads.com/fixed-widget-wordpress/"
+
+#: q2w3-fixed-widget.php:480
+msgid "Margin Bottom"
+msgstr "Нижний отступ:"
+
+#: q2w3-fixed-widget.php:453 q2w3-fixed-widget.php:454
+#: q2w3-fixed-widget.php:479 q2w3-fixed-widget.php:480
+msgid "px"
+msgstr "px"
+
+#: q2w3-fixed-widget.php:479
+msgid "Margin Top"
+msgstr "Верхний отступ:"
+
+#: q2w3-fixed-widget.php:417
+msgid "Save Changes"
+msgstr "Сохранить"
+
+#: q2w3-fixed-widget.php:394
+msgid "Settings saved."
+msgstr "Настройки сохранены."
+
+#: q2w3-fixed-widget.php:383
+msgid "General Options"
+msgstr "Основные настройки"
+
+#: q2w3-fixed-widget.php:263
+msgid "Fixed widget"
+msgstr "Зафиксировать виджет"
