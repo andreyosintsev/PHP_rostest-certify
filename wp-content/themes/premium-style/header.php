@@ -20,6 +20,8 @@
     $site_url       = site_url();
     $template_url   = get_template_directory_uri();
 
+    $search_num = $_GET['param'] ?? '';
+
 ?>
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
@@ -31,7 +33,7 @@
 
 	<!--OpenGraph-->
 	<meta property="og:site_name" content="<?php bloginfo('name'); ?>" />
-	
+
 	<?php if (is_single()) {?>
 	    <?php
 	        $metadata           = get_post_custom($post->ID);
@@ -41,7 +43,6 @@
 	        $og_product         = mb_substr($og_product, 0, 107 - mb_strlen($og_number));
 	    ?>
 
-        <!--OpenGraph-->
 	    <meta property="og:title" 		content="Скачать сертификат на <?php echo get_the_title(); ?>">
 	    <meta property="og:description" content="Сертификат соответствия № <?php echo $og_number; ?> на <?php echo $og_product; ?>...">
 	    <meta property="og:image" 		content="<?php echo $site_url; ?>/thumbs/<?php get_post_meta($post->ID, 'img_thmb', true); ?>">
@@ -50,9 +51,8 @@
 	    <meta property="og:type"		content="article">
 	    <meta property="og:url"			content= "<?php echo get_permalink(); ?>">
 	    <meta property="og:locale"		content="ru_RU">
-        <!--/OpenGraph-->
-
 	<?php } ?>
+    <!--/OpenGraph-->
 
 
 	<title><?php wp_title( '|', true, 'right' ); ?></title>
@@ -86,7 +86,6 @@
 	<?php wp_head(); ?>
     <!--/Cтили и скрипты шаблона-->
 
-
     <!--Старые скрипты-->
 	<?php if (is_page('addnew')) { ?>
 		<script type="text/javascript" src="<?php echo $template_url; ?>/js/addswitch.js"></script>
@@ -115,8 +114,8 @@
     <!--/Новые скрипты-->
 
 	<!--Yandex.RTB -->
-        <script>window.yaContextCb=window.yaContextCb||[]</script>
-        <script src="https://yandex.ru/ads/system/context.js" async></script>
+    <script>window.yaContextCb=window.yaContextCb||[]</script>
+    <script src="https://yandex.ru/ads/system/context.js" async></script>
     <!--/Yandex.RTB -->
 </head>
 <body>
@@ -124,25 +123,39 @@
 <div class="menu-mobile">
     <ul class="menu-mobile__items">
         <li class="menu-mobile__item">
-            <a class="menu-mobile__link" href="<?php echo $site_url ?>/naiti-sertifikat-po-nomeru/" title="">Поиск по номеру</a>
+            <a class="menu-mobile__link" href="<?php echo $site_url ?>/naiti-sertifikat-po-nomeru/" title="Найти сертификат по номеру">
+                Поиск по номеру
+            </a>
         </li>
         <li class="menu-mobile__item">
-            <a class="menu-mobile__link" href="<?php echo $site_url ?>/naiti-sertifikat-po-vidu-produktsii/" title="">Продукция</a>
+            <a class="menu-mobile__link" href="<?php echo $site_url ?>/naiti-sertifikat-po-vidu-produktsii/" title="Найти сертификат по виду продукции">
+                Продукция
+            </a>
         </li>
         <li class="menu-mobile__item">
-            <a class="menu-mobile__link" href="<?php echo $site_url ?>/kompanii/" title="">Изготовители</a>
+            <a class="menu-mobile__link" href="<?php echo $site_url ?>/kompanii/" title="Найти сертификат по изготовителю">
+                Изготовители
+            </a>
         </li>
         <li class="menu-mobile__item">
-            <a class="menu-mobile__link" href="<?php echo $site_url ?>/reestr-sertifikatov/" title="">Реестр сертификатов</a>
+            <a class="menu-mobile__link" href="<?php echo $site_url ?>/reestr-sertifikatov/" title="Реестр сертификатов и деклараций соответствия">
+                Реестр сертификатов
+            </a>
         </li>
         <li class="menu-mobile__item">
-            <a class="menu-mobile__link" href="<?php echo $site_url ?>/organy-po-sertifikacii/" title="">Органы по сертификации</a>
+            <a class="menu-mobile__link" href="<?php echo $site_url ?>/organy-po-sertifikacii/" title="Органы по сертификации">
+                Органы по сертификации
+            </a>
         </li>
         <li class="menu-mobile__item">
-            <a class="menu-mobile__link" href="<?php echo $site_url ?>/gosty/" title="">ГОСТы</a>
+            <a class="menu-mobile__link" href="<?php echo $site_url ?>/gosty/" title="ГОСТы на материалы, товары, продукцию и услуги">
+                ГОСТы
+            </a>
         </li>
         <li class="menu-mobile__item">
-            <a class="menu-mobile__link" href="<?php echo $site_url ?>/o-sajte/" title="">О сайте</a>
+            <a class="menu-mobile__link" href="<?php echo $site_url ?>/o-sajte/" title="О сайте">
+                О сайте
+            </a>
         </li>
     </ul>
 </div>
@@ -152,21 +165,16 @@
             <img class="logo__image" src="<?php echo $template_url; ?>/images/logo.svg" alt="<?php echo $site_url ?>">
         </a>
     </div>
-    <div class="search search_collapseable">
-        <div class="search__magnifier"></div>
-        <form id="searchform" method="get">
-            <input class="search__input" placeholder="Поиск сертификата по номеру">
-            <input class="search__input search__input-mobile" placeholder="Поиск по номеру">
-            <input type="submit" hidden>
+    <?php
+        $search_string = empty($search_num)
+            ? "Поиск сертификата по номеру"
+            : $search_num;
+    ?>
+    <form class="search search_collapseable" id="searchform" method="get">
+        <input class="search__input" placeholder="<?php echo $search_string; ?>">
+        <button class="search__magnifier" id="searchsubmit" type="submit"></button>
+    </form>
 
-            <div class="searchform_submit"><input id="searchsubmit" type="submit" value="Поиск"/></div>
-            <?php
-            if ($metavalue=='') $searchstring="Поиск сертификата по номеру"; else $searchstring=$metavalue;
-            ?>
-            <div class="searchform_text"><input type="text" name="param" placeholder="<?php echo $searchstring; ?>"/></div>
-        </form>
-
-    </div>
     <nav class="menu-main menu-main_collapseable">
         <ul class="menu-main__items">
             <li class="menu-main__item">

@@ -20,7 +20,7 @@
     margin-bottom: 16px;
 
     font-size: 13px;
-    font-weight: 700;
+    font-weight: 700;    
 }
 
 .sidebar-certificates__items {
@@ -36,7 +36,7 @@
     overflow: hidden;
 }
 
-.sidebar-certificates__item:nth-child(2) {
+.sidebar-certificates__item:first-child {
     padding-top: 0;
 }
 
@@ -54,7 +54,7 @@
 
 .sidebar-certificates__link:hover {
     color: var(--link-black-color_hover, #2F448A);
-
+    
     text-decoration: none;
 }
 
@@ -68,7 +68,7 @@
     position: relative;
     width: 56px;
     height: 45px;
-
+    
     overflow: hidden;
 }
 
@@ -90,11 +90,11 @@
     padding-right: 14px;
     padding-left: 12px;
 
-    background: url("../../images/arrow-right.svg") no-repeat center right;
+    background: url("../../../common/images/arrow-right.svg") no-repeat center right; 
 }
 
 .sidebar-certificates__description:hover {
-    background: url("../../images/arrow-right_hover.svg") no-repeat center right;
+    background: url("../../../common/images/arrow-right_hover.svg") no-repeat center right; 
 }
 
 .sidebar-certificates__more {
@@ -114,12 +114,12 @@
     color: var(--link-normal-color, #2F448A);
     text-decoration: none;
 
-    background: url("../../images/arrow-right.svg") no-repeat right
+    background: url("../../../common/images/arrow-right.svg") no-repeat right
 }
 
 .sidebar-certificates__more-link:hover {
     color: var(--link-normal-color_hover, #5969A1);
     text-decoration: none;
 
-    background: url("../../images/arrow-right_hover.svg") no-repeat right center;
+    background: url("../../../common/images/arrow-right_hover.svg") no-repeat right center;
 }
