@@ -1,19 +1,15 @@
 <?php
 /**
- * search.php
+ * sidebar.php
  *
- * The template sidebar containing the main widget area.
+ * The sidebar template file
  *
- * @link        http://www.gopiplus.com/
+ * @link        http://rostest-certify.ru/
  *
- * @author      www.gopiplus.com
- * @copyright   Copyright (c) 2013 www.gopiplus.com
+ * @author      Andrei Osintsev
+ * @copyright   Copyright (c) 2024 asosintsev@yandex.ru
  */
 ?>
-<div id="sidebar" class="right">
-	<?php if ( is_active_sidebar('sidebar') ) :  ?>
-		<?php dynamic_sidebar('sidebar'); ?>
-	<?php endif; ?>
-
-	<div class="clear"></div>
-</div>
+<?php if ( is_active_sidebar('sidebar') ) :  ?>
+    <?php dynamic_sidebar('sidebar'); ?>
+<?php endif; ?>

@@ -6,7 +6,7 @@
 <?php
     require('wp-load.php');
     $companies = array();
-    $companies = getAllCompanies();
+    $companies = getAllManufacturers();
 
     echo '<ol>';
     foreach($companies as $name=>$count) {

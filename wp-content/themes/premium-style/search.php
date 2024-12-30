@@ -69,7 +69,7 @@
 		                    <div class="arch_number">
 		                        <?php 
 		                            $number=get_post_meta(get_the_ID(), "param1_number", $single = true);
-		                            echo '№ '.getCountry($number).$number;
+		                            echo '№ '.getCountryFlag($number).$number;
 		                        ?>
 		                    </div>
 							<div style="margin: 5px 0 20px 0"><a href="<?php the_permalink() ?>" title="<?php echo mb_ucfirst(get_the_title()); ?> подробное описание">Подробное описание</a></div>

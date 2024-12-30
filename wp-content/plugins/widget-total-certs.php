@@ -1,13 +1,13 @@
 <?php
-/*
+/**
 Plugin Name: Total Certificates
 Description: Total quantity of certificates in the base
 Version: 1.1
 Last-Modified: 2018/11/28
-Author: Kintaro Oe
+Author: Andrei Osintsev
 License: GPL2 
  
-    Copyright 2011 Author Name
+    Copyright 2011 Andrei Osintsev
  
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License,
@@ -33,8 +33,9 @@ class Total_Certificates extends WP_Widget {
 		$this->alt_option_name = 'widget_total_certificates';
 	}
 
-	
 	public function widget( $args, $instance ) {
+        $site_url = site_url();
+
 		if ( ! isset( $args['widget_id'] ) ) {
 			$args['widget_id'] = $this->id;
 		}
@@ -57,40 +58,60 @@ class Total_Certificates extends WP_Widget {
 		$companies_subtitle = $instance['total_companies'];
 		$agencies_subtitle = $instance['total_agencies'];
 
-		//Рисуем виджет
-		echo $args['before_widget'];
+        //Рисуем виджет
+        ?>
 
-		if ($title) echo $args['before_title'] . $title . $args['after_title'];?>
+        <div class="sidebar-stats">
+            <div class="sidebar-stats__title">
+                <?php if ($title) echo $args['before_title'] . $title . $args['after_title'];?>
+            </div>
+            <a class="sidebar-stats__certificates" href="<?php echo $site_url; ?>/reestr-sertifikatov/" title="Реестр сертификатов соответствия">
+                <div class="sidebar-stats__certificates-value">
+                    <?php echo $total_published;?>
+                </div>
+                <div class="sidebar-stats__certificates-subtitle">
+                    <?php echo $total_subtitle;?>
+                </div>
+            </a>
+            <div class="sidebar-stats__manufacturers-agencies">
+                <a class="sidebar-stats__manufacturers" href="<?php echo $site_url; ?>/kompanii/" title="Поиск сертификата по изготовителю">
+                    <div class="sidebar-stats__manufacturers-value">
+                        <?php echo count(getAllManufacturers()); ?>
+                    </div>
+                    <div class="sidebar-stats__manufacturers-subtitle">
+                        <?php echo $companies_subtitle; ?>
+                    </div>
+                </a>
+                <a class="sidebar-stats__agencies" href="<?php echo $site_url; ?>/organy-po-sertifikacii/" title="Реестр органов по сертификации">
+                    <div class="sidebar-stats__agencies-value">
+                        <?php echo count(getAllAgenciesNum()); ?>
+                    </div>
+                    <div class="sidebar-stats__agencies-subtitle">
+                        <?php echo $agencies_subtitle; ?>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="sidebar-countries">
+            <div class="sidebar-countries__title">
+                Сертификаты по странам
+            </div>
+            <ul class="sidebar-countries__items">
+                <?php
+                    $countries = getAllCountries(12);
+                    foreach ($countries as $country => $num) {
+                ?>
+                    <li class="sidebar-countries__item">
+                        <span class="flag sidebar-countries__flag">
+                            <?php echo getCountryFlag($country); ?>
+                        </span>
+                        <?php echo $num; ?>
+                    </li>
+                <?php } ?>
+            </ul>
+        </div>
 
-		<div class="total_certs"><a href="/reestr-sertifikatov/" title="Реестр сертификатов соответствия"><?php echo $total_published;?></a></div>
-		<div class="total_certs_subtitle"><a href="/reestr-sertifikatov/" title="Реестр сертификатов соответствия"><?php echo $total_subtitle;?></a></div>
-		<div class="total_flags">
-            <?php
-                $countries = getAllCountries(12);
-                foreach ($countries as $country=>$num) {
-                    echo '<div class="total_flag">'.getCountry($country).' - '.$num.'<div style="clear: both;"></div></div>';
-                };
-            ?>
-		</div>
-		<div class="clear"></div>
-
-		<?php $companies = count(getAllCompanies());?>
-		<?php $agencies = count(getAllAgenciesNum());?>
-
-		
-		<div class="total_companies_wrapper">
-			<div class="total_companies"><a href="/kompanii/" title="Поиск сертификата по изготовителю"><?php echo $companies;?></a></div>
-			<div class="total_companies_subtitle"><a href="/kompanii/" title="Поиск сертификата по изготовителю"><?php echo $companies_subtitle;?></a></div>
-		</div>
-		
-		<div class="total_agencies_wrapper">
-			<div class="total_agencies"><a href="/organy-po-sertifikacii/" title="Реестр органов по сертификации"><?php echo $agencies;?></a></div>
-			<div class="total_agencies_subtitle"><a href="/organy-po-sertifikacii/" title="Реестр органов по сертификации"><?php echo $agencies_subtitle;?></a></div>
-		</div>
-
-		<?php echo $args['after_widget'];
-		
-	}
+<?php }
 
 	public function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;

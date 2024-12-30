@@ -8,6 +8,8 @@
 
     line-height: 16px;
 
+    text-decoration: none;
+
     background-color: var(--button-normal-background, #2F448A);
 
     border-radius: var(--border-radius-small, 8px);
@@ -20,6 +22,8 @@
 
 .button:hover {
     color: var(--button-normal-color, #FFFFFF);
+
+    text-decoration: none;
 
     background-color: var(--button-normal-background_hover, #5969A1);
 

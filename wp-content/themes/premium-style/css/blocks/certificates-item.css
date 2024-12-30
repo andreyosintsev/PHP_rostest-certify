@@ -176,6 +176,12 @@
 .ancestor {
     margin-left: 10px;
 }
+.ancestor~.ancestor {
+    margin-left: 20px;
+}
+.ancestor~.ancestor~.ancestor {
+    margin-left: 30px;
+}
 
 @media (max-width: 1200px) {
     .certificates-item__link-thumb {

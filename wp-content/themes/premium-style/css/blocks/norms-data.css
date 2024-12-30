@@ -37,14 +37,17 @@
     text-align: left;
 }
 
+.norms-data__actions {
+    display: flex;
+    justify-content: center;
+}
+
 .norms-data__action {
-    margin-right: 8px;
-}
+    display: inline-block;
+    min-width: 50%;
 
-.norms-data__action:last-child {
-    margin-right: 0;
+    text-align: center;
 }
-
 
 @media (max-width: 480px) {
     .norms-data {

@@ -47,7 +47,7 @@
 
     flex-shrink: 0;
 
-    background-image: url("../../../common/images/magnifier.svg");
+    background-image: url("../../images/magnifier.svg");
     background-size: cover;
 }
 

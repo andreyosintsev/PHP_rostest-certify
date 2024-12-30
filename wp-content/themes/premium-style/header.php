@@ -58,7 +58,6 @@
 	<link rel="shortcut icon" href="<?php echo $site_url; ?>/favicon.ico" type="image/x-icon">
 
     <!--Новые стили-->
-    <?php if (is_home()) { ?>
 
         <link rel="stylesheet" href="<?php echo $template_url;?>/css/common/normalize.css">
         <link rel="stylesheet" href="<?php echo $template_url;?>/css/common/consts.css">
@@ -66,19 +65,103 @@
         <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/menu-mobile.css">
         <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/button.css">
         <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/search-item.css">
-        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/title-more.css">
         <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/flag.css">
-        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/certificates-item.css">
-        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/manufacturers-item.css">
-        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/agencies-item.css">
-        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/norms-item.css">
         <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/sidebar-stats.css">
         <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/sidebar-countries.css">
         <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/sidebar-certificates.css">
         <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/footer.css">
+
+    <?php if (is_home()) { ?>
+
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/title-more.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/certificates-item.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/manufacturers-item.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/agencies-item.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/norms-item.css">
         <link rel="stylesheet" href="<?php echo $template_url;?>/css/pages/home.css">
 
     <?php } ?>
+    <?php if (is_category() || is_tag()) { ?>
+
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/breadcrumbs.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/title-section.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/wp-page-numbers.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/title-more.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/certificates-item.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/manufacturers-item.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/agencies-item.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/norms-item.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/pages/archive.css">
+
+    <?php } ?>
+    <?php if (is_page('naiti-sertifikat-po-nomeru')) { ?>
+
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/breadcrumbs.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/title-section.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/certificates-item.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/wp-page-numbers.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/pages/naiti-sertifikat-po-nomeru.css">
+
+    <?php } ?>
+    <?php if (is_page('naiti-sertifikat-po-vidu-produktsii')) { ?>
+
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/breadcrumbs.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/title-section.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/products-list.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/certificates-item.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/pages/naiti-sertifikat-po-vidu-produktsii.css">
+
+    <?php } ?>
+    <?php if (is_page('kompanii')) { ?>
+
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/breadcrumbs.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/title-section.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/manufacturers-item.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/manufacturers-data.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/certificates-item.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/wp-page-numbers.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/pages/kompanii.css">
+
+    <?php } ?>
+    <?php if (is_page('reestr-sertifikatov')) { ?>
+
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/breadcrumbs.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/certificates-table.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/wp-page-numbers.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/pages/reestr-sertifikatov.css">
+
+    <?php } ?>
+    <?php if (is_page('organy-po-sertifikacii')) { ?>
+
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/breadcrumbs.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/title-section.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/certificates-item.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/agencies-table.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/agencies-data.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/certificates-table.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/certificates-item.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/wp-page-numbers.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/pages/organy-po-sertifikacii.css">
+
+    <?php } ?>
+    <?php if (is_page('gosty')) { ?>
+
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/breadcrumbs.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/title-section.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/norms-data.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/norms-item.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/certificates-item.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/wp-page-numbers.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/pages/gosty.css">
+
+    <?php } ?>
+    <?php if (is_page('debug')) { ?>
+
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/breadcrumbs.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/pages/debug.css">
+
+    <?php } ?>
+
     <!--/Новые стили-->
 
     <!--Cтили и скрипты шаблона-->
@@ -92,24 +175,23 @@
 	    <script type="text/javascript" src="<?php echo $site_url ?>/tesseract/tesseract.js"></script>
 	    <script type="text/javascript" src="<?php echo $template_url; ?>/js/ocr.js"></script>
 	<?php } ?>
+    <?php if (is_single()) { ?>
+        <script type="text/javascript" src="<?php echo $template_url; ?>/js/register.js"></script>
+        <script type="text/javascript" src="<?php echo $template_url; ?>/js/print.js"></script>
+        <script type="text/javascript" src="<?php echo $template_url; ?>/js/norightbutton.js"></script>
+    <?php }?>
 
-	<?php if (is_page('naiti-sertifikat-po-vidu-produktsii')) { ?>
-		<script type="text/javascript" src="<?php echo $template_url; ?>/js/slider.js"></script>
-	<?php } ?>
 
-	<?php if (is_page('organy-po-sertifikacii')) { ?>
-		<script type="text/javascript" src="<?php echo $template_url; ?>/js/expandinfo.js"></script>
-	<?php } ?>
-
-	<?php if (is_single()) { ?>
-		<script type="text/javascript" src="<?php echo $template_url; ?>/js/register.js"></script>
-		<script type="text/javascript" src="<?php echo $template_url; ?>/js/print.js"></script>
-		<script type="text/javascript" src="<?php echo $template_url; ?>/js/norightbutton.js"></script>
-	<?php }?>
     <!--/Старые скрипты-->
 
     <!--Новые скрипты-->
     <script src="<?php echo $template_url; ?>/scripts/menu-mobile.js"></script>
+    <?php if (is_page('naiti-sertifikat-po-vidu-produktsii')) { ?>
+        <script type="text/javascript" src="<?php echo $template_url; ?>/scripts/products-list.js"></script>
+    <?php } ?>
+    <?php if (is_page('organy-po-sertifikacii')) { ?>
+        <script type="text/javascript" src="<?php echo $template_url; ?>/scripts/agencies-table.js"></script>
+    <?php } ?>
     <!--/Новые скрипты-->
 
 	<!--Yandex.RTB -->
@@ -147,7 +229,7 @@
             </a>
         </li>
         <li class="menu-mobile__item">
-            <a class="menu-mobile__link" href="<?php echo $site_url ?>/gosty/" title="ГОСТы на материалы, товары, продукцию и услуги">
+            <a class="menu-mobile__link" href="<?php echo $site_url ?>/gosty/" title="ГОСТы и ТР на материалы, товары, продукцию и услуги">
                 ГОСТы
             </a>
         </li>
@@ -169,9 +251,9 @@
             ? "Поиск сертификата по номеру"
             : $search_num;
     ?>
-    <form class="search search_collapseable" id="searchform" method="get">
-        <input class="search__input" placeholder="<?php echo $search_string; ?>">
-        <button class="search__magnifier" id="searchsubmit" type="submit"></button>
+    <form class="search search_collapseable" action="<?php echo $site_url; ?>/naiti-sertifikat-po-nomeru" method="get">
+        <input class="search__input" name="param" placeholder="<?php echo $search_string; ?>">
+        <button class="search__magnifier" type="submit"></button>
     </form>
     <nav class="menu-main menu-main_collapseable">
         <ul class="menu-main__items">

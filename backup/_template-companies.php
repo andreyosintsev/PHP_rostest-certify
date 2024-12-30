@@ -43,7 +43,7 @@ Template Name: Company
                     echo '<h2 style="margin-top: 20px; margin-bottom: 5px; padding-bottom: 5px; border-bottom: 1px solid #ddd;">Алфавитный указатель</h2>';
                     echo '<p style="margin-bottom: 30px;">Организации-изготовители, для которых на данном сайте представлено наибольшее количество сертификатов и деклараций. Для поиска организации-изготовителя, не представленной в этом перечне, воспользуйтесь поиском.</p>';
 
-                    $companies = getAllCompanies(300);
+                    $companies = getAllManufacturers(300);
 
                     $currLetter = '';
                     $opened = false;

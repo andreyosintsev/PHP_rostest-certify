@@ -8,6 +8,7 @@
 }
 
 .products-list__classificator {
+    display: inline-block;
     margin-right: 8px;
 }
 
@@ -126,8 +127,8 @@
 .product-content-item__code {
     flex: none;
 
-    width: 100%;
-    max-width: 62px;
+    width: auto;
+    min-width: 63px;
     margin-right: 4px;
 
     color: var(--text-color-second, #2F448A);

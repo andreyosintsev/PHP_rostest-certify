@@ -15,7 +15,7 @@ function wp_page_numbers_stylesheet()
 	$head_stylesheet_folder_name = $settings["head_stylesheetsheet_folder_name"];
 	$style_theme = $settings["style_theme"];
 	
-	if($head_stylesheet == "on" || $head_stylesheet == "" && (is_archive() || is_search() || is_home() ||is_page()))
+	if(false /*$head_stylesheet == "on" || $head_stylesheet == "" && (is_archive() || is_search() || is_home() ||is_page())*/)
 	{
 		echo '<link rel="stylesheet" href="'. get_bloginfo('wpurl') . '/wp-content/plugins/wp-page-numbers/';
 		if($head_stylesheet_folder_name == "")
@@ -200,7 +200,7 @@ function wp_page_numbers($start = "", $end = "")
 	
 	if( $max_page <= $limit_pages ) { $limit_pages = $max_page; }
 	
-	$pagingString = "<div id='wp_page_numbers'>\n";
+	$pagingString = "<div class='certificates__nav' id='wp_page_numbers'>\n";
 	$pagingString .= '<ul>';
 	
 	if($page_of_page != "no")

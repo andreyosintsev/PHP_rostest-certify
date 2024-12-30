@@ -2,9 +2,8 @@
 /**
  * footer.php
  *
- * This file controls the HTML <footer> and top graphical markup (including
- * Navigation) for each page in your theme. Displays all of the <footer>
- * section and everything up till the end of page.
+ * The template for displaying the footer. Contains footer
+ * content and the closing of the html elements.
  *
  * @link        http://rostest-certify.ru/
  *
@@ -30,9 +29,9 @@
             ? "Поиск сертификата по номеру"
             : $search_num;
         ?>
-        <form class="search" id="searchform" method="get">
-            <input class="search__input" placeholder="<?php echo $search_string; ?>">
-            <button class="search__magnifier" id="searchsubmit" type="submit"></button>
+        <form class="search" action="<?php echo $site_url; ?>/naiti-sertifikat-po-nomeru" method="get">
+            <input class="search__input" name="param" placeholder="<?php echo $search_string; ?>">
+            <button class="search__magnifier" type="submit"></button>
         </form>
         <nav class="menu-main">
             <ul class="menu-main__items">
