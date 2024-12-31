@@ -155,6 +155,17 @@
         <link rel="stylesheet" href="<?php echo $template_url;?>/css/pages/gosty.css">
 
     <?php } ?>
+    <?php if (is_page('o-sajte')) { ?>
+
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/breadcrumbs.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/title-section.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/norms-data.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/norms-item.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/certificates-item.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/wp-page-numbers.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/pages/o-sajte.css">
+
+    <?php } ?>
     <?php if (is_page('debug')) { ?>
 
         <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/breadcrumbs.css">

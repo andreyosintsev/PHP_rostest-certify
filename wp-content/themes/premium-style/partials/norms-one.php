@@ -89,7 +89,7 @@
                 ?>
                 <h2 class="title-section certificates__title ">
                     <?php
-                        echo declination($postCount, ["Найден ", "Найдено ", "Найдено"]) .
+                        echo declination($postCount, ["Найден ", "Найдено ", "Найдено "]) .
                         $postCount . declination($postCount, [
                             " сертификат, соответствующий нормативу",
                             " сертификата, соответствующих нормативу",
