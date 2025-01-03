@@ -214,7 +214,7 @@ Template Name: Agencies
                                         [
                                             'regnum' => $regnum,
                                             'name' => $agenciesNames[$regnum],
-                                            'link' => $base_url . '/?agency='. urlencode($agenciesNames[$regnum]),
+                                            'link' => getAgencyLink($agenciesNames[$regnum]),
                                             'city' => $agenciesCities[$regnum],
                                             'info' => getAgencyInfoByReg($regnum),
                                             'url' => $agenciesLinks[$regnum]
@@ -238,7 +238,7 @@ Template Name: Agencies
                                         [
                                             'regnum' => $regnum,
                                             'name' => $agenciesNames[$regnum],
-                                            'link' => $base_url . '/?agency='. urlencode($agenciesNames[$regnum]),
+                                            'link' => getAgencyLink($agenciesNames[$regnum]),
                                             'city' => $agenciesCities[$regnum],
                                             'info' => getAgencyInfoByReg($regnum),
                                             'url' => $agenciesLinks[$regnum]
@@ -261,7 +261,7 @@ Template Name: Agencies
                                         [
                                             'regnum' => $regnum,
                                             'name' => $agenciesNames[$regnum],
-                                            'link' => $base_url . '/?agency='. urlencode($agenciesNames[$regnum]),
+                                            'link' => getAgencyLink($agenciesNames[$regnum]),
                                             'city' => $agenciesCities[$regnum],
                                             'info' => getAgencyInfoByReg($regnum),
                                             'url' => $agenciesLinks[$regnum]
@@ -338,7 +338,7 @@ Template Name: Agencies
                 while ( $wp_query->have_posts() ) {
                     $wp_query->the_post();
 
-                    $agency =  mb_strtolower(getManufacturerClean(getCertAgency(get_the_ID())));
+                    $agency =  mb_strtolower(getCleanName(getCertAgency(get_the_ID())));
                     if ($agency != $agencyPrev) {
                         if ($isOpened) echo '</div>'; else $isOpened = true;
 

@@ -80,7 +80,7 @@ Template Name: Number Search
 							<a href="<?php the_permalink() ?>"  title="Сертификат на <?php echo get_the_title(); ?>"><?php echo mb_ucfirst(get_the_title()); ?></a>
 						</h2>
 	                    <div class="arch_manufacturer">
-	                        <?php $manufacturer = getManufacturer(get_post_meta(get_the_ID(), "param6_manufacturer", $single = true), false);
+	                        <?php $manufacturer = getCompletedName(get_post_meta(get_the_ID(), "param6_manufacturer", $single = true), false);
 	                                if ($manufacturer!='') echo '<a href="/kompanii/?param='.urlencode($manufacturer).'" title="Другие сертификаты '.$manufacturer.'">'.$manufacturer.'</a>';
 	                        ?>                      
 	                    </div>

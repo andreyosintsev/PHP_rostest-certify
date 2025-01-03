@@ -172,6 +172,20 @@
         <link rel="stylesheet" href="<?php echo $template_url;?>/css/pages/debug.css">
 
     <?php } ?>
+    <?php if (is_single()) { ?>
+
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/breadcrumbs.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/title-section.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/specs.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/tags.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/certificates-item.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/wp-page-numbers.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/title-more.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/preloader.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/modal.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/pages/single.css">
+
+    <?php } ?>
 
     <!--/Новые стили-->
 
@@ -189,7 +203,6 @@
     <?php if (is_single()) { ?>
         <script type="text/javascript" src="<?php echo $template_url; ?>/js/register.js"></script>
         <script type="text/javascript" src="<?php echo $template_url; ?>/js/print.js"></script>
-        <script type="text/javascript" src="<?php echo $template_url; ?>/js/norightbutton.js"></script>
     <?php }?>
 
 
@@ -202,6 +215,11 @@
     <?php } ?>
     <?php if (is_page('organy-po-sertifikacii')) { ?>
         <script type="text/javascript" src="<?php echo $template_url; ?>/scripts/agencies-table.js"></script>
+    <?php } ?>
+    <?php if (is_single()) { ?>
+        <script type="text/javascript" src="<?php echo $template_url; ?>/scripts/register.js"></script>
+        <script type="text/javascript" src="<?php echo $template_url; ?>/scripts/modal.js"></script>
+        <script type="text/javascript" src="<?php echo $template_url; ?>/scripts/disable-right-button.js"></script>
     <?php } ?>
     <!--/Новые скрипты-->
 

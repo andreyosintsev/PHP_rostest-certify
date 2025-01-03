@@ -150,7 +150,7 @@ Template Name: Manufacturers
                         while ( $wp_query->have_posts() ) {
                             $wp_query->the_post();
 
-                            $manufacturer =  mb_strtolower(getManufacturerClean(getCertManufacturer(get_the_ID())));
+                            $manufacturer =  mb_strtolower(getCleanName(getCertManufacturer(get_the_ID())));
                             if ($manufacturer != $manufacturerPrev) {
                                 if ($isOpened) echo '</div>'; else $isOpened = true;
 

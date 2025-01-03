@@ -142,7 +142,7 @@ Template Name: Register
                     </div>
                     <?php
 			            while(have_posts()): the_post();
-                        $manufacturer = getManufacturerClean(getCertManufacturer(get_the_ID()));
+                        $manufacturer = getCleanName(getCertManufacturer(get_the_ID()));
                     ?>
                         <div class="certificates-table__cell">
                             <div class="certificates-table__flag-number">

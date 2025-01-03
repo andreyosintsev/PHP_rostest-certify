@@ -1,12 +1,13 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const imgLeft = document.querySelector('.left_img');
-    const imgRight = document.querySelector('.right_img');
-    const imgCenter = document.querySelector('.center_img');
+    const certificateElements = document.querySelectorAll('.certificate__image');
 
-    function contextmenuEvent (e) {
+    function contextMenuEvent(e) {
         e.preventDefault();
 
-        document.querySelector(".download").scrollIntoView({
+        const $downloaButtonElement = document.querySelector(".download")
+
+
+            .scrollIntoView({
             behavior: 'smooth',
             block: 'start'
         });

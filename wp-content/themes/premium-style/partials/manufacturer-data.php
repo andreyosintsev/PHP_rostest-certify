@@ -15,13 +15,14 @@
     if (!$postId) exit;
 
     $yamapContainer = rand(0, 1000);
-    $manufacturer = getManufacturerClean(getCertManufacturer($postId));
+    $manufacturer = getCleanName(getCertManufacturer($postId));
     $site_url = site_url();
 
 ?>
 <div class="manufacturers-data">
     <a class="manufacturers-data__link"
-       href="<?php echo $site_url; ?>/kompanii/?manufacturer=<?php echo urlencode($manufacturer); ?>"
+
+       href="<?php echo getManufacturerLink($manufacturer); ?>"
        title="Сертификаты <?php echo $manufacturer; ?>">
         <div class="manufacturers-data__thumb-title">
             <?php

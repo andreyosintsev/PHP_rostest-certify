@@ -16,7 +16,7 @@
     $city   = $args['city'];
     $info   = $args['info'];
     $url    = isset($args['url']) ?? '';
-    $urlDisplayable = $url != '' ? parse_url($url, PHP_URL_HOST) : '';
+    $urlDisplayable = $url !== '' ? parse_url($url, PHP_URL_HOST) : '';
 ?>
 <div class="agencies-table__cell">
     <div class="agencies-table__link agencies-table__expandinfo"

@@ -26,7 +26,7 @@
             <input
                 class="search-item__input"
                 name="<?php echo $param; ?>"
-                placeholder="<?php echo $placeholder ? $placeholder : $placeholderDefault; ?>"
+                placeholder="<?php echo $placeholder ?: $placeholderDefault; ?>"
             >
         </div>
         <button class="button search-item__button" type="submit">Поиск</button>

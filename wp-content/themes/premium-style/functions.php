@@ -13,7 +13,7 @@
 /**
  * SimpleImage foreign image resample class
  */
-include('simpleimage.php');
+include('utils/simpleimage.php');
 
 /**
  * Sets up the content width value based on the theme's design.
@@ -591,7 +591,15 @@ function premiumstyle_display()
 }
 ?>
 <?php
-function mb_trim($string, $character_mask = " \t\n\r\0\x0B", $encoding = 'UTF-8'): string {
+/**
+ * Функция удаления пробелов слева и справа в многобайтной строке
+ *
+ * @param $string - исходная многобайтная строка
+ * @param $character_mask - варианты пробелов, переносов строк и пр.
+ * @param $encoding - кодировка
+ * @return string - результирующая строка с удалёнными пробелами в начале и конце
+ */
+function mb_trim(string $string, $character_mask = " \t\n\r\0\x0B", $encoding = 'UTF-8'): string {
     // Убираем пробелы слева
     $left_trimmed = mb_substr($string, mb_strpos($string, mb_ereg_replace('^[' . $character_mask . ']+', '', $string, $encoding)), mb_strlen($string, $encoding), $encoding);
 
@@ -677,18 +685,6 @@ function getCertDownloadLink2($postId = null): string {
     if ($postId === null || $postId === '') $postId = $post->ID;
     return get_post_meta($postId, 'img_download_link2', true);
 }
-
-function getCertThumb($postId = null): string {
-    global $post;
-    if ($postId === null || $postId === '') $postId = $post->ID;
-    return get_post_meta($postId, 'thumb', true);
-}
-
-function getCertThumb2($postId = null): string {
-    global $post;
-    if ($postId === null || $postId === '') $postId = $post->ID;
-    return get_post_meta($postId, 'thumb2', true);
-}
 ?>
 <?php
 function getSpecs($postId = null): string {
@@ -752,7 +748,7 @@ function getSpecs($postId = null): string {
 		$out.='<div class="clear"></div>'."\r\n";
 	}
 	if ($manufacturer!="") {
-		$out.='<div class="td_frst"><b>Изготовитель:</b></div>'."\r\n".'<div class="td_sec">'.getManufacturer($manufacturer).'</div>'."\r\n";
+		$out.='<div class="td_frst"><b>Изготовитель:</b></div>'."\r\n".'<div class="td_sec">'.getCompletedName($manufacturer).'</div>'."\r\n";
 		$out.='<div class="clear"></div>'."\r\n";
 	}
 	if ($issued!="") {
@@ -772,149 +768,28 @@ function getSpecs($postId = null): string {
 }
 ?>
 <?php
-function thumbnailHome($w, $h, $postId = null){
-	global $post;
-
-    if ($postId === null || $postId === '') $postId = $post->ID;
-
-    $title = get_the_title($postId);
-	
-	$out = '';
-
-	$args = 'w='.$w.'&h='.$h.'&crop=false';
-	$kama_thumb = kama_thumb_src($args, site_url() . '/thumbs/'. getThmb($postId));
-	$out = $out . '<img class="certificates-item__thumb" src="'.$kama_thumb.'" title="Сертификат на '. $title .'" alt="'. $title .'">';
-	return ($out);
-}
-?>
-<?php
-function thumbnails($down_link = true, $permalink = false, $w, $h, $post, $actual_emph = false){
-
-	$link = getCertDownloadLink($post->ID);
-    $link2 = getCertDownloadLink2($post->ID);
-	$title = get_the_title($post->ID);
-	$is_actual = isActualDates(getCertValidity($post->ID), true);
-	if (!$is_actual && $actual_emph) $actual_style='style="-webkit-filter: grayscale(100%); -moz-filter: grayscale(100%); -ms-filter: grayscale(100%); -o-filter: grayscale(100%); filter: grayscale(100%); filter: gray;"'; else $actual_style='';
-		
-	$out = "";
-	
-	if ($link!="") {
-		if ($link2!="") $out .= '<div class="left_img">'; else $out .= '<div class="center_img">';
-		
-		if ($permalink) $out.='<a href="'.get_permalink($post).'" title="'.$title.' подробное описание">';
-        echo '<!--SITE URL: '. site_url() .'-->';
-		if (!isset($w)) $out .= '<img itemprop="image" src="'. site_url() .'/thumbs/'. getThmb($post).'" title="Сертификат на '. $title .'" alt="Скачать сертификат на '.$title.'" />'; else {
-			$args = 'w='.$w.'&h='.$h.'&crop=false';
-			$kama_thumb = kama_thumb_src($args, site_url() . '/thumbs/'. getThmb($post));
-			$out .= '<img src="'.$kama_thumb.'" title="Сертификат на '. $title .'" alt="Скачать сертификат на '.$title.'" '.$actual_style.'/>';
-		}
-		if (!$permalink) {
-			$out .= '<div class="shadow_img"></div>';
-		}
-		
-		if ($permalink) $out.='</a>'; 
-		if ($down_link) {
-			$out .= '<div class="download_link">';
-			$out .= '<a href="#" title="Скачать сертификат на '.$title.'" target="_blank" rel="nofollow" onclick="yaCounter32820367.reachGoal(\'dowload-click\'); return true;">Скачать сертификат</a>';
-			$out .= '</div>';
-			$print_link = mb_substr(getCertThumb($post->ID) ,5);
-			$out .= '<div class="print_button" onclick="javascript:CallPrint(\''.$print_link.'\')"><img src="/imgs/zoomin.png" alt="Увеличение и печать сертификата" title="Увеличение и печать сертификата"/></div>';
-		}
-		$out .= '</div>';
-	}
-
-	if ($link2!="") {
-		$out .= '<div class="right_img">';
-
-		if ($permalink) $out.='<a href="'.get_permalink($post).'" title="'.$title.' подробное описание">';
-
-		if (!isset($w)) $out .= '<img src="'. site_url() .'/thumbs/'. getThmb2($post).'" title="Приложение к сертификату на '. $title .'" alt="Скачать приложение к сертификату на '.$title.'" />'; else {
-			$args = 'w='.$w.'&h='.$h.'&crop=false';
-			$kama_thumb = kama_thumb_src($args, site_url() .'/thumbs/'. getThmb2($post));
-			$out .= '<img src="'.$kama_thumb.'" title="Приложение к сертификату на '. $title .'" alt="Скачать приложение к сертификату на '.$title.'" '.$actual_style.' />';
-		}
-		if (!$permalink) {
-			$out .= '<div class="shadow_img"></div>';
-		}
-
-		if ($permalink) $out.='</a>';
-		if ($down_link) {
-			$out .= '<div class="download_link">';
-			$out .='<a href="#" title="Скачать приложение к сертификату на '.$title.'" target="_blank" onclick="ym(32820367,\'reachGoal\',\'appendix-click\'); return true;" rel="nofollow">Скачать приложение</a>';
-			$out .= '</div>';
-			$print_link2 = mb_substr(getCertThumb2($post->ID) ,5);
-			$out .= '<div class="print_button" onclick="javascript:CallPrint(\''.$print_link2.'\')"><img src="/imgs/zoomin.png" alt="Увеличение и печать приложение к сертификату" title="Увеличение и печать приложение к сертификату"/></div>';
-		}
-		$out .= '</div>';
-	}
-
-	return ($out);
-}
-?>
-<?php
-function thumbnailSidebar($w = 56, $h = 80, $postId = null): string {
+/**
+ * Функция получения ссылки на кешированное изображение с нужными размерами
+ *
+ * @param int $w - новая ширина изображения
+ * @param int $h - новая высота изображения
+ * @param $postId - ID записи, из метаполя которой нужно извлечь имя файла изображения
+ * @param bool $thumbnail2 - false - выбор 1-го изображения, true - выбор 2-го изображения
+ * @return string - URL-адрес кешированного изображения с нужными размерами
+ */
+function getThumbnail(int $w, int $h, $postId = null, bool $thumbnail2 = false): string {
     global $post;
-
     if ($postId === null || $postId === '') $postId = $post->ID;
 
-    $title = get_the_title($postId);
-    $args = 'w='.$w.'&h='.$h.'&crop=false';
+    $args = 'w=' . $w . '&h=' . $h . '&crop=false';
 
-    $kamaThumb = kama_thumb_src($args, site_url() . '/thumbs/'. getThmb($postId));
+    $thumbnailLink = $thumbnail2
+        ? getCertDownloadLink2($postId)
+        : getCertDownloadLink($postId);
 
-    return '<img
-                class="sidebar-certificates__image" 
-                src="'. $kamaThumb .'" 
-                title="Сертификат на '. $title .'"
-                alt="Скачать сертификат на '. $title .'"
-            >';
-}
-?>
-<?php function download_button (){
-	global $post;
-	$link = getCertDownloadLink($post->ID);
-	$link2 = getCertDownloadLink2($post->ID);
-	$title = get_the_title($post->ID);
+    if ($thumbnailLink === '') return '';
 
-    $validity = getCertValidity($post->ID);
-    $valid = isActualDates($validity, true);
-
-    if (!$valid) {
-        $btn_class_left='download_link_left'/* btn_green'*/;
-        $btn_class_right='download_link_right'/* btn_green'*/;
-        $btn_class_center='download_link'/* btn_green'*/;
-        $btn_class_left_text='Скачать сертификат на '.$title;
-        $btn_class_right_text='Скачать приложение к сертификату на '.$title;
-        $btn_class_center_text='Скачать сертификат на '.$title;
-        $btn_class_left_title='Скачать сертификат';
-        $btn_class_right_title='Скачать приложение';
-        $btn_class_center_title='Скачать сертификат';
-    } else {
-        $btn_class_left='download_link_left';
-        $btn_class_right='download_link_right';
-        $btn_class_center='download_link';
-        $btn_class_left_text='Скачать сертификат на '.$title;
-        $btn_class_right_text='Скачать приложение к сертификату на '.$title;
-        $btn_class_left_title='Скачать сертификат'; 
-        $btn_class_right_title='Скачать приложение'; 
-    }
-
-	$out = '';
-	
-	if ($link!="") {
-		if ($link2!="") $out .= '<div class="'.$btn_class_left.'" id="'.$post->ID.'" title="'.$btn_class_left_text.'" onclick="yaCounter32820367.reachGoal(\'dowload-click\'); return true;">'; else $out .= '<div class="'.$btn_class_center.'"  id="'.$post->ID.'" title="'.$btn_class_center_text.'" onclick="yaCounter32820367.reachGoal(\'dowload-click\'); return true;">';
-		$out .= $btn_class_left_title;
-		$out .= '</div>';
-	}
-
-	if ($link2!="") {
-		$out .= '<div class="'.$btn_class_right.'"  id="'.$post->ID.'" title="'.$btn_class_right_text.'" onclick="ym(32820367,\'reachGoal\',\'appendix-click\'); return true;">';
-		$out .= $btn_class_right_title;
-		$out .= '</div>';
-	}
-	
-	$out .= '<div style="clear: both; border-bottom: solid #ddd 1px;"></div>';
-	return ($out);
+    return kama_thumb_src($args, site_url() . '/download/' . $thumbnailLink);
 }
 ?>
 <?php function download_count ($link_number, $id, $direct) {
@@ -1064,6 +939,12 @@ function update_norm_count ($norm_id) {
 }
 ?>
 <?php
+/**
+ * Функция возвращает случайную строку из массива вариантов
+ *
+ * @param $variants - массив вариантов строк
+ * @return string - случайно выбранная строка
+ */
 function getRandomString($variants = []): string {
     if (!(is_array($variants) && count($variants) > 0)) return '';
     return $variants[rand(0, count($variants) - 1)];
@@ -2112,120 +1993,107 @@ function norm_highlight($complies_with) {
 }
 ?>
 <?php
-function norm_highlight_block($complies_with) {
-	global $wpdb;
+/**
+ * Функция выводит HTML-разметку блока ссылок на найденные в исходной строке нормы
+ *
+ * @param string $compliesWith - исходная строка, которая может содержать нормы
+ * @return string - HTMД-разметка блока найденных норм
+ */
+function getNormLinks(string $compliesWith = '') {
+    if ($compliesWith === '') return '';
 
-	mb_internal_encoding("UTF-8");
+	global $wpdb;
 
 	//Получим все доступные нормативы из таблицы БД
 	$norms = $wpdb->get_results("SELECT DISTINCT ID, name, name_full, file FROM wp_norms");
-	$norms_num = 0;
-	$counter = 0;
 
-	$link_block = ''; //Код с блоком ссылок на стандарты
+    if (empty($norms)) return '';
+
+	$out = '';
 
 	//Попробуем найти каждый норматив в строке для разбора
 	foreach ($norms as $norm) {
-		$counter++;
-
-		//Длина названия этой нормы
-		$norm_length = mb_strlen($norm->name);
-
 		//Найдем норму в строке для разбора
-		$first_letter = mb_strpos($complies_with, $norm->name);
 
-		if (!($first_letter===false)) {
-			$complies_with = mb_substr($complies_with, 0, $first_letter).'<span class="norm" title="'.$norm->name_full.'">'.mb_substr($complies_with, $first_letter, $norm_length).'</span>'.mb_substr($complies_with, $first_letter+$norm_length);
-			$norms_num++;
-
-			if ($norms_num==1) $link_block = '<div id="norm_block"><div class="norm"><a href="'. site_url() .'/gosty/?param='.urlencode($norm->name).'" title="Скачать '.$norm->name.' - '.$norm->name_full.'"><strong>Скачать '.$norm->name.'</strong> - '.$norm->name_full.'</a></div>';
-			else $link_block .= '<div class="norm"><a href="'. site_url() .'/gosty/?param='.urlencode($norm->name).'" title="Скачать '.$norm->name.' - '.$norm->name_full.'"><strong>Скачать '.$norm->name.'</strong> - '.$norm->name_full.'</a></div>';
+		if (mb_strpos($compliesWith, $norm->name) !== false) {
+            $out .= '<a class="specs__complies-link"
+                        href="'. getNormLink($norm->name).'" 
+                        title="Скачать '. $norm->name .' - '. $norm->name_full .'">
+                        <span class="number">'. $norm->name .'</span> - '. $norm->name_full .'</a>';
 		}
-
-		if ($counter == count($norms) && ($norms_num>0)) $link_block .= '</div>';
-	}
-
-	if ($norms_num>0) {
-		$complies_with .= '<div class="norm_download" onclick="document.getElementById(\'norm_block\').style.display=\'block\';">Скачать нормативы</div>';
-	}
-	
-	$out = $complies_with.$link_block;
+    }
 	return $out;
-}
-?>
-<?php 
-function mb_preg_match_all($pattern, $subject, &$matches, $flags = PREG_PATTERN_ORDER, $offset = 0, $encoding = null) {
-    if($encoding == null) $encoding = mb_internal_encoding();
-    
-    $offset = strlen(mb_substr($subject, 0, $offset, $encoding));
-    $result = preg_match_all($pattern, $subject, $matches, $flags, $offset);
-    
-    if ($result && ($flags & PREG_OFFSET_CAPTURE))
-        foreach($matches as &$match)
-            foreach($match as &$match)
-                $match[1] = mb_strlen(substr($subject, 0, $match[1]), $encoding);
-    
-   	return $result;
 }
 ?>
 <?php
 /**
  * Функция определяет, является ли сертификат действующим
- * В дальнейшем рекомендуется избавиться от параметра $nohtml
+ *
+ * @param string $source - это строка, содержащая дату начала и окончания действия в виде: "с dd.mm.yyyy по dd.mm.yyyy (включительно)"
+ * @return bool - результат: true - действующий сертификат, false - просроченный сертификат
  */
-function isActualDates($source = '', $nohtml = false) {
+function isActualDates(string $source = ''): bool {
 	date_default_timezone_set('Europe/Samara');
 	
-	if (empty($source)) {
-		return $nohtml ?  false : '<span class="validity-false" title="Срок действия сертификата соответствия истек">Срок истек</span>';
-	};
+	if (empty($source)) return false;
 
     // Ищем две даты с помощью регулярного выражения
     preg_match_all('/\d{2}\.\d{2}\.\d{4}/', $source, $matches);
 
-    if (empty($matches[0])) {
-        return $nohtml ? true : '<span class="validity-true" title="Действующий сертификат соответствия">Действующий</span>';
-    }
+    if (empty($matches[0])) return true;
 
     $startDate = strtotime($matches[0][0]);
     $endDate = isset($matches[0][1]) ? strtotime($matches[0][1]) : null;
 
-    if ($endDate === null) {
-        return $nohtml ? true : '<span class="validity-true" title="Действующий сертификат соответствия">Действующий</span>';
-    }
+    if ($endDate === null) return true;
 
 	$currentDate = time();
 
-    if ($currentDate >= $startDate && $currentDate <= $endDate) {
-        return $nohtml ? true : '<span class="validity-true" title="Действующий сертификат соответствия">Действующий</span>';
-    }
+    if ($currentDate >= $startDate && $currentDate <= $endDate) return true;
 
-    return $nohtml ? false : '<span class="validity-false" title="Срок действия сертификата соответствия истек">Срок истек</span>';
+    return false;
 }
 ?>
 <?php
-function sortActual($post_ids) {
+/**
+ * Функция сортировки записи по актуальности - сначала актуальные, потом неактуальные
+ *
+ * @param $postIds - массив несортированных ID записей
+ * @return array - массив ID записей, сортированных по актуальности
+ */
+function sortActual($postIds): array {
+    if (empty($postIds)) return [];
 
-	$actual = array();
-	$others = array();
-	
-	if (!empty($post_ids))
+	$actual = [];
+	$others = [];
 
-	foreach ($post_ids as $post_id) {
-		$is_actual = isActualDates(getCertValidity(($post_id)), true);
-		if ($is_actual) array_push($actual, $post_id); else array_push($others, $post_id);
-	} else return null;
+	foreach ($postIds as $postId) {
+		$isActual = isActualDates(getCertValidity($postId));
+		if ($isActual) {
+            $actual[] = $postId;
+        } else {
+            $others[] = $postId;
+        }
+    }
 
 	return array_merge($actual, $others);
 }
 ?>
 <?php
+/**
+ * Функция сортировки записи по актуальности - сначала актуальные, потом неактуальные
+ *
+ * @param $posts - массив несортированных записей
+ * @return array - массив записей, сортированных по актуальности
+ */
 function sortActualByPosts($posts): array {
+    if (empty($posts)) return [];
+
 	$actual = [];
 	$others = [];
 
 	foreach ($posts as $post) {
-		$isActual = isActualDates(getCertValidity(($post->ID)), true);
+		$isActual = isActualDates(getCertValidity($post->ID));
 		if ($isActual) {
             $actual[] = $post;
         } else {
@@ -2238,133 +2106,143 @@ function sortActualByPosts($posts): array {
 ?>
 <?php
 /**
-    Ранее эта функция называлась getCountry
-*/
-function getCountryCode($source = null): string {
-	if (!$source) return '';
+ * Функция выделяет из номера сертификата или декларации двузначный код страны
+ *
+ * @param string $source - исходная строка, содержащая код страны
+ * @return string - строка с двузначным кодом страны
+ */
+
+function getCountryCode(string $source = ''): string {
+	if ($source === '') return '';
 
 	$source = mb_strtolower($source);
 
 	/*Для декларации соответствия*/
 
-	if (!(mb_strpos($source, '-ru')===false)) return 'ru';
-	if (!(mb_strpos($source, '-by')===false)) return 'by';
-	if (!(mb_strpos($source, '-ua')===false)) return 'ua';
-	if (!(mb_strpos($source, '-us')===false)) return 'us';
-	if (!(mb_strpos($source, '-de')===false)) return 'de';
-	if (!(mb_strpos($source, '-kr')===false)) return 'kr';
-	if (!(mb_strpos($source, '-es')===false)) return 'es';
-	if (!(mb_strpos($source, '-cn')===false)) return 'cn';
-	if (!(mb_strpos($source, '-kz')===false)) return 'kz';
-	if (!(mb_strpos($source, '-tr')===false)) return 'tr';
-	if (!(mb_strpos($source, '-hk')===false)) return 'hk';
-	if (!(mb_strpos($source, '-fi')===false)) return 'fi';
-	if (!(mb_strpos($source, '-lv')===false)) return 'lv';
-	if (!(mb_strpos($source, '-jp')===false)) return 'jp';
-	if (!(mb_strpos($source, '-fr')===false)) return 'fr';
-	if (!(mb_strpos($source, '-tw')===false)) return 'tw';
-	if (!(mb_strpos($source, '-si')===false)) return 'si';
-	if (!(mb_strpos($source, '-sk')===false)) return 'sk';
-	if (!(mb_strpos($source, '-pl')===false)) return 'pl';
-	if (!(mb_strpos($source, '-it')===false)) return 'it';
-	if (!(mb_strpos($source, '-cz')===false)) return 'cz';
-	if (!(mb_strpos($source, '-at')===false)) return 'at';
-	if (!(mb_strpos($source, '-ch')===false)) return 'ch';
-	if (!(mb_strpos($source, '-gb')===false)) return 'gb';
-	if (!(mb_strpos($source, '-nl')===false)) return 'nl';
-	if (!(mb_strpos($source, '-se')===false)) return 'se';
-	if (!(mb_strpos($source, '-li')===false)) return 'li';
-	if (!(mb_strpos($source, '-rs')===false)) return 'rs';
-	if (!(mb_strpos($source, '-sg')===false)) return 'sg';
-	if (!(mb_strpos($source, '-th')===false)) return 'th';
-	if (!(mb_strpos($source, '-bg')===false)) return 'bg';
-	if (!(mb_strpos($source, '-gr')===false)) return 'gr';
-	if (!(mb_strpos($source, '-vn')===false)) return 'vn';
-	if (!(mb_strpos($source, '-pt')===false)) return 'pt';
-	if (!(mb_strpos($source, '-ee')===false)) return 'ee';
-	if (!(mb_strpos($source, '-be')===false)) return 'be';
-	if (!(mb_strpos($source, '-dk')===false)) return 'dk';
-	if (!(mb_strpos($source, '-ca')===false)) return 'ca';
-	if (!(mb_strpos($source, '-mk')===false)) return 'mk';
-	if (!(mb_strpos($source, '-my')===false)) return 'my';
-	if (!(mb_strpos($source, '-bb')===false)) return 'bb';
-	if (!(mb_strpos($source, '-in')===false)) return 'in';
-	if (!(mb_strpos($source, '-ma')===false)) return 'ma';
-	if (!(mb_strpos($source, '-cy')===false)) return 'cy';
-	if (!(mb_strpos($source, '-id')===false)) return 'id';
-	if (!(mb_strpos($source, '-mx')===false)) return 'mx';
-    if (!(mb_strpos($source, '-bm')===false)) return 'bm';
-    if (!(mb_strpos($source, '-ae')===false)) return 'ae';
-    if (!(mb_strpos($source, '-md')===false)) return 'md';
-    if (!(mb_strpos($source, '-ro')===false)) return 'ro';
-    if (!(mb_strpos($source, '-hu')===false)) return 'hu';
-    if (!(mb_strpos($source, '-lu')===false)) return 'lu';
-    if (!(mb_strpos($source, '-no')===false)) return 'no';
-    if (!(mb_strpos($source, '-vg')===false)) return 'vg';
+	if (mb_strpos($source, '-ru') !== false) return 'ru';
+	if (mb_strpos($source, '-by') !== false) return 'by';
+	if (mb_strpos($source, '-ua') !== false) return 'ua';
+	if (mb_strpos($source, '-us') !== false) return 'us';
+	if (mb_strpos($source, '-de') !== false) return 'de';
+	if (mb_strpos($source, '-kr') !== false) return 'kr';
+	if (mb_strpos($source, '-es') !== false) return 'es';
+	if (mb_strpos($source, '-cn') !== false) return 'cn';
+	if (mb_strpos($source, '-kz') !== false) return 'kz';
+	if (mb_strpos($source, '-tr') !== false) return 'tr';
+	if (mb_strpos($source, '-hk') !== false) return 'hk';
+	if (mb_strpos($source, '-fi') !== false) return 'fi';
+	if (mb_strpos($source, '-lv') !== false) return 'lv';
+	if (mb_strpos($source, '-jp') !== false) return 'jp';
+	if (mb_strpos($source, '-fr') !== false) return 'fr';
+	if (mb_strpos($source, '-tw') !== false) return 'tw';
+	if (mb_strpos($source, '-si') !== false) return 'si';
+	if (mb_strpos($source, '-sk') !== false) return 'sk';
+	if (mb_strpos($source, '-pl') !== false) return 'pl';
+	if (mb_strpos($source, '-it') !== false) return 'it';
+	if (mb_strpos($source, '-cz') !== false) return 'cz';
+	if (mb_strpos($source, '-at') !== false) return 'at';
+	if (mb_strpos($source, '-ch') !== false) return 'ch';
+	if (mb_strpos($source, '-gb') !== false) return 'gb';
+	if (mb_strpos($source, '-nl') !== false) return 'nl';
+	if (mb_strpos($source, '-se') !== false) return 'se';
+	if (mb_strpos($source, '-li') !== false) return 'li';
+	if (mb_strpos($source, '-rs') !== false) return 'rs';
+	if (mb_strpos($source, '-sg') !== false) return 'sg';
+	if (mb_strpos($source, '-th') !== false) return 'th';
+	if (mb_strpos($source, '-bg') !== false) return 'bg';
+	if (mb_strpos($source, '-gr') !== false) return 'gr';
+	if (mb_strpos($source, '-vn') !== false) return 'vn';
+	if (mb_strpos($source, '-pt') !== false) return 'pt';
+	if (mb_strpos($source, '-ee') !== false) return 'ee';
+	if (mb_strpos($source, '-be') !== false) return 'be';
+	if (mb_strpos($source, '-dk') !== false) return 'dk';
+	if (mb_strpos($source, '-ca') !== false) return 'ca';
+	if (mb_strpos($source, '-mk') !== false) return 'mk';
+	if (mb_strpos($source, '-my') !== false) return 'my';
+	if (mb_strpos($source, '-bb') !== false) return 'bb';
+	if (mb_strpos($source, '-in') !== false) return 'in';
+	if (mb_strpos($source, '-ma') !== false) return 'ma';
+	if (mb_strpos($source, '-cy') !== false) return 'cy';
+	if (mb_strpos($source, '-id') !== false) return 'id';
+	if (mb_strpos($source, '-mx') !== false) return 'mx';
+    if (mb_strpos($source, '-bm') !== false) return 'bm';
+    if (mb_strpos($source, '-ae') !== false) return 'ae';
+    if (mb_strpos($source, '-md') !== false) return 'md';
+    if (mb_strpos($source, '-ro') !== false) return 'ro';
+    if (mb_strpos($source, '-hu') !== false) return 'hu';
+    if (mb_strpos($source, '-lu') !== false) return 'lu';
+    if (mb_strpos($source, '-no') !== false) return 'no';
+    if (mb_strpos($source, '-vg') !== false) return 'vg';
 
 
 	/*Для сертификатов соответствия*/
 
-	if (!(mb_strpos($source, 'ru')===false)) return 'ru';
-	if (!(mb_strpos($source, 'by')===false)) return 'by';
-	if (!(mb_strpos($source, 'ua')===false)) return 'ua';
-	if (!(mb_strpos($source, 'us')===false)) return 'us';
-	if (!(mb_strpos($source, 'de')===false)) return 'de';
-	if (!(mb_strpos($source, 'kr')===false)) return 'kr';
-	if (!(mb_strpos($source, 'es')===false)) return 'es';
-	if (!(mb_strpos($source, 'cn')===false)) return 'cn';
-	if (!(mb_strpos($source, 'kz')===false)) return 'kz';
-	if (!(mb_strpos($source, 'tr')===false)) return 'tr';
-	if (!(mb_strpos($source, 'hk')===false)) return 'hk';
-	if (!(mb_strpos($source, 'fi')===false)) return 'fi';
-	if (!(mb_strpos($source, 'lv')===false)) return 'lv';
-	if (!(mb_strpos($source, 'jp')===false)) return 'jp';
-	if (!(mb_strpos($source, 'fr')===false)) return 'fr';
-	if (!(mb_strpos($source, 'tw')===false)) return 'tw';
-	if (!(mb_strpos($source, 'si')===false)) return 'si';
-	if (!(mb_strpos($source, 'sk')===false)) return 'sk';
-	if (!(mb_strpos($source, 'pl')===false)) return 'pl';
-	if (!(mb_strpos($source, 'it')===false)) return 'it';
-	if (!(mb_strpos($source, 'cz')===false)) return 'cz';
-	if (!(mb_strpos($source, 'at')===false)) return 'at';
-	if (!(mb_strpos($source, 'ch')===false)) return 'ch';
-	if (!(mb_strpos($source, 'gb')===false)) return 'gb';
-	if (!(mb_strpos($source, 'nl')===false)) return 'nl';
-	if (!(mb_strpos($source, 'se')===false)) return 'se';
-	if (!(mb_strpos($source, 'li')===false)) return 'li';
-	if (!(mb_strpos($source, 'rs')===false)) return 'rs';
-	if (!(mb_strpos($source, 'sg')===false)) return 'sg';
-	if (!(mb_strpos($source, 'th')===false)) return 'th';
-	if (!(mb_strpos($source, 'bg')===false)) return 'bg';
-	if (!(mb_strpos($source, 'gr')===false)) return 'gr';
-	if (!(mb_strpos($source, 'vn')===false)) return 'vn';
-	if (!(mb_strpos($source, 'pt')===false)) return 'pt';
-	if (!(mb_strpos($source, 'ee')===false)) return 'ee';
-	if (!(mb_strpos($source, 'be')===false)) return 'be';
-	if (!(mb_strpos($source, 'dk')===false)) return 'dk';
-	if (!(mb_strpos($source, 'ca')===false)) return 'ca';
-	if (!(mb_strpos($source, 'mk')===false)) return 'mk';
-	if (!(mb_strpos($source, 'my')===false)) return 'my';
-	if (!(mb_strpos($source, 'bb')===false)) return 'bb';
-	if (!(mb_strpos($source, 'in')===false)) return 'in';
-	if (!(mb_strpos($source, 'ma')===false)) return 'ma';
-	if (!(mb_strpos($source, 'cy')===false)) return 'cy';
-	if (!(mb_strpos($source, 'id')===false)) return 'id';
-	if (!(mb_strpos($source, 'mx')===false)) return 'mx';
-    if (!(mb_strpos($source, 'bm')===false)) return 'bm';
-    if (!(mb_strpos($source, 'ae')===false)) return 'ae';
-    if (!(mb_strpos($source, 'md')===false)) return 'md';
-    if (!(mb_strpos($source, 'ro')===false)) return 'ro';
-    if (!(mb_strpos($source, 'hu')===false)) return 'hu';
-    if (!(mb_strpos($source, 'lu')===false)) return 'lu';
-    if (!(mb_strpos($source, 'no')===false)) return 'no';
-    if (!(mb_strpos($source, 'vg')===false)) return 'vg';
+	if (mb_strpos($source, 'ru') !== false) return 'ru';
+	if (mb_strpos($source, 'by') !== false) return 'by';
+	if (mb_strpos($source, 'ua') !== false) return 'ua';
+	if (mb_strpos($source, 'us') !== false) return 'us';
+	if (mb_strpos($source, 'de') !== false) return 'de';
+	if (mb_strpos($source, 'kr') !== false) return 'kr';
+	if (mb_strpos($source, 'es') !== false) return 'es';
+	if (mb_strpos($source, 'cn') !== false) return 'cn';
+	if (mb_strpos($source, 'kz') !== false) return 'kz';
+	if (mb_strpos($source, 'tr') !== false) return 'tr';
+	if (mb_strpos($source, 'hk') !== false) return 'hk';
+	if (mb_strpos($source, 'fi') !== false) return 'fi';
+	if (mb_strpos($source, 'lv') !== false) return 'lv';
+	if (mb_strpos($source, 'jp') !== false) return 'jp';
+	if (mb_strpos($source, 'fr') !== false) return 'fr';
+	if (mb_strpos($source, 'tw') !== false) return 'tw';
+	if (mb_strpos($source, 'si') !== false) return 'si';
+	if (mb_strpos($source, 'sk') !== false) return 'sk';
+	if (mb_strpos($source, 'pl') !== false) return 'pl';
+	if (mb_strpos($source, 'it') !== false) return 'it';
+	if (mb_strpos($source, 'cz') !== false) return 'cz';
+	if (mb_strpos($source, 'at') !== false) return 'at';
+	if (mb_strpos($source, 'ch') !== false) return 'ch';
+	if (mb_strpos($source, 'gb') !== false) return 'gb';
+	if (mb_strpos($source, 'nl') !== false) return 'nl';
+	if (mb_strpos($source, 'se') !== false) return 'se';
+	if (mb_strpos($source, 'li') !== false) return 'li';
+	if (mb_strpos($source, 'rs') !== false) return 'rs';
+	if (mb_strpos($source, 'sg') !== false) return 'sg';
+	if (mb_strpos($source, 'th') !== false) return 'th';
+	if (mb_strpos($source, 'bg') !== false) return 'bg';
+	if (mb_strpos($source, 'gr') !== false) return 'gr';
+	if (mb_strpos($source, 'vn') !== false) return 'vn';
+	if (mb_strpos($source, 'pt') !== false) return 'pt';
+	if (mb_strpos($source, 'ee') !== false) return 'ee';
+	if (mb_strpos($source, 'be') !== false) return 'be';
+	if (mb_strpos($source, 'dk') !== false) return 'dk';
+	if (mb_strpos($source, 'ca') !== false) return 'ca';
+	if (mb_strpos($source, 'mk') !== false) return 'mk';
+	if (mb_strpos($source, 'my') !== false) return 'my';
+	if (mb_strpos($source, 'bb') !== false) return 'bb';
+	if (mb_strpos($source, 'in') !== false) return 'in';
+	if (mb_strpos($source, 'ma') !== false) return 'ma';
+	if (mb_strpos($source, 'cy') !== false) return 'cy';
+	if (mb_strpos($source, 'id') !== false) return 'id';
+	if (mb_strpos($source, 'mx') !== false) return 'mx';
+    if (mb_strpos($source, 'bm') !== false) return 'bm';
+    if (mb_strpos($source, 'ae') !== false) return 'ae';
+    if (mb_strpos($source, 'md') !== false) return 'md';
+    if (mb_strpos($source, 'ro') !== false) return 'ro';
+    if (mb_strpos($source, 'hu') !== false) return 'hu';
+    if (mb_strpos($source, 'lu') !== false) return 'lu';
+    if (mb_strpos($source, 'no') !== false) return 'no';
+    if (mb_strpos($source, 'vg') !== false) return 'vg';
 
 	return '';
 }
 ?>
 <?php
-function getCountryFlag($source = '') {
+/**
+ * Функция возвращает HTML-разметку с флагом изготовителя по строке
+ *
+ * @param string $source - исходная строка, внутри которой есть двузначный код страны
+ * @return string - результат HTML-разметка с изображением флага страны
+ */
+function getCountryFlag(string $source = ''): string {
 	if (empty($source)) return '';
 
 	$source = mb_strtolower($source);
@@ -2432,36 +2310,30 @@ function getCountryFlag($source = '') {
 }
 ?>
 <?php
+/**
+ * Функция возвращает HTML-разметка дерева рубрик с предками и shema-разметкой
+ *
+ * @param $category - корневая рубрика
+ * @param $postId - или ID записи, для которой будет найдена корневая рубрика
+ * @return string - HTML-разметка дерева рубрик
+ */
 function getCategoryTree($category = null, $postId = null): string {
 	global $post;
+
     if (!$postId) {
         $postId = $post->ID;
     }
 
-	$out = array();
+	$out = [];
+    $catId = $category ? $category->cat_ID : get_the_category($postId)[0]->cat_ID ;
 
-	if (!$category) {
-		$cat = get_the_category($postId);
-		$cat_id = $cat[0]->cat_ID;
-	} else {
-		$cat = $category;
-		$cat_id = $cat->cat_ID;
-	}
-	
-	$cat_link = get_category_link($cat_id);
-	$cat_name = get_cat_name($cat_id);
+    $out[] = getCategoryLinkHtml($catId);
 
-	array_push($out, '<a itemprop="item" href="'.$cat_link.'" title="Сертификаты на продукцию '.$cat_name.'">'.$cat_name.'<meta itemprop="name" content="'.cutStringToWords($cat_name, 30).'">');
+	$ancestors = get_ancestors($catId, 'category');
 
-	$ancestors = get_ancestors($cat_id, 'category');
-
-	foreach ($ancestors as $cat => $id) {
-		if (($id != 37) && ($id != 316) && ($id != 38)) {
-
-			$cat_link = get_category_link($id);
-			$cat_name = get_cat_name($id);
-
-			array_push($out, '<a itemprop="item" href="'.$cat_link.'" title="Сертификаты на продукцию '.$cat_name.'">'.$cat_name.'<meta itemprop="name" content="'.cutStringToWords($cat_name, 30).'">');
+	foreach ($ancestors as $ancestorId) {
+		if (!in_array($ancestorId, [37, 361, 38])) {
+            $out[] = getCategoryLinkHtml($ancestorId);
 		}
 	}
 
@@ -2470,8 +2342,9 @@ function getCategoryTree($category = null, $postId = null): string {
 	$result = '<div class="certificates-item__category" itemscope itemtype="https://schema.org/BreadcrumbList">';
 	$num = 1;
 	foreach ($out as $outret) {
-		$result .='<div class="ancestor" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">'.$outret.'<meta itemprop="position" content="'.$num.'"></a></div>';
-		$num++;
+		$result .= '<div class="ancestor" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">'
+                . $outret
+                . '<meta itemprop="position" content="'.$num++.'"></a></div>';
 	}
 
     $result .= "</div>";
@@ -2480,80 +2353,53 @@ function getCategoryTree($category = null, $postId = null): string {
 }
 ?>
 <?php
-function getCategoryType($postId = null): string {
-    global $post;
+/**
+ * Функция получения HTML-разметки для дерева рубрик
+ *
+ * @param $catId - ID рубрики для ветки дерева
+ * @return string - готовая HTML-разметка для рубрики
+ */
+function getCategoryLinkHtml($catId): string {
+    $catLink = get_category_link($catId);
+    $catName = get_cat_name($catId);
+    [$catNumber, $catName] = splitStringByDash($catName);
 
-    if (!$postId) {
-        $postId = $post->ID;
-    }
-
-	$cat = get_the_category($postId);
-	$cat_id = $cat[0]->cat_ID;
-
-	if (cat_is_ancestor_of(37, $cat_id) || is_category(37)) {
-		return 'ОКП';
-	}
-
-	if (cat_is_ancestor_of(38, $cat_id) || is_category(38)) {
-		return 'ТН ВЭД ТС';
-	}
-
-	if (cat_is_ancestor_of(316, $cat_id) || is_category(316)) {
-		return 'ОКУН';
-	}
-
-	return 'ОКП/ТН ВЭД ТС/ОКУН';
+    return '<a itemprop="item" href="' . $catLink . '" title="Сертификаты на продукцию' . $catName . '">
+            <span class="ancestor__number">'. $catNumber .'</span> - <span class="ancestor__name">'. $catName .'</span>
+            <meta itemprop="name" content="' . cutStringToWords($catName, 30) . '">';
 }
+
 ?>
 <?php
 /**
- * Теперь в функцию getThmb должен передаваться post->ID, а не post, как раньше
+ * Функция получает строковое наименование корневой рубрики записи
+ *
+ * @param $postId - ID записи
+ * @return string - строка с наименованием рубрики
  */
-function getThmb($postId): string {
+function getCategoryType($postId = null): string {
     global $post;
-    if (!$postId) $postId = $post->ID;
 
-	$thmb = getCertThumb($postId);
+    $postId = $postId ?? $post->ID;
 
-	if ($thmb !== '') return $thmb;
+	$cat = get_the_category($postId);
+    if (empty($cat)) return 'ОКП/ТН ВЭД ТС/ОКУН';
 
-	$imgFull = getCertDownloadLink($postId);
+	$catId = $cat[0]->cat_ID;
 
-	if ($imgFull === '') return '';
+    $categoryMap = [
+        37 => 'ОКП',
+        38 => 'ТН ВЭД ТС',
+        316 => 'ОКУН',
+    ];
 
-	$image = new SimpleImage();
+    foreach ($categoryMap as $ancestorId => $type) {
+        if (cat_is_ancestor_of($ancestorId, $catId) || is_category($ancestorId)) {
+            return $type;
+        }
+    }
 
-   	$image->load('download/'. $imgFull);
-   	$image->resize(367, 525);
-   	$image->save('thumbs/thmb_' .$imgFull);
-
-   	update_post_meta($postId, "img_thmb", 'thmb_'.$imgFull);
-
-   	return 'thmb_'.$imgFull;
-}
-/**
- * Теперь в функцию getThmb должен передаваться post->ID, а не post, как раньше
- */
-function getThmb2($postId): string {
-    global $post;
-    if (!$postId) $postId = $post->ID;
-
-    $thmb2 = getCertThumb2($postId);
-
-    if ($thmb2 !== '') return $thmb2;
-
-	$imgFull2 = getCertDownloadLink2($postId);
-	if ($imgFull2 === '') return '';
-
-	$image = new SimpleImage();
-
-   	$image->load('download/'.$imgFull2);
-   	$image->resize(367, 525);
-   	$image->save('thumbs/thmb_'.$imgFull2);
-
-   	update_post_meta($postId, "img_thmb2", 'thmb_'.$imgFull2);
-
-   	return 'thmb_'.$imgFull2;
+	return 'ОКП/ТН ВЭД ТС/ОКУН';
 }
 ?>
 <?php
@@ -2576,7 +2422,7 @@ if (!function_exists('mb_ucfirst') && extension_loaded('mbstring'))
 if (!function_exists('mb_lcfirst') && extension_loaded('mbstring'))
 {
     /**
-     * mb_lcfirst - преобразует первый символ в нижний регистр
+     * Функция преобразует первый символ в нижний регистр
      * @param string $str - строка
      * @param string $encoding - кодировка, по-умолчанию UTF-8
      * @return string
@@ -2871,7 +2717,7 @@ function getAllManufacturers($num = null): array {
 	/*Очистим название организации от лишней шелухи*/
 
 	foreach($rec as $r) {
-		$manufacturerClean = getManufacturerClean($r);
+		$manufacturerClean = getCleanName($r);
 		if ($manufacturerClean !== '') $manufacturers[] = $manufacturerClean;
 	}
 
@@ -2903,7 +2749,7 @@ function getAllNotEmphCompanies() {
 	/*Если не удается выделить название организации - он нам и нужна*/
 
 	foreach($rec as $r){ 
-		$manufacturer_clean = getManufacturer($r, false);
+		$manufacturer_clean = getCompletedName($r, false);
 		if ($manufacturer_clean=='') array_push($companies, $r);
 	}
 
@@ -2932,8 +2778,14 @@ function getAllNorms($num = null) {
 }
 ?>
 <?php
-    function getNormLink($norm = null): string {
-    return $norm ? site_url() . '/gosty/?param=' . urlencode($norm) : '';
+/**
+ * Функция получения строки с адресом для нормативного документа
+ *
+ * @param string $norm - наименование нормативного документа
+ * @return string - строка с url
+ */
+function getNormLink(string $norm = ''): string {
+    return $norm !== '' ? site_url() . '/gosty/?norm=' . urlencode($norm) : '';
 }
 ?>
 <?php
@@ -2987,69 +2839,72 @@ function getAllCountries($num = 10) {
 ?>
 <?php
 /**
- * Возвращает изготовителя без самых внешних кавычек,
+ * Функция извлечения названия из длинной строки внутри самых внешних кавычек,
  * но внутри могут оставаться кавычки, в т.ч. и непарные
+ * Используется для внутренних нужд, например, поиска
+ *
+ * @param string $manufacturer - наименование изготовителя
+ * @return string - строка с результатом функции
  */
-function getManufacturerClean($manufacturer = ""): string {
-    if (empty($manufacturer)) return '';
+function getCleanName(string $string = ''): string {
+    if ($string === '') return '';
 
-    return getTextInsideQuotes($manufacturer);
+    return getTextInsideQuotes($string);
 }
 ?>
 <?php
 /**
- * Функция получения названия изготовителя без кавычек.
- * Рекомендуется к удалению и заменой функции, которая не возвращает
- * HTML-разметку
+ * Функция получения названия без кавычек.
+ * Внешние кавычки искусственно дополнены парными.
+ * Используется для целей отображения "красивых" названий
+ *
+ * @param string $string - исходная строка, которую требуется дополнить кавычками
+ * @return string - строка с результатом функции
  */
-function getManufacturer($manufacturer = null, $outp = true) {
-    if (!$manufacturer) return '';
+function getCompletedName(string $string = ''): string {
+    if ($string === '') return '';
 
-    $manufacturerClean = getManufacturerClean($manufacturer);
+    $cleanName = getCleanName($string);
 
-    $symarr = array();
+    $quoteTypes = [
+        '\'' => '\'',
+        '"' => '"',
+        '`' => '`',
+        '«' => '»',
+        '“' => '”',
+    ];
 
-    for ($i = 0; $i < mb_strlen($manufacturerClean); $i++) {
-        $sym = mb_substr($manufacturerClean, $i, 1);
-        if (($sym=='«') || ($sym=='“') || ($sym=='»') || ($sym=='”') || ($sym=='"')) {
-            array_push($symarr, $sym);
+    foreach (array_keys($quoteTypes) as $openingQuote) {
+        $pos = mb_strrpos($cleanName, $openingQuote);
+        if ($pos !== false) {
+            // Если открывающая кавычка найдена, добавляем закрывающую
+            $cleanName .= $quoteTypes[$openingQuote];
+            break;
         }
     }
 
-    if (count($symarr) > 0) {
-        end($symarr);
-        if (current($symarr)=='«') $manufacturerClean = $manufacturerClean . '»';
-        if (current($symarr)=='“') $manufacturerClean = $manufacturerClean . '”';
-        if (current($symarr)=='"') $manufacturerClean = $manufacturerClean . '"';
-    }
-
-    $out = '';
-
-    if ($outp) {
-        $logo_pic = getManufacturerLogo($manufacturerClean);
-        if ($logo_pic) $sizes = newSizes(site_url().'/logos/'.$logo_pic);
-        if ($sizes) $out.='<div class="company_logo" style="background: url('.site_url().'/logos/'.getManufacturerLogo($manufacturerClean).'); background-size: contain; background-repeat: no-repeat; background-position: top; width: '.$sizes[0].'px ; height: '.$sizes[1].'px;"></div>';
-        $out.='<div class="manufacturer_text">';
-        $out.=$manufacturer;
-        $out.='</div>';
-        $out.='<meta itemprop="manufacturer" content="'.$manufacturerClean.'">';
-        $out.='<div style="clear:both"></div>';
-        $out.='<a href="'. site_url() .'/kompanii/?param='.urlencode($manufacturerClean).'"><div class="manufacturer_go">Другая продукция этого изготовителя</div></a>';
-    } else $out = $manufacturerClean;
-
-    return $out;
-}
-?>
-<?php
-function getManufacturerLink($manufacturer = null): string {
-    return $manufacturer ? site_url() . '/kompanii/?manufacturer=' . urlencode($manufacturer) : '';
+    return $cleanName;
 }
 ?>
 <?php
 /**
- * Функция получения имени файла логотипа изготовителя.
+ * Функция получения строки с адресом для изготовителя
+ *
+ * @param string $manufacturer - наименование изготовителя
+ * @return string - строка с url
  */
-function getManufacturerLogo($manufacturer = ''): string {
+function getManufacturerLink(string $manufacturer = ''): string {
+    return $manufacturer !== '' ? site_url() . '/kompanii/?manufacturer=' . urlencode($manufacturer) : '';
+}
+?>
+<?php
+/**
+ * Функция получения имени файла логотипа изготовителя по его наименованию без кавычек
+ *
+ * @param string $manufacturer - наименование изготовителя без кавычек
+ * @return string - имя файла логотипа изготовителя или пустая стркоа в случае ошибки
+ */
+function getManufacturerLogo(string $manufacturer = ''): string {
     if ($manufacturer === '') return '';
 
     global $wpdb;
@@ -3061,10 +2916,13 @@ function getManufacturerLogo($manufacturer = ''): string {
 ?>
 <?php
 /**
- *   Функция возвращает полную строку изготовителя по его наименованию без кавычек
+ * Функция получения полных сведений об изготовителе по его наименованию без кавычек
+ *
+ * @param string $manufacturerClean - наименование изготовителя без кавычек
+ * @return string - строка с результатом или пустая строка в случае ошибки
  */
-function getManufacturerFull($manufacturerClean = null): string {
-    if (!$manufacturerClean) return '';
+function getManufacturerFull(string $manufacturerClean = ''): string {
+    if ($manufacturerClean === '') return '';
 
     global $wpdb;
 
@@ -3074,8 +2932,14 @@ function getManufacturerFull($manufacturerClean = null): string {
 }
 ?>
 <?php
-function getAgencyNum($str = '') {
-    if ($str == '') return false;
+/**
+ * Функция получения регистрационного номера органа по сертификации
+ *
+ * @param string $str - строка с полными сведениями об органе
+ * @return false|string - регистрационный номер или false, если он не найден
+ */
+function getAgencyNum(string $str = '') {
+    if ($str === '') return false;
 
     $patterns = [
         'РОСС RU.' => 19,
@@ -3094,94 +2958,70 @@ function getAgencyNum($str = '') {
 }
 ?>
 <?php
-function getCertAgencyButton($certification_agency) {
-    if (!isset($certification_agency)) return '';
+/**
+ * Функция получения URL-адреса официального сайта органа по сертификации
+ *
+ * @param string $regnum - регистрационный номер органа по сертификации
+ * @return string - строка с url официального сайта
+ */
+function getAgencyUrl(string $regnum = ''): string {
+    if ($regnum === '') return '';
 
     global $wpdb;
 
-    $agencyName = getManufacturer($certification_agency, false);
+    $url = $wpdb->get_var($wpdb->prepare("SELECT link FROM wp_certagency WHERE regnum LIKE %s", $regnum));
 
-    if (!($agencyName==='')) $link='<a href="'. site_url() .'/organy-po-sertifikacii/?param='.urlencode($agencyName).'" title="Сертификаты выданные '.$agencyName.'" ><div class="manufacturer_go">Другие сертификаты выданные органом</div></a>';
-
-    $st = mb_strpos($certification_agency, 'РОСС RU.');
-    //echo '<b>ST: '.$st.'</b><br/>';
-    if ($st!==false) {
-        $pre = mb_substr($certification_agency, 0, $st);
-        $agency=mb_substr($certification_agency, $st, 19);
-        $aft = mb_substr($certification_agency, $st+19);
-        //echo '<b>PRE: '.$pre.'</b><br/>';
-        //echo '<b>AGENCY: '.$agency.'</b><br/>';
-        //echo '<b>AFT: '.$aft.'</b><br/>';
-
-    }
-
-    $st = mb_strpos($certification_agency, 'РОСС BY.');
-    //echo '<b>ST: '.$st.'</b><br/>';
-    if ($st!==false) {
-        $pre = mb_substr($certification_agency, 0, $st);
-        $agency=mb_substr($certification_agency, $st, 19);
-        $aft = mb_substr($certification_agency, $st+19);
-        //echo '<b>PRE: '.$pre.'</b><br/>';
-        //echo '<b>AGENCY: '.$agency.'</b><br/>';
-        //echo '<b>AFT: '.$aft.'</b><br/>';
-
-    }
-
-    $st = mb_strpos($certification_agency, 'RA.RU.');
-    //echo '<b>ST: '.$st.'</b><br/>';
-    if ($st!==false) {
-        $pre = mb_substr($certification_agency, 0, $st);
-        $agency= mb_substr($certification_agency, $st, 12);
-        $aft = mb_substr($certification_agency, $st+12);
-        //echo '<b>PRE: '.$pre.'</b><br/>';
-        //echo '<b>AGENCY: '.$agency.'</b><br/>';
-        //echo '<b>AFT: '.$aft.'</b><br/>';
-    }
-
-    if (!(empty($agency))) {
-
-        $rec = $wpdb->get_row($wpdb->prepare("SELECT link FROM wp_certagency WHERE regnum LIKE '$agency'", $agency));
-
-        if (isset($rec->link)) $link.='<a href="'.$rec->link.'" rel="nofollow" target="_blank" title="Официальный сайт '.$agencyName.'"><div class="manufacturer_go">Перейти на сайт органа по сертификации</div></a>';
-    }
-
-    return $pre.'<strong>'.$agency.'</strong>'.$aft.$link;
+    return $url ?? '';
 }
 ?>
 <?php
-function getAgencyLink($agency = null): string {
-    return $agency ? site_url() . '/organy-po-sertifikacii/?param=' . urlencode($agency) : '';
+/**
+ * Функция получения строки с адресом для органа по сертификации
+ *
+ * @param string $agency - наименование органа по сертификации
+ * @return string - строка с url
+ */
+function getAgencyLink(string $agency = ''): string {
+    return $agency !== '' ? site_url() . '/organy-po-sertifikacii/?agency=' . urlencode($agency) : '';
 }
 ?>
 <?php
-    function getAgencyFull($agencyClean = null): string {
-    if (!$agencyClean) return '';
+/**
+ * Функция возвращает полные сведения об органе по сертификации
+ *
+ * @param $agencyClean - строка с именем органа по сертификации
+ * @return string - строка с результатом
+ */
+function getAgencyFull(string $agencyClean = ''): string {
+    if ($agencyClean === '') return '';
 
     global $wpdb;
 
-    $agency = $wpdb -> get_var($wpdb -> prepare("SELECT meta_value FROM $wpdb->postmeta WHERE meta_key='param3_certification_agency' AND meta_value LIKE '%%$agencyClean%%'", $agencyClean));
+    $agency = $wpdb -> get_var($wpdb -> prepare("SELECT meta_value FROM $wpdb->postmeta WHERE meta_key='param3_certification_agency' AND meta_value LIKE %s", '%'. $wpdb->esc_like($agencyClean) .'%'));
 
-    return $agency ? $agency : '';
-    }
-?>
-<?php
-function getCertAgencyName($regnum) {
-    global $wpdb;
-
-    if ($regnum=='') return '';
-
-
-    $rec = $wpdb->get_row($wpdb->prepare("SELECT meta_value FROM wp_postmeta WHERE meta_key='param3_certification_agency' AND meta_value LIKE '%$regnum%'", $regnum));
-    if (isset($rec->meta_value)) $agency = getManufacturer($rec->meta_value, false);
-    return $agency;
+    return $agency ?: '';
 }
 ?>
 <?php
-/*
-Возвращает массив "Наименование органа по сертификации" => "Количество сертификатов",
-обрезанный по длине до $num и отсортированный по убыванию количества сертификатов
-*/
-function getAllAgecies($num = null): array {
+function getCertAgencyName(string $regnum = ''): string {
+    if ($regnum === '') return '';
+
+    global $wpdb;
+
+    $rec = $wpdb->get_row($wpdb->prepare("SELECT meta_value FROM wp_postmeta WHERE meta_key='param3_certification_agency' AND meta_value LIKE %s", '%%'. $regnum .'%%'));
+
+    return $rec ? getCompletedName($rec->meta_value) : '';
+}
+?>
+<?php
+/**
+ * Возвращает массив "Наименование органа по сертификации" => "Количество сертификатов",
+ * обрезанный по длине до $num и отсортированный по убыванию количества сертификатов
+ *
+ * @param $num - требуемое количество органов по сертификации
+ * @return array - массив "наименование органа" => "количество сертификатов"
+ */
+function getAllAgencies($num = null): array {
     global $wpdb;
 
     $agencies = array();
@@ -3194,7 +3034,7 @@ function getAllAgecies($num = null): array {
     /*Очистим название органа от лишней шелухи*/
 
     foreach ($rec as $r) {
-        $agencyClean = getManufacturer($r, false);
+        $agencyClean = getCompletedName($r, false);
         if ($agencyClean !== '') $agencies[] = $agencyClean;
     }
 
@@ -3251,9 +3091,8 @@ function getAllAgenciesNames($num = null) {
 
     foreach ($rec as $r) {
         $agencyNum = getAgencyNum($r);
-        $agencyName = getManufacturer($r, false);
+        $agencyName = getCleanName($r, false);
         $agencies[$agencyNum] = $agencyName;
-//        $agencies += [$agencyNum => $agencyName];
     }
 
     return array_slice($agencies, 0, $num);
@@ -3280,7 +3119,14 @@ function getAllAgenciesCities($start = 0, $num = null) {
 }
 ?>
 <?php
-function getAllAgenciesLinks($start = 0, $num = null) {
+/**
+ * Функция получения массива ссылок на все органы по сертификации
+ *
+ * @param int $start - начальный элемент массива
+ * @param int $num - общее количество элементов массива
+ * @return array|mixed - результат поиска в виде массива ссылок
+ */
+function getAllAgenciesLinks(int $start = 0, int $num = null) {
     global $wpdb;
 
     /*Получим все возможные значения пар regnum => link*/
@@ -3374,7 +3220,14 @@ add_action( 'template_redirect', function(){
 });
 ?>
 <?php
-function declination($number, $titles) {
+/**
+ * Функция получения нужной формы слова в зависимости от числа
+ *
+ * @param int $number - исходное число
+ * @param array $titles - варианты словоформ
+ * @return mixed - результат с нужной словоформой
+ */
+function declination(int $number, array $titles) {
     // Массив, где:
     // 0 — для чисел, заканчивающихся на 2, 3, 4, но не 12, 13, 14;
     // 1 — для числа 1;
@@ -3509,7 +3362,9 @@ function normalizeNumbers() {
 }
 ?>
 <?php
-//Нормализация номеров ВСЕХ сертификатов и деклараций соответствия
+/**
+ * Нормализация номеров ВСЕХ сертификатов и деклараций соответствия
+ */
 function normalizeStrings() {
     global $wpdb;
 
@@ -3588,8 +3443,14 @@ function getCitiesByAgencies($agencies) {
 }
 ?>
 <?php
-function getCity($str = '') {
-    if ($str == '') return false;
+/**
+ * Функция для выделения города из исходной строки
+ *
+ * @param string $str - исходная строка, содержащая город
+ * @return false|mixed - найденный город или false, если он не найден
+ */
+function getCity(string $str = '') {
+    if ($str === '') return false;
 
     $cities = array('Москва', 'Ульяновск', 'Тула', 'Самара', 'Ростов', 'Екатеринбург', 'Белгород', 'Орел', 'Орёл', 'Краснодар', 'Орлов', 'Барнаул', 'Люберцы', 'Оренбург', 'Санкт-Петербург', 'Серпухов', 'Обнинск', 'Королев', 'Королёв', 'Иваново', 'Балабаново', 'Сергиев Посад', 'Кемерово', 'Рязань', 'Курск', 'Калуга', 'Приволжск', 'Махачкала', 'Тамбов', 'Волгоград', 'Красноярск', 'Ижевск', 'Чебоксары', 'Ставрополь', 'Саранск', 'Юбилейный', 'Саров', 'Иркутск', 'Челябинск', 'Омск', 'Уфа', 'Курган', 'Тольятти', 'Нальчик', 'Новосибирск', 'Казань', 'Владивосток', 'Фрязино', 'Тюмень', 'Химки', 'Нижний Новгород', 'Псков', 'Курчатов', 'Смоленск', 'Сыктывкар', 'Саратов', 'Йошкар-Ола', 'Ярославль', 'Энгельс', 'п. Красково', 'Абаза', 'Абакан', 'Абдулино', 'Абинск', 'Агрыз', 'Адыгейск', 'Азнакаево', 'Азов', 'Ак-Довурак', 'Аксай', 'Акша', 'Алагир', 'Алапаевск', 'Алатырь', 'Алдан', 'Алейск', 'Александров', 'Александровск', 'Александровск-Сахалинский', 'Алексеевка', 'Алексин', 'Алзамай', 'Альметьевск', 'Амурск', 'Анадырь', 'Анапа', 'Ангарск', 'Андреаполь', 'Анжеро-Судженск', 'Анива', 'Апатиты', 'Апрелевка', 'Апшеронск', 'Арамиль', 'Аргун', 'Ардатов', 'Ардон', 'Арзамас', 'Аркадак', 'Армавир', 'Арсеньев', 'Арск', 'Артём', 'Артёмовск', 'Артёмовский', 'Архангельск', 'Асбест', 'Асино', 'Аткарск', 'Ахтубинск', 'Ачинск', 'Аша', 'Бабаево', 'Бабушкин', 'Багратионовск', 'Байкальск', 'Баймак', 'Бакал', 'Баксан', 'Балаково', 'Балахна', 'Балашиха', 'Балашов', 'Балей', 'Балтийск', 'Барабинск', 'Барыш', 'Батайск', 'Беднодемьяновск', 'Бежецк', 'Белая Калитва', 'Белая Холуница', 'Белебей', 'Белёв', 'Белинский', 'Белово', 'Белогорск', 'Белозерск', 'Белокуриха', 'Беломорск', 'Белорецк', 'Белореченск', 'Белоярский', 'Белый', 'Бердск', 'Березники', 'Берёзово', 'Берёзовский', 'Беслан', 'Бийск', 'Бикин', 'Биробиджан', 'Бирск', 'Бирюсинск', 'Благовещенск', 'Благодарный', 'Бобров', 'Богданович', 'Богородицк', 'Богородск', 'Боготол', 'Богучар', 'Бодайбо', 'Бокситогорск', 'Бологое', 'Болотное', 'Болохово', 'Болхов', 'Большой Камень', 'Бор', 'Борзя', 'Борисоглебск', 'Боровичи', 'Боровск', 'Бородино', 'Братск', 'Бронницы', 'Бугульма', 'Бугуруслан', 'Буденновск', 'Бузулук', 'Буинск', 'Буй', 'Буйнакск', 'Булгар', 'Бутурлиновка', 'Валдай', 'Валуйки', 'Варнавино', 'Васильсурск', 'Велиж', 'Великие Луки', 'Великий Новгород', 'Великий Устюг', 'Вельск', 'Венев', 'Верещагино', 'Верея', 'Верхнеуральск', 'Верхний Тагил', 'Верхний Уфалей', 'Верхняя Пышма', 'Верхняя Салда', 'Верхняя Тура', 'Верхотурье', 'Верхоянск', 'Весьегонск', 'Ветлуга', 'Видное', 'Вилюйск', 'Вихоревка', 'Вичуга', 'Владимир', 'Волгодонск', 'Волжск', 'Волжский', 'Вологда', 'Володарск', 'Волоколамск', 'Волхов', 'Волчанск', 'Вольск', 'Воркута', 'Воронеж', 'Ворсма', 'Воскресенск', 'Воткинск', 'Всеволожск', 'Вуктыл', 'Выборг', 'Выкса', 'Высоковск', 'Высоцк', 'Вытегра', 'Вышний Волочек', 'Вяземский', 'Вязники', 'Вязьма', 'Вятские Поляны', 'Гаврилов Посад', 'Гаврилов-Ям', 'Гай', 'Галич', 'Гатчина', 'Гвардейск', 'Гдов', 'Геленджик', 'Георгиевск', 'Глазов', 'Горбатов', 'Горно-Алтайск', 'Горнозаводск', 'Горняк', 'Городец', 'Городище', 'Городовиковск', 'Гороховец', 'Горячий Ключ', 'Грайворон', 'Гремячинск', 'Грязи', 'Грязовец', 'Губаха', 'Губкин', 'Гудермес', 'Гуково', 'Гулькевичи', 'Гурьевск', 'Гусев', 'Гусинозёрск', 'Гусь-Хрустальный', 'Давлеканово', 'Дагестанские Огни', 'Далматово', 'Дальнегорск', 'Дальнереченск', 'Данилов', 'Данков', 'Девяткино', 'Дегтярск', 'Дедовск', 'Демидов', 'Демянск', 'Дербент', 'Десногорск', 'Дзержинск', 'Дзержинский', 'Дивногорск', 'Дигора', 'Диксон', 'Димитровград', 'Дмитриев-Льговский', 'Дмитров', 'Дмитровск-Орловский', 'Дно', 'Добрянка', 'Долгопрудный', 'Долинск', 'Домодедово', 'Донецк', 'Донской', 'Дорогобуж', 'Дрезна', 'Дубна', 'Дубовка', 'Дудинка', 'Духовщина', 'Дюртюли', 'Дятьково', 'Егорьевск', 'Елабуга', 'Елатьма', 'Елец', 'Елизово', 'Ельня', 'Еманжелинск', 'Емва', 'Енисейск', 'Енотаевка', 'Епифань', 'Ершов', 'Ессентуки', 'Ефремов', 'Железноводск', 'Железногорск', 'Железногорск-Илимский', 'Железнодорожный', 'Жердевка', 'Жиганск', 'Жигулевск', 'Жиздра', 'Жирновск', 'Жуковка', 'Жуковский', 'Завитинск', 'Заводоуковск', 'Заволжск', 'Заволжье', 'Задонск', 'Заинск', 'Закаменск', 'Заозёрный', 'Западная Двина', 'Заполярный', 'Зарайск', 'Заринск', 'Звенигово', 'Звенигород', 'Зверево', 'Зеленогорск', 'Зеленоград', 'Зеленоградск', 'Зеленодольск', 'Зеленокумск', 'Зерноград', 'Зея', 'Зима', 'Златоуст', 'Злынка', 'Змеиногорск', 'Зубцов', 'Зуевка', 'Ивангород', 'Ивантеевка', 'Ивдель', 'Игарка', 'Истра', 'Изербаш', 'Изобильный', 'Иланский', 'Инза', 'Инсар', 'Инта', 'Ипатово', 'Ирбит', 'Исилькуль', 'Искитим', 'Ишим', 'Ишимбай', 'Кадников', 'Кадом', 'Кадый', 'Кайеркан', 'Калач', 'Калачинск', 'Калач-на-Дону', 'Калининград', 'Калининск', 'Калтан', 'Калязин', 'Камбарка', 'Каменка', 'Каменногорск', 'Каменск-Уральский', 'Каменск-Шахтинский', 'Камень-на-Оби', 'Камешково', 'Камызяк', 'Камышин', 'Камышлов', 'Канадей', 'Канаш', 'Кандалакша', 'Канск', 'Карабаш', 'Караваново', 'Карасук', 'Карачаевск', 'Карачев', 'Каргат', 'Каргополь', 'Карпинск', 'Карсун', 'Карталы', 'Касимов', 'Касли', 'Каспийск', 'Катав-Ивановск', 'Катайск', 'Качканар', 'Кашин', 'Кашира', 'Кедровый', 'Кемь', 'Кизел', 'Кизилюрт', 'Кизляр', 'Кимовск', 'Кимры', 'Кингисепп', 'Кинель', 'Кинешма', 'Киреевск', 'Киренск', 'Киржач', 'Кириллов', 'Кириши', 'Киров', 'Кировград', 'Кирово-Чепецк', 'Кировск', 'Кирс', 'Кирсанов', 'Кисилевск', 'Кисловодск', 'Климовск', 'Клин', 'Клинцы', 'Ключи', 'Княгинино', 'Ковдор', 'Ковров', 'Ковылкино', 'Когалым', 'Кодинск', 'Козельск', 'Козловка', 'Козьмодемьянск', 'Кола', 'Кологрив', 'Коломна', 'Колпашево', 'Колпино', 'Колывань', 'Кольчугино', 'Комсомольск', 'Комсомольск-на-Амуре', 'Конаково', 'Кондопога', 'Кондрово', 'Константиновск', 'Копейск', 'Кораблино', 'Кореновск', 'Коркино', 'Короча', 'Корсаков', 'Коряжма', 'Костерево', 'Костомукша', 'Кострома', 'Котельниково', 'Котельнич', 'Котлас', 'Котово', 'Котовск', 'Кохма', 'Красавино', 'Красноармейск', 'Красноборск', 'Красновишерск', 'Красногорск', 'Краснозаводск', 'Краснознаменск', 'Краснокаменск', 'Краснокамск', 'Краснослободск', 'Краснотурьинск', 'Красноуральск', 'Красноуфимск', 'Красный Кут', 'Красный Судин', 'Красный Холм', 'Красный Яр', 'Крестцы', 'Кромы', 'Кронштадт', 'Кропоткин', 'Крымск', 'Кстово', 'Кувандык', 'Кувшиново', 'Кудымкар', 'Кузнецк', 'Куйбышев', 'Кулебаки', 'Кумертау', 'Кунгур', 'Купино', 'Курганинск', 'Курильск', 'Куровское', 'Куртамыш', 'Куса', 'Кушва', 'Кызыл', 'Кыштым', 'Кяхта', 'Лабинск', 'Лабытнанги', 'Лагань', 'Ладушкин', 'Лаишево', 'Лакинск', 'Лальск', 'Лангепас', 'Лахденпохья', 'Лебедянь', 'Лениногорск', 'Ленинск', 'Ленинск-Кузнецкий', 'Ленск', 'Лермонтов', 'Лесогорск', 'Лесозаводск', 'Лесосибирск', 'Ливны', 'Ликино-Дулево', 'Липки', 'Лиски', 'Лихославль', 'Лобня', 'Лодейное Поле', 'Ломоносов', 'Лосино-Петровский', 'Луга', 'Луза', 'Лукоянов', 'Лух', 'Луховицы', 'Лысково', 'Лысьва', 'Лыткарино', 'Льгов', 'Любань', 'Любим', 'Людиново', 'Магнитогорск', 'Майкоп', 'Майский', 'Макаров', 'Макарьев', 'Макарьево', 'Макушино', 'Малая Вишера', 'Малгобек', 'Малмыж', 'Малоархангельск', 'Малоярославец', 'Мамадыш', 'Мамоново', 'Мантурово', 'Мариинск', 'Мариинский Посад', 'Мглин', 'Мегион', 'Медвежьегорск', 'Медногорск', 'Медынь', 'Междуреченск', 'Мезень', 'Меленки', 'Мелеуз', 'Менделеевск', 'Мензелинск', 'Мещовск', 'Миасс', 'Микунь', 'Миллерово', 'Минеральные Воды', 'Минусинск', 'Миньяр', 'Мирный', 'Михайлов', 'Михайловка', 'Михайловск', 'Мичуринск', 'Могоча', 'Можайск', 'Можга', 'Моздок', 'Мокшан', 'Мончегорск', 'Морозовск', 'Моршанск', 'Мосальск', 'Мураши', 'Муром', 'Мценск', 'Мыски', 'Мытищи', 'Мышкин', 'Набережные Челны', 'Навашино', 'Наволоки', 'Надым', 'Назарово', 'Назрань', 'Называевск', 'Нариманов', 'Наровчат', 'Наро-Фоминск', 'Нарткала', 'Нарьян-Мар', 'Находка', 'Невель', 'Невельск', 'Невинномысск', 'Невьянск', 'Нелидово', 'Неман', 'Нерехта', 'Нерчинск', 'Нерюнгри', 'Нефтегорск', 'Нефтекамск', 'Нефтекумск', 'Нефтеюганск', 'Нижневартовск', 'Нея', 'Нижнедевицк', 'Нижнекамск', 'Нижнеудинск', 'Нижние Серги', 'Нижний Ломов', 'Нижний Тагил', 'Нижняя Салда', 'Нижняя Тура', 'Николаевск', 'Николаевск-на-Амуре', 'Никольск, Вологодская обл.', 'Никольск, Пензенская обл.', 'Никольское', 'Новая Ладога', 'Новая Ляля', 'Новоалександровск', 'Новоалтайск', 'Новоаннинский', 'Нововоронеж', 'Новодвинск', 'Новозыбков', 'Новокубанск', 'Новокузнецк', 'Новокуйбышевск', 'Новомичуринск', 'Новомосковск', 'Новопавловск', 'Новоржев', 'Новороссийск', 'Новосиль', 'Новосокольники', 'Новотроицк', 'Новоузенск', 'Новоульяновск', 'Новохоперск', 'Новочебоксарск', 'Новочеркасск', 'Новошахтинск', 'Новый Оскол', 'Новый Уренгой', 'Ногинск', 'Нолинск', 'Норильск', 'Ноябрьск', 'Нурлат', 'Нытва', 'Нягань', 'Нязепетровск', 'Няндома', 'Облучье', 'Обоянь', 'Обь', 'Одинцово', 'Одоев', 'Ожерелье', 'Озерск', 'Озёры', 'Октябрьск', 'Октябрьский', 'Окуловка', 'Олекминск', 'Оленегорск', 'Олонец', 'Омутнинск', 'Онега', 'Опочка', 'Орехово-Зуево', 'Орск', 'Оса', 'Осинники', 'Осташков', 'Остров', 'Острогожск', 'Отрадное', 'Отрадный', 'Оха', 'Оханск', 'Охотск', 'Очер', 'Павлово', 'Павловск', 'Павловский Посад', 'Палласовка', 'Партизанск', 'Парфеньево', 'Певек', 'Первомайск', 'Первоуральск', 'Перевоз', 'Перемышль', 'Переславль-Залесский', 'Пермь', 'Пестово', 'Петров Вал', 'Петровск', 'Петровск-Забайкальский', 'Петровское', 'Петродворец', 'Петухово', 'Петушки', 'Печора', 'Печоры', 'Пикалево', 'Пинега', 'Пионерский', 'Питкяранта', 'Плавск', 'Пласт', 'Плёс', 'Повенец', 'Поворино', 'Погар', 'Подольск', 'Подпорожье', 'Покров', 'Полевской', 'Полесск', 'Полысаево', 'Полярный', 'Поронайск', 'Порхов', 'Похвистнево', 'Почеп', 'Починки', 'Починок', 'Пошехонье', 'Правдинск', 'Приморск', 'Приморско-Ахтарск', 'Приозерск', 'Прокопьевск', 'Пролетарск', 'Пронск', 'Протвино', 'Прохладный', 'Пугачев', 'Пудож', 'Пустошка', 'Пучеж', 'Пушкин', 'Пушкино', 'Пущино', 'Пыталово', 'Пятигорск', 'Радужный', 'Райчихинск', 'Раменское', 'Рассказово', 'Ревда', 'Реж', 'Реутов', 'Ржев', 'Родники', 'Рославль', 'Россошь', 'Ростов-на-Дону', 'Рошаль', 'Ртищево', 'Рубцовск', 'Рудня', 'Руза', 'Рузаевка', 'Рыбинск', 'Рыбное', 'Рыльск', 'Ряжск', 'Салават', 'Салаир', 'Салехард', 'Сальск', 'Санчурск', 'Сапожок', 'Сарапул', 'Сасово', 'Сатка', 'Сафоново', 'Саяногорск', 'Саянск', 'Светлогорск', 'Светлоград', 'Светлый', 'Светогорск', 'Свирск', 'Свободный', 'Себеж', 'Северобайкальск', 'Северодвинск', 'Северо-Задонск', 'Североморск', 'Северо-Курильск', 'Североуральск', 'Северск', 'Севск', 'Сегежа', 'Сельцо', 'Семенов', 'Семилуки', 'Семикаракорск', 'Сенгилей', 'Серафимович', 'Сергач', 'Сергиевск', 'Сердобск', 'Серов', 'Сестрорецк', 'Сибай', 'Сковородино', 'Скопин', 'Славгород', 'Славск', 'Славянск-на-Кубани', 'Сланцы', 'Слободской', 'Слюдянка', 'Собинка', 'Советск', 'Советская Гавань', 'Сокол', 'Сокольники', 'Солигалич', 'Соликамск', 'Солнечногорск', 'Сольвычегодск', 'Соль-Илецк', 'Сольцы', 'Сорочинск', 'Сорск', 'Сортавала', 'Сосновка', 'Сосновоборск', 'Сосновый Бор', 'Сосногорск', 'Сочи', 'Спас-Деменск', 'Спас-Клепики', 'Спасск-Рязанский', 'Среднеколымск', 'Среднеуральск', 'Сретенск', 'Старая Русса', 'Старица', 'Стародуб', 'Старый Оскол', 'Стерлитамак', 'Стрежевой', 'Струнино', 'Ступино', 'Суворов', 'Суджа', 'Судиславль', 'Судогда', 'Суздаль', 'Суоярви', 'Сураж', 'Сургут', 'Суровикино', 'Сурск', 'Сусуман', 'Сухиничи', 'Сухой Лог', 'Сходня', 'Сызрань', 'Сысерть', 'Сычевка', 'Тавда', 'Таганрог', 'Тайга', 'Тайшет', 'Талдом', 'Талица', 'Талнах', 'Тара', 'Таруса', 'Татарск', 'Таштагол', 'Тверь', 'Теберда', 'Тейково', 'Темников', 'Темрюк', 'Терек', 'Тетюши', 'Тикси', 'Тим', 'Тимашевск', 'Тихвин', 'Тихорецк', 'Тобольск', 'Тогучин', 'Томари', 'Томмот', 'Томск', 'Топки', 'Торжок', 'Торопец', 'Тосно', 'Тотьма', 'Троицк', 'Трубчевск', 'Туапсе', 'Туймазы', 'Тулун', 'Туран', 'Туринск', 'Туруханск', 'Тутаев', 'Тында', 'Тырныауз', 'Тюкалинск', 'Туапсе', 'Уварово', 'Углегорск', 'Углич', 'Удачный', 'Удомля', 'Ужур', 'Узловая', 'Унеча', 'Урай', 'Урень', 'Уржум', 'Урус-Мартан', 'Урюпинск', 'Усинск', 'Усмань', 'Усолье', 'Усолье-Сибирское', 'Уссурийск', 'Усть-Джегута', 'Усть-Илимск', 'Усть-Катав', 'Усть-Кут', 'Усть-Лабинск', 'Устюжна', 'Ухта', 'Учалы', 'Уяр', 'Фатеж', 'Фокино', 'Фролово', 'Фурманов', 'Хадыженск', 'Харабали', 'Харовск', 'Хасавюрт', 'Хвалынск', 'Хилок', 'Холм', 'Холмогоры', 'Холмск', 'Хотьково', 'Цивильск', 'Цимлянск', 'Чадан', 'Чайковский', 'Чапаевск', 'Чаплыгин', 'Чебаркуль', 'Чекалин', 'Чердынь', 'Черемхово', 'Черепаново', 'Череповец', 'Черкесск', 'Чермоз', 'Черногорск', 'Чернушка', 'Черный Яр', 'Чернь', 'Черняховск', 'Чехов', 'Чистополь', 'Чкаловск', 'Чудово', 'Чулым', 'Чусовой', 'Чухлома', 'Шагонар', 'Шадринск', 'Шали', 'Шарыпово', 'Шарья', 'Шатура', 'Шахтерск', 'Шахты', 'Шахунья', 'Шацк', 'Шебекино', 'Шелехов', 'Шенкурск', 'Шилка', 'Шимановск', 'Шлиссельбург', 'Шумерля', 'Шумиха', 'Шуя', 'Щекино', 'Щелково', 'Щербинка', 'Щигры', 'Щучье', 'Электрогорск', 'Электросталь', 'Электроугли', 'Эртиль', 'Южа', 'Южно-Сухокумск', 'Южноуральск', 'Юрга', 'Юрьевец', 'Юрьев-Польский', 'Юрюзань', 'Юхнов', 'Ядрин', 'Ялуторовск', 'Яранск', 'Ярцево', 'Ясногорск', 'Ясный', 'Яхрома');
 
@@ -3638,11 +3499,18 @@ function getCity($str = '') {
     return $out;
 }
 ?>
-<?php function getImageResolution($image = null): string {
-    if (!$image) return '';
+<?php
+/**
+ * Функция возвращает строку с размерами полноразмерного изображения сертификата в пикселях
+ *
+ * @param string $source - строка, содержащая путь к изображению в папке download
+ * @return string - строка с результатом или пустая строка в случае ошибки
+ */
+function getImageResolution(string $source = ''): string {
+    if ($source === '') return '';
 
-    $info = getimagesize($image);
-    return $info[0].'x'.$info[1];
+    $info = getimagesize(site_url(). '/download/'. $source);
+    return $info ? $info[0] .'x'. $info[1] : '';
 }
 ?>
 <?php function searchByNum($search) {
@@ -3674,8 +3542,16 @@ function getCity($str = '') {
 
     return $wpdb->get_col($sql);
 }
-
-function sortByLength($a, $b): int {
+?>
+<?php
+/**
+ * Функция для сортировки по длине строки
+ *
+ * @param string $a - первая строка
+ * @param string $b - вторая строка
+ * @return int - -1 если первая строка длиннее, 0 - если они равны, 1 - если длиннее вторая строка
+ */
+function sortByLength(string $a, string $b): int {
     return mb_strlen($b) <=> mb_strlen($a);
 }
 ?>
@@ -3690,7 +3566,13 @@ function getAgencyInfoByName($agencyName = null) {
 }
 ?>
 <?php
-function getAgencyInfoByReg($agencyReg = ''): string {
+/**
+ * Функция получения полных сведений об органе по сертификации по регистрационному номеру
+ *
+ * @param string $agencyReg - строка с регистрационным номером органа
+ * @return string - полные сведения об органе или пустая строка, если они не найдены
+ */
+function getAgencyInfoByReg(string $agencyReg = ''): string {
     if ($agencyReg == '') return '';
 
     global $wpdb;
@@ -3734,10 +3616,16 @@ function cutStringToWords($str, $length, $postfix = '', $encoding = null): strin
 }
 ?>
 <?php
-function getManufacturerCoords($manufacturer = null) {
+/**
+ * Функция получения координат изготовителя
+ *
+ * @param string $manufacturer - наименование изготовителя
+ * @return string - строка с координатами или пустая строка, если координаты не найдены
+ */
+function getManufacturerCoords(string $manufacturer = '') {
     global $wpdb;
 
-    if (!$manufacturer) return '';
+    if ($manufacturer === '') return '';
 
     $rec = $wpdb->get_row($wpdb->prepare("SELECT coords FROM wp_logos WHERE name LIKE %s", $manufacturer));
 
@@ -3746,9 +3634,13 @@ function getManufacturerCoords($manufacturer = null) {
 ?>
 <?php
 /**
+ * Функция получения координат органа по сертификации
  * Зарезервировано для будущего использования
+ *
+ * @param string $agency - наименование органа по сертификации
+ * @return string - строка с координатами
  */
-function getAgencyCoords($agency = null) {
+function getAgencyCoords(string $agency = '') {
     return '';
 //    global $wpdb;
 //
@@ -3760,8 +3652,15 @@ function getAgencyCoords($agency = null) {
 }
 ?>
 <?php
-function splitStringByDash($input = null) {
-    if (!$input) return ['', ''];
+/**
+ * Функция для разделения строки по одному из возможных
+ * знаков тире пополам
+ *
+ * @param string $input - исходная строка
+ * @return array|string[] - первый элемент - строка до тире, второй - после тире
+ */
+function splitStringByDash(string $input = '') {
+    if ($input === '') return ['', ''];
 
 
     $input = str_replace(['–', '—'], '-', $input);
@@ -3782,12 +3681,15 @@ function splitStringByDash($input = null) {
 }
 ?>
 <?php
-/** Выделение текста внутри внешних кавычек
- *  и дополнение справа кавычкой, парной самой левой оставшейся.
+/**
+ * Функция получения текста внутри внешних кавычек
+ * и дополнение справа кавычкой, парной самой левой оставшейся.
+ *
+ * @param string $string - строка с исходным текстом
+ * @return mixed|string - результат
  */
-
-function getTextInsideQuotes($string) {
-    if (empty($string)) return $string;
+function getTextInsideQuotes(string $string = '') {
+    if ($string === '') return $string;
 
     $quoteTypes = [
         '\'' => '\'',
@@ -3820,6 +3722,15 @@ function getTextInsideQuotes($string) {
 }
 ?>
 <?php
+/**
+ * Функция для расчёта количества страниц, текущей страницы
+ * и массива кнопок для отображения пагинации
+ *
+ * @param int $totalItems - общее количество элементов
+ * @param int $st - номер первого элемента на странице
+ * @param int $len - количество элементов на странице
+ * @return array - массив кнопок для пагинации
+ */
 function calculatePagination($totalItems, $st, $len) {
 
     // Вычисляем общее количество страниц

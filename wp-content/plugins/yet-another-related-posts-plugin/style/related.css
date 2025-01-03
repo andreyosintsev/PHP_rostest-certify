@@ -2,16 +2,10 @@
     margin: 1em 0;
 }
 
-
-.yarpp-related h2.entry-title {
-    font-size: 18px;
-    font-weight: normal;
+.yarpp-related a{
+    text-decoration: none;
+    font-weight: bold;
 }
-
-
-.yarpp_manufacturer {display: block; margin-top: -15px; font-size: 14px; color: #666;}
-.yarpp_manufacturer a {text-decoration: none; color: #666;}
-.yarpp_manufacturer a:hover {text-decoration: underline; color: #666;}
 
 .yarpp-related .yarpp-thumbnail-title{
     text-align: left;
@@ -24,6 +18,7 @@
     font-weight: bold;
     padding: 0 0 5px 0;
     font-size: 125%;
+    text-transform: capitalize;
     margin: 0;
 }
 
@@ -37,16 +32,4 @@
     font-size: 11px;
     height: 17px;
     width: 78px;
-}
-
-@media screen and (max-width:960px){
-.yarpp_manufacturer {
-    margin-top: 0;
-}
-
-@media screen and (max-width:488PX){
-.yarpp_manufacturer {
-    margin-top: 5px;
-    line-height: 1.3;
-}
 }

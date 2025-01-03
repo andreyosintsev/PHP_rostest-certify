@@ -119,6 +119,13 @@ h1 {
     margin-bottom: 16px !important;
 }
 
+.certificates__content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
 .sidebar {
     display: flex;
     flex-direction: column;

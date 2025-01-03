@@ -67,7 +67,7 @@
                     foreach ($norms as $norm) { ?>
                         <div class="norms-item">
                             <a class="norms-item__link"
-                               href="<?php echo site_url(); ?>/gosty/?norm=<?php echo urlencode($norm->name); ?>"
+                               href="<?php echo getNormLink($norm->name); ?>"
                                title="Скачать <?php echo $norm->name; ?>">
                                 <div class="norms-item__title">
                                     <?php echo $norm->name; ?>

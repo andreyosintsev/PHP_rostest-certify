@@ -122,7 +122,7 @@
                 </div>
                 <div class="agencies__content">
                     <?php
-                    $agencies = getAllAgecies(4);
+                    $agencies = getAllAgencies(4);
                     foreach ($agencies as $agency => $freq) {
                         $agencyLink = getAgencyLink($agency);
                         $agencyDesc = getAgencyFull($agency);

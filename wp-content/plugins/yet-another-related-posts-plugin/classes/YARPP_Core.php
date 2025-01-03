@@ -1097,7 +1097,7 @@ class YARPP {
         if ( $this->do_not_query_for_related()) return false;
         $this->enforce();
 
-        wp_enqueue_style('yarppRelatedCss', plugins_url('/style/related.css', YARPP_MAIN_FILE));
+//        wp_enqueue_style('yarppRelatedCss', plugins_url('/style/related.css', YARPP_MAIN_FILE));
         $output = null;
 
         if (is_numeric($reference_ID)) {

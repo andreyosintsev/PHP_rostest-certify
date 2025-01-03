@@ -80,7 +80,7 @@ Template Name: Register
 			?>
 				<div class="td_left"><?php echo getCountry($number).$number;?></div>
 
-                <?php $manufacturer = getManufacturer(get_post_meta(get_the_ID(), "param6_manufacturer", $single = true), false);
+                <?php $manufacturer = getCompletedName(get_post_meta(get_the_ID(), "param6_manufacturer", $single = true), false);
                     if ($manufacturer!='') $manufacturer='<a href="/kompanii/?param='.urlencode($manufacturer).'" title="Другие сертификаты '.$manufacturer.'">'.$manufacturer.'</a>';
                 ?>                      
     

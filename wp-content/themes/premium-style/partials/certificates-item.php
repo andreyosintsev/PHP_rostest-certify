@@ -1,6 +1,6 @@
 <?php
 /**
- * certificate-item.php
+ * certificates-item.php
  *
  * The partial for displaying the certificate in list of certificates.
  *
@@ -18,22 +18,27 @@
     $titleUp =  mb_ucfirst($title);
     $number =   get_post_meta(get_the_ID(), "param1_number", $single = true);
     $link =     get_permalink();
-    $thumb =    thumbnailHome(220, 315, $post->ID);
+    $thumb =    getThumbnail(220, 315, $post->ID);
     $manufacturerFull = getCertManufacturer($post->ID);
-    $manufacturer = getManufacturerClean($manufacturerFull);
+    $manufacturer = getCleanName($manufacturerFull);
     $manufacturerLink = getManufacturerLink($manufacturer);
     $flag = getCountryFlag($number);
 ?>
 <div class="certificates-item">
     <div class="certificates-item__link-thumb">
-        <a class="certificates-item__link" href="<?php echo $link; ?>" title="Сертификат на <?php echo $title; ?>">
-            <?php echo $thumb; ?>
+        <a class="certificates-item__link"
+           href="<?php echo $link; ?>"
+           title="Сертификат на <?php echo $title; ?>">
+            <img class="certificates-item__thumb"
+                 src="<?php echo $thumb; ?>"
+                 alt="<?php echo $title; ?>">;
             <div class="certificates-item__gradient"></div>
         </a>
     </div>
     <div class="certificates-item__description">
         <div class="certificates-item__title">
-            <a href="<?php echo $link; ?>" title="Сертификат на <?php echo $title; ?>">
+            <a href="<?php echo $link; ?>"
+               title="Сертификат на <?php echo $title; ?>">
                 <?php echo $titleUp; ?>
             </a>
         </div>

@@ -652,7 +652,7 @@ function getSpecs() {
 		$out.='<div class="clear"></div>'."\r\n";
 	}
 	if ($manufacturer!="") {
-		$out.='<div class="td_frst"><b>Изготовитель:</b></div>'."\r\n".'<div class="td_sec">'.getManufacturer($manufacturer).'</div>'."\r\n";
+		$out.='<div class="td_frst"><b>Изготовитель:</b></div>'."\r\n".'<div class="td_sec">'.getCompletedName($manufacturer).'</div>'."\r\n";
 		$out.='<div class="clear"></div>'."\r\n";
 	}
 	if ($issued!="") {
@@ -2941,7 +2941,7 @@ function getAllCompanies($num=null) {
 	/*Очистим название организации от лишней шелухи*/
 
 	foreach($rec as $r){ 
-		$manufacturer_clean = getManufacturer($r, false);
+		$manufacturer_clean = getCompletedName($r, false);
 		if ($manufacturer_clean!== '') array_push($companies, $manufacturer_clean);
 	}
 
@@ -2977,7 +2977,7 @@ function getAllNotEmphCompanies() {
 	/*Если не удается выделить название организации - он нам и нужна*/
 
 	foreach($rec as $r){ 
-		$manufacturer_clean = getManufacturer($r, false);
+		$manufacturer_clean = getCompletedName($r, false);
 		if ($manufacturer_clean=='') array_push($companies, $r);
 	}
 
@@ -3184,7 +3184,7 @@ function getCertAgencyButton($certification_agency) {
 
     global $wpdb;
 
-	$agencyName = getManufacturer($certification_agency, false);
+	$agencyName = getCompletedName($certification_agency, false);
 
 	if (!($agencyName==='')) $link='<a href="'. site_url() .'/organy-po-sertifikacii/?param='.urlencode($agencyName).'" title="Сертификаты выданные '.$agencyName.'" ><div class="manufacturer_go">Другие сертификаты выданные органом</div></a>';
 
@@ -3241,7 +3241,7 @@ function getCertAgencyName($regnum) {
 
 
 	$rec = $wpdb->get_row($wpdb->prepare("SELECT meta_value FROM wp_postmeta WHERE meta_key='param3_certification_agency' AND meta_value LIKE '%$regnum%'", $regnum));
-	if (isset($rec->meta_value)) $agency = getManufacturer($rec->meta_value, false);	
+	if (isset($rec->meta_value)) $agency = getCompletedName($rec->meta_value, false);
 	return $agency;	
 }
 ?>
@@ -3286,7 +3286,7 @@ function getAllAgenciesNames($start=0, $num=null) {
 
 	foreach($rec as $r){ 
 		$agencyNum = getCertAgency($r);
-	    $agencyName = getManufacturer($r, false);
+	    $agencyName = getCompletedName($r, false);
         $agenciesNames += [$agencyNum => $agencyName];
 	}
 

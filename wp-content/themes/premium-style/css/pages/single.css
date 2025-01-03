@@ -136,6 +136,17 @@ h1 {
     gap: 8px;
 }
 
+.certificates-item__category {
+    font-size: 12px;
+
+    line-height: 17px;
+}
+
+.ancestor__number {
+    color: var(--text-color-second, #2F448A);
+    font-weight: 700;
+}
+
 .certificates__nav {
     padding-top: 16px;
 }

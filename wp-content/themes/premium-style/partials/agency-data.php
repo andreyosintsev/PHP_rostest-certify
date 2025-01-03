@@ -15,7 +15,7 @@
     if (!$postId) exit;
 
     $yamapContainer = rand(0, 1000);
-    $agency = getManufacturerClean(getCertAgency($postId));
+    $agency = getCleanName(getCertAgency($postId));
     $site_url = site_url();
 
 ?>

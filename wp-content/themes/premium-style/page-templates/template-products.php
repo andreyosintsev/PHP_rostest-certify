@@ -92,9 +92,8 @@ Template Name: Products
                         $categories = get_categories($args);
 
                         foreach ($categories as $category) {
-                            $catNumber = splitStringByDash($category->cat_name)[0];
-                            $catName = splitStringByDash($category->cat_name)[1];
-                    ?>
+                            [$catNumber, $catName] = splitStringByDash($category->cat_name);
+                        ?>
                             <div class="product-list__item product-item">
                                 <div class="product-item__title">
                                     <?php if (!empty($catNumber)) { ?>
@@ -124,9 +123,8 @@ Template Name: Products
                                         <ul class="product-item__content">
                                             <?php
                                                 foreach ($categories2 as $category2) {
-                                                    $catNumber2 = splitStringByDash($category2->cat_name)[0];
-                                                    $catName2 = splitStringByDash($category2->cat_name)[1];
-                                            ?>
+                                                    [$catNumber2, $catName2] = splitStringByDash($category2->cat_name);
+                                                ?>
                                                     <li class="product-item__content-item product-content-item">
                                                         <a class="product-content-item__link"
                                                            href="<?php echo get_category_link($category2->term_id) ?>"

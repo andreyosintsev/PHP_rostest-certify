@@ -75,7 +75,7 @@ class Users_History extends WP_Widget {
 			?>
 				<div class="arch_home">
 					<div class="arch_thumbnails_home">
-						<?php echo thumbnails(false, true, 52, 75, get_post($post_id)); ?>
+						<?php echo getThumbnail(52, 75, $post_id); ?>
 					</div>
 					<div class="arch_description_home">
 						<a href="<?php the_permalink($post_id) ?>"  title="Скачать сертификат соответствия на <?php echo get_the_title($post_id); ?>">Сертификат соответствия на <?php echo get_the_title($post_id); ?></a>

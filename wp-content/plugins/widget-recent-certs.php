@@ -69,7 +69,7 @@ class Recent_Certificates extends WP_Widget {
         } else {
             //is_single == true
 
-            $manufacturer = getManufacturerClean(getCertManufacturer(get_post()->ID));
+            $manufacturer = getCleanName(getCertManufacturer(get_post()->ID));
             if ($manufacturer !== '') {
 
                 $title = 'Сертификаты "'.$manufacturer.'"';
@@ -148,7 +148,12 @@ class Recent_Certificates extends WP_Widget {
                         >
                             <div class="sidebar-certificates__thumb-description">
                                 <div class="sidebar-certificates__thumb">
-                                    <?php echo thumbnailSidebar(56, 80, $post->ID); ?>
+                                    <img
+                                            class="sidebar-certificates__image"
+                                            src="<?php echo getThumbnail(56, 80, $post->ID); ?>"
+                                            title="Сертификат на <?php echo get_the_title($post->ID); ?>"
+                                            alt="Скачать сертификат на <?php echo get_the_title($post->ID); ?>"
+                                    >
                                     <div class="sidebar-certificates__gradient"></div>
                                 </div>
                                 <div class="sidebar-certificates__description">
@@ -168,8 +173,8 @@ class Recent_Certificates extends WP_Widget {
 
         <div class="sidebar-certificates__more">
             <a class="sidebar-certificates__more-link"
-                href="<?php echo $site_url; ?>/kompanii/?param=<?php echo urlencode($manufacturer); ?>"
-                title="Сертификаты соответствия изготовителя <?php echo urlencode($manufacturer); ?>"
+                href="<?php echo getManufacturerLink($manufacturer); ?>"
+                title="Сертификаты соответствия изготовителя <?php echo $manufacturer; ?>"
             >
                 Другая продукция этого изготовителя
             </a>
