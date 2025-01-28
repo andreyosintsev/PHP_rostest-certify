@@ -2414,6 +2414,7 @@ function getAllAgencies($num = null): array {
 
     /*Очистим название органа от лишней шелухи*/
     foreach ($rec as $r) {
+        if (empty($r)) continue;
         $agencyClean = getCompletedName($r);
         if ($agencyClean !== '') $agencies[] = $agencyClean;
     }
