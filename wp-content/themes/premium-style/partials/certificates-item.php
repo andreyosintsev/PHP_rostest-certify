@@ -61,7 +61,7 @@
         <?php echo getCategoryTree(null, $post->ID); ?>
         <div class="certificates-item__more">
             <a href="<?php echo $link; ?>" title="Просмотреть и скачать сертификат на <?php echo $title; ?>">
-                Подробнее
+                Скачать
             </a>
         </div>
     </div>
