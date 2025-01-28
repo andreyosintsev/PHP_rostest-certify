@@ -1,0 +1,293 @@
+# Copyright (C) 2019 Kamal Khan
+# This file is distributed under the GPLv2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: kk Star Ratings 3.1.2\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/index\n"
+"POT-Creation-Date: 2019-08-16 15:27:23+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2019-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"X-Generator: grunt-wp-i18n 0.5.4\n"
+"X-Poedit-KeywordsList: "
+"__;_e;_x:1,2c;_ex:1,2c;_n:1,2;_nx:1,2,4c;_n_noop:1,2;_nx_noop:1,2,3c;esc_"
+"attr__;esc_html__;esc_attr_e;esc_html_e;esc_attr_x:1,2c;esc_html_x:1,2c;\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-Country: United States\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: ../\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-Bookmarks: \n"
+"X-Textdomain-Support: yes\n"
+
+#: src/admin/appearance.php:19
+msgid "Stars"
+msgstr ""
+
+#: src/admin/appearance.php:22
+msgid "Total number of stars."
+msgstr ""
+
+#: src/admin/appearance.php:29
+msgid "Size"
+msgstr ""
+
+#: src/admin/appearance.php:32
+msgid "Size of a single star."
+msgstr ""
+
+#: src/admin/appearance.php:39
+msgid "Fill color"
+msgstr ""
+
+#: src/admin/appearance.php:42
+msgid "Fill color of stars."
+msgstr ""
+
+#: src/admin/appearance.php:49
+msgid "Stroke color"
+msgstr ""
+
+#: src/admin/appearance.php:52
+msgid "Stroke color of stars."
+msgstr ""
+
+#: src/admin/appearance.php:59
+msgid "Active fill color"
+msgstr ""
+
+#: src/admin/appearance.php:62
+msgid "Fill color of active stars."
+msgstr ""
+
+#: src/admin/appearance.php:69
+msgid "Active stroke color"
+msgstr ""
+
+#: src/admin/appearance.php:72
+msgid "Stroke color of active stars."
+msgstr ""
+
+#: src/admin/appearance.php:79
+msgid "Hover fill color"
+msgstr ""
+
+#: src/admin/appearance.php:82
+msgid "Fill color of hover stars."
+msgstr ""
+
+#: src/admin/appearance.php:89
+msgid "Hover stroke color"
+msgstr ""
+
+#: src/admin/appearance.php:92
+msgid "Stroke color of hover stars."
+msgstr ""
+
+#: src/admin/general.php:49
+msgid "Posts"
+msgstr ""
+
+#: src/admin/general.php:50
+msgid "Pages"
+msgstr ""
+
+#: src/admin/general.php:57 src/admin/rich-snippets.php:18
+#: views/metabox/index.php:20
+msgid "Status"
+msgstr ""
+
+#: src/admin/general.php:58 src/admin/rich-snippets.php:19
+msgid "Active"
+msgstr ""
+
+#: src/admin/general.php:62
+msgid "Globally activate/deactivate the star ratings."
+msgstr ""
+
+#: src/admin/general.php:69
+msgid "Strategies"
+msgstr ""
+
+#: src/admin/general.php:71
+msgid "Select the voting strategies."
+msgstr ""
+
+#: src/admin/general.php:78
+msgid "Allow voting in archives"
+msgstr ""
+
+#: src/admin/general.php:85
+msgid "Allow guests to vote"
+msgstr ""
+
+#: src/admin/general.php:92
+msgid "Unique votes (based on IP Address)"
+msgstr ""
+
+#: src/admin/general.php:104
+msgid "Manual Control"
+msgstr ""
+
+#: src/admin/general.php:106
+msgid ""
+"Select the post types that should not auto embed the<br>markup and will be "
+"manually controlled by the theme.<br>E.g. Using %s in your template."
+msgstr ""
+
+#: src/admin/general.php:123
+msgid "Disable Locations"
+msgstr ""
+
+#: src/admin/general.php:125
+msgid "Select the locations where the star ratings should be excluded."
+msgstr ""
+
+#: src/admin/general.php:137
+msgid "Home page"
+msgstr ""
+
+#: src/admin/general.php:141
+msgid "Archives"
+msgstr ""
+
+#: src/admin/general.php:153
+msgid "Disable Categories"
+msgstr ""
+
+#: src/admin/general.php:160
+msgid ""
+"Exclude star ratings from posts belonging to the selected "
+"categories.<br>Use <strong>cmd/ctrl + click</strong> to select/deselect "
+"multiple categories."
+msgstr ""
+
+#: src/admin/general.php:167
+msgid "Default Position"
+msgstr ""
+
+#: src/admin/general.php:169
+msgid "Choose a default position."
+msgstr ""
+
+#: src/admin/general.php:173
+msgid "Top Left"
+msgstr ""
+
+#: src/admin/general.php:180
+msgid "Top Center"
+msgstr ""
+
+#: src/admin/general.php:187
+msgid "Top Right"
+msgstr ""
+
+#: src/admin/general.php:194
+msgid "Bottom Left"
+msgstr ""
+
+#: src/admin/general.php:201
+msgid "Bottom Center"
+msgstr ""
+
+#: src/admin/general.php:208
+msgid "Bottom Right"
+msgstr ""
+
+#: src/admin/rich-snippets.php:23
+msgid "Activate/deactivate rich snippets."
+msgstr ""
+
+#: src/admin/rich-snippets.php:29
+msgid "Context"
+msgstr ""
+
+#: src/admin/rich-snippets.php:32
+msgid "Structured data context."
+msgstr ""
+
+#: src/admin/rich-snippets.php:38
+msgid "Type"
+msgstr ""
+
+#: src/admin/rich-snippets.php:41
+msgid "Structured data type."
+msgstr ""
+
+#: src/ajax.php:22
+msgid "This action is forbidden."
+msgstr ""
+
+#: src/ajax.php:29
+msgid "Unauthorized."
+msgstr ""
+
+#: src/ajax.php:35
+msgid "An id is required to vote."
+msgstr ""
+
+#: src/ajax.php:49
+msgid "Not allowed to vote."
+msgstr ""
+
+#: src/ajax.php:55
+msgid "A rating is required to vote."
+msgstr ""
+
+#: src/functions.php:372
+msgid "You can only rate between 0 and %s."
+msgstr ""
+
+#: src/functions.php:511
+msgid "General"
+msgstr ""
+
+#: src/functions.php:512
+msgid "Rich Snippets"
+msgstr ""
+
+#: src/functions.php:513
+msgid "Appearance"
+msgstr ""
+
+#: views/metabox/index.php:13
+msgid "Reset Ratings"
+msgstr ""
+
+#: views/metabox/index.php:26
+msgid "Auto"
+msgstr ""
+
+#: views/metabox/index.php:30
+msgid "Enable"
+msgstr ""
+
+#: views/metabox/index.php:34
+msgid "Disable"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "kk Star Ratings"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "https://github.com/kamalkhan/kk-star-ratings"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"Allow blog visitors to involve and interact more effectively with your "
+"website by rating posts."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Kamal Khan"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://bhittani.com"
+msgstr ""
