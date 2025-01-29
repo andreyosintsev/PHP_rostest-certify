@@ -2238,8 +2238,8 @@ function getCleanName(string $string = ''): string {
  * @param string $string - исходная строка, которую требуется дополнить кавычками
  * @return string - строка с результатом функции
  */
-function getCompletedName(string $string = ''): string {
-    if ($string === '') return '';
+function getCompletedName($string): string {
+    if (!$string) return '';
 
     $cleanName = getCleanName($string);
 
@@ -2303,7 +2303,7 @@ function getManufacturerFull(string $manufacturerClean = ''): string {
 
     global $wpdb;
 
-    $manufacturer = $wpdb -> get_var($wpdb -> prepare("SELECT meta_value FROM $wpdb->postmeta WHERE meta_key='param6_manufacturer' AND meta_value LIKE '%%$manufacturerClean%%'", $manufacturerClean));
+    $manufacturer = $wpdb -> get_var($wpdb -> prepare("SELECT meta_value FROM $wpdb->postmeta WHERE meta_key='param6_manufacturer' AND meta_value LIKE %s", '%'. $manufacturerClean .'%'));
 
     return $manufacturer ? $manufacturer : '';
 }
@@ -2414,7 +2414,6 @@ function getAllAgencies($num = null): array {
 
     /*Очистим название органа от лишней шелухи*/
     foreach ($rec as $r) {
-        if (empty($r)) continue;
         $agencyClean = getCompletedName($r);
         if ($agencyClean !== '') $agencies[] = $agencyClean;
     }
@@ -2423,7 +2422,7 @@ function getAllAgencies($num = null): array {
 
     /*Посчитаем количество каждой организации*/
     foreach ($agencies as $agency) {
-        $agenciesSorted[$agency] = $agenciesSorted[$agency] + 1;
+        $agenciesSorted[$agency] = isset($agenciesSorted[$agency]) ? $agenciesSorted[$agency] + 1 : 1;
     }
 
     /*Отсортируем по убыванию количества повторений*/
