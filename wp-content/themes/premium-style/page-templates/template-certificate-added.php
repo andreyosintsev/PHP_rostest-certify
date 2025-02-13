@@ -34,7 +34,9 @@ Template Name: Certificate added
     <main class="main">
         <div class="content added">
             <?php if (!$isAuth) { ?>
-                <div class="content__ad"></div>
+                <div class="content__ad">
+                    <?php echo getAdContent('horizontal.ad'); ?>
+                </div>
             <?php } ?>
             <div class="added__content">
                 <?php

@@ -274,8 +274,7 @@
     }
 
     .search__magnifier {
-        width: 14px;
-        height: 14px;
+        display: none;
     }
 
     .menu-main__items {

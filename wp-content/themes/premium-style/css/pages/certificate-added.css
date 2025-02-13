@@ -88,11 +88,9 @@ h1 {
 
 .content__ad {
     width: 100%;
-    height: 320px;
+    max-width: 920px;
 
     border-radius: var(--border-radius-xlarge, 20px);
-
-    background-color: var(--gray-light, #E7E7E7);
 }
 
 .added__button {
@@ -110,12 +108,7 @@ h1 {
 }
 
 .sidebar__ad {
-    width: 100%;
-    height: 320px;
-
     border-radius: var(--border-radius-xlarge, 20px);
-
-    background-color: var(--gray-light, #E7E7E7);
 }
 
 @media (max-width: 960px) {

@@ -97,7 +97,7 @@
 			$to = $rec->email;
             writeLog('Mail Notification to User: '. $to, $logFile);
 	        
-	        $subject = 'Регистрация на сайте rostest-certify';
+	        $subject = mb_encode_mimeheader('Регистрация на сайте rostest-certify','UTF-8', 'B');
 	    
             $headers = "From: support@rostest-certify.ru\r\n";
             $headers .= "Reply-To: support@rostest-certify.ru\r\n";

@@ -21,20 +21,20 @@
 <div class="agencies-table__cell">
     <div class="agencies-table__link agencies-table__expandinfo"
          data-reg="<?php echo $regnum; ?>"
-         title="Просмотреть сведения об органе <?php echo $name; ?>">
+         title="Просмотреть сведения об органе <?php echo replaceQuotes($name); ?>">
         <?php echo $regnum; ?>
     </div>
 </div>
 <div class="agencies-table__cell agencies-table__cell_name">
     <a class="agencies-table__link"
        href="<?php echo $link; ?>"
-       title="Сертификаты выданные <?php echo $name; ?>">
+       title="Сертификаты выданные <?php echo replaceQuotes($name); ?>">
         <?php echo $name; ?>
     </a>
     <?php if ($url !== '') { ?>
         <a class="agencies-table__link agencies-table__link_website"
            href="<?php echo $url; ?>"
-           title="Перейти на официальный сайт <?php echo $name; ?>">
+           title="Перейти на официальный сайт <?php echo replaceQuotes($name); ?>">
             <?php echo $urlDisplayable; ?>
         </a>
     <?php } ?>

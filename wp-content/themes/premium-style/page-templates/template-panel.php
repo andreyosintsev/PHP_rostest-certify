@@ -39,7 +39,7 @@ Template Name: Panel
                 $res = $wpdb->get_row($wpdb->prepare("SELECT email FROM wp_paidusers WHERE ID = %d", $user->ID));
                 $to = $res->email;
 
-                $subject = 'Регистрация на сайте rostest-certify';
+                $subject = mb_encode_mimeheader('Регистрация на сайте rostest-certify','UTF-8', 'B');
 
                 $headers  = "From: support@rostest-certify.ru\r\n";
                 $headers .= "Reply-To: support@rostest-certify.ru\r\n";
@@ -92,7 +92,9 @@ Template Name: Panel
         <main class="main">
             <div class="content">
                 <?php if (!$isAuth) { ?>
-                    <div class="content__ad"></div>
+                    <div class="content__ad">
+                        <?php echo getAdContent('horizontal.ad'); ?>
+                    </div>
                 <?php } ?>
                 <h2 class="content__title">
                     Регистрация и активация
@@ -124,7 +126,7 @@ Template Name: Panel
                                     <ol class="certificates-table__downloaded">
                                         <?php foreach ($userDownload as $post) { ?>
                                              <li>
-                                                 <a class="certificates-table__downloaded-link"href="<?php echo get_permalink($post->post_id); ?>">
+                                                 <a class="certificates-table__downloaded-link" href="<?php echo get_permalink($post->post_id); ?>">
                                                      <?php echo mb_ucfirst(cutStringToWords(get_the_title($post->post_id), 100)); ?>
                                                  </a>
                                              </li>

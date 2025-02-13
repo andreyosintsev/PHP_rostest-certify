@@ -26,7 +26,7 @@
         </div>
         <?php
         $search_string = empty($search_num)
-            ? "Поиск сертификата по номеру"
+            ? "Поиск по номеру сертификата"
             : $search_num;
         ?>
         <form class="search" action="<?php echo $site_url; ?>/naiti-sertifikat-po-nomeru" method="get">
@@ -89,7 +89,7 @@
                      title="Яндекс.Метрика: данные за сегодня (просмотры, визиты и уникальные посетители)"
                      class="ym-advanced-informer"
                      data-cid="32820367"
-                     data-lang="ru" />
+                     data-lang="ru">
             </a>
             <!-- /Yandex.Metrika informer -->
 
@@ -106,7 +106,7 @@
                     webvisor:true
                 });
             </script>
-            <noscript><div><img src="https://mc.yandex.ru/watch/32820367" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+            <noscript><div><img src="https://mc.yandex.ru/watch/32820367" style="position:absolute; left:-9999px;" alt=""></div></noscript>
             <!-- /Yandex.Metrika counter -->
         </div>
     </div>

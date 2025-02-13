@@ -16,6 +16,7 @@
     $post =     get_post($postId);
     $title =    get_the_title();
     $titleUp =  mb_ucfirst($title);
+    $titleClean = replaceQuotes($title);
     $number =   get_post_meta(get_the_ID(), "param1_number", $single = true);
     $link =     get_permalink();
     $thumb =    getThumbnail(220, 315, $post->ID);
@@ -28,23 +29,23 @@
     <div class="certificates-item__link-thumb">
         <a class="certificates-item__link"
            href="<?php echo $link; ?>"
-           title="Сертификат на <?php echo $title; ?>">
+           title="Сертификат на <?php echo $titleClean; ?>">
             <img class="certificates-item__thumb"
                  src="<?php echo $thumb; ?>"
-                 alt="<?php echo $title; ?>">;
+                 alt="<?php echo $titleClean; ?>">;
             <div class="certificates-item__gradient"></div>
         </a>
     </div>
     <div class="certificates-item__description">
         <div class="certificates-item__title">
             <a href="<?php echo $link; ?>"
-               title="Сертификат на <?php echo $title; ?>">
+               title="Сертификат на <?php echo $titleClean; ?>">
                 <?php echo $titleUp; ?>
             </a>
         </div>
         <div class="certificates-item__manufacturer">
             <a href="<?php echo $manufacturerLink; ?>"
-               title="Сертификаты изготовителя <?php echo $manufacturer; ?>"
+               title="Сертификаты изготовителя <?php echo $titleClean; ?>"
             >
                 <?php echo $manufacturer; ?>
             </a>
@@ -56,11 +57,10 @@
             № <?php echo $number; ?>
         </div>
     </div>
-
     <div class="certificates-item__category-more">
         <?php echo getCategoryTree(null, $post->ID); ?>
         <div class="certificates-item__more">
-            <a href="<?php echo $link; ?>" title="Просмотреть и скачать сертификат на <?php echo $title; ?>">
+            <a href="<?php echo $link; ?>" title="Просмотреть и скачать сертификат на <?php echo $titleClean; ?>">
                 Скачать
             </a>
         </div>

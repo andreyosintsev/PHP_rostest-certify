@@ -35,7 +35,9 @@ Template Name: Products
     <main class="main">
         <div class="content">
             <?php if (!$isAuth) { ?>
-                <div class="content__ad"></div>
+                <div class="content__ad">
+                    <?php echo getAdContent('horizontal.ad'); ?>
+                </div>
             <?php } ?>
             <div class="products-list">
                 <div class="products-list__classificators">
@@ -121,8 +123,8 @@ Template Name: Products
                                                 ?>
                                                     <li class="product-item__content-item product-content-item">
                                                         <a class="product-content-item__link"
-                                                           href="<?php echo get_category_link($category2->term_id) ?>"
-                                                           title="Сертификаты из рубрики <?php echo $catName2 ?>">
+                                                           href="<?php echo get_category_link($category2->term_id); ?>"
+                                                           title="Сертификаты из рубрики <?php echo replaceQuotes($catName2); ?>">
                                                             <?php if (!empty($catNumber2)) { ?>
                                                                 <div class="product-content-item__code">
                                                                     <?php echo $catNumber2; ?>
@@ -142,7 +144,9 @@ Template Name: Products
 
             </div>
             <?php if (!$isAuth) { ?>
-                <div class="content__ad"></div>
+                <div class="content__ad">
+                    <?php echo getAdContent(''); ?>
+                </div>
             <?php } ?>
         </div>
         <aside class="sidebar">

@@ -55,7 +55,11 @@
     </div>
     <main class="main">
         <div class="content">
-            <div class="content__ad"></div>
+            <?php if (!$isAuth) { ?>
+                <div class="content__ad">
+                    <?php echo getAdContent('horizontal.ad'); ?>
+                </div>
+            <?php } ?>
             <div class="certificate">
                 <?php
                     $thumbnail = getThumbnail(454, 650, get_the_ID(), false);
@@ -64,15 +68,15 @@
                 <img class="certificate__image"
                      id="certify__image"
                      src="<?php echo $thumbnail;?>"
-                     alt="Сертификат на <?php echo the_title(); ?>"
-                     title="Скачать сертификат на <?php echo the_title(); ?>">
+                     alt="Сертификат на <?php echo replaceQuotes(get_the_title()); ?>"
+                     title="Скачать сертификат на <?php echo replaceQuotes(get_the_title()); ?>">
                 <?php
                     if ($thumbnail2 !== '') { ?>
                         <img class="certificate__image"
                              id="appendix__image"
                              src="<?php echo $thumbnail2;?>"
-                             alt="Приложение к сертификату на <?php echo the_title(); ?>"
-                             title="Скачать приложение к сертификату на <?php echo the_title(); ?>">
+                             alt="Приложение к сертификату на <?php echo replaceQuotes(get_the_title()); ?>"
+                             title="Скачать приложение к сертификату на <?php echo replaceQuotes(get_the_title()); ?>">
                 <?php } ?>
             </div>
             <div class="specs">
@@ -88,15 +92,17 @@
                             <div class="tags__tag">
                                 <a class="tags__link"
                                    href="<?php echo esc_url(get_tag_link($tag->term_id)); ?>"
-                                    title="Сертификаты на <?php echo esc_html($tag->name); ?>">
+                                    title="Сертификаты на <?php echo replaceQuotes(esc_html($tag->name)); ?>">
                                     <?php echo esc_html($tag->name); ?>
                                 </a>
                             </div>
                     <?php } ?>
                 </div>
             </div>
-            <?php if (!$isAuth) { ?>
-                <div class="content__ad"></div>
+            <?php if (/* !$isAuth*/ false) { ?>
+                <div class="content__ad">
+                    <?php echo getAdContent(''); ?>
+                </div>
             <?php } ?>
             <?php related_posts(); ?>
         </div>

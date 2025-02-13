@@ -46,9 +46,11 @@ Template Name: Debug
                         echo '<li>'. $regnum .' : '. $agency. '</li>';
                         ++$num;
                     };
-                    echo '<br/>Всего <b>'. $num. '</b> организаций';
                 ?>
             </ol>
+            <p>
+                Всего <b><?php echo $num; ?></b> организаций
+            </p>
         </div>
         <aside class="sidebar">
             <?php get_sidebar(); ?>

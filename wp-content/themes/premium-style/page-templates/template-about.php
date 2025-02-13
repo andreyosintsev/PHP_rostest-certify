@@ -35,7 +35,11 @@ Template Name: About
     </div>
     <main class="main">
         <div class="content">
-            <div class="content__ad"></div>
+            <?php if (!$isAuth) { ?>
+                <div class="content__ad">
+                    <?php echo getAdContent('horizontal.ad'); ?>
+                </div>
+            <?php } ?>
             <section class="about">
                 <h3 class="title-section about__title">
                     О сайте
@@ -82,8 +86,10 @@ Template Name: About
                     ?>
                 </div>
             </section>
-            <?php if (!$isAuth) { ?>
-                <div class="content__ad"></div>
+            <?php if (/* !$isAuth */ false) { ?>
+                <div class="content__ad">
+                    <?php echo getAdContent(''); ?>
+                </div>
             <?php } ?>
         </div>
         <aside class="sidebar">

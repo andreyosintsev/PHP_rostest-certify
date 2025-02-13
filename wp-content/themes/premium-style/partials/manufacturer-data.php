@@ -23,7 +23,7 @@
     <a class="manufacturers-data__link"
 
        href="<?php echo getManufacturerLink($manufacturer); ?>"
-       title="Сертификаты <?php echo $manufacturer; ?>">
+       title="Сертификаты <?php echo replaceQuotes($manufacturer); ?>">
         <div class="manufacturers-data__thumb-title">
             <?php
             $logo = getManufacturerLogo($manufacturer);
@@ -31,7 +31,7 @@
             if ($logo) { ?>
                 <div class="manufacturers-data__thumb">
                     <img src="<?php echo $site_url; ?>/logos/<?php echo $logo; ?>"
-                         alt="Сертификаты <?php echo $manufacturer; ?>">
+                         alt="Сертификаты <?php echo replaceQuotes($manufacturer); ?>">
                 </div>
             <?php  } ?>
             <div class="manufacturers-data__title">

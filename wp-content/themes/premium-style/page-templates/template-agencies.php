@@ -21,6 +21,12 @@ Template Name: Agencies
     $agencySearchString  = $_GET['agency'];
     $isAuth              = isset($_SESSION['auth']);
 
+    if (isset($_GET['param'])) {
+        header("HTTP/1.1 301 Moved Permanently");
+        header("Location: ". $base_url .'/?agency='. $_GET['param']);
+        exit();
+    }
+
     $agenciesNums = getAllAgenciesNum();
 
     $validOrderby = ["title", "number", "city"];
@@ -81,7 +87,9 @@ Template Name: Agencies
         <div class="content">
             <?php if ($agencySearchString == '') { ?>
                 <?php if (!$isAuth) { ?>
-                    <div class="content__ad"></div>
+                    <div class="content__ad">
+                        <?php echo getAdContent('horizontal.ad'); ?>
+                    </div>
                 <?php } ?>
                 <div class="content__foreword">
                     <p>Представлен реестр органов по сертификации и испытательных лабораторий (центров) Таможенного союза, осуществляющих оценку соответствия продукции, включенной в Единый перечень продукции и требованиям Технических регламентов Таможенного союза.</p>
@@ -361,9 +369,10 @@ Template Name: Agencies
                     <?php }
                 }
                 ?>
+                </div>
                 <?php if (function_exists ('wp_page_numbers')) wp_page_numbers(); ?>
             </section>
-            <?php if (!$isAuth) { ?>
+            <?php if (/* !$isAuth */ false) { ?>
                 <div class="content__ad"></div>
             <?php } ?>
                 <?php } else { ?>

@@ -26,12 +26,13 @@
 <html <?php language_attributes(); ?>>
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<meta name='yandex-verification' content='5034b468f638d5d4' />
-	<meta name="yandex-verification" content="b0dd183a09ff4e68" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name='yandex-verification' content='5034b468f638d5d4'>
+	<meta name="yandex-verification" content="b0dd183a09ff4e68">
 
 	<!--OpenGraph-->
-	<meta property="og:site_name" content="<?php bloginfo('name'); ?>" />
+	<meta property="og:site_name" content="<?php bloginfo('name'); ?>">
+    <meta property="og:logo" content="<?php echo $template_url; ?>/images/logo.svg" />
 
 	<?php if (is_single()) {?>
 	    <?php
@@ -227,6 +228,7 @@
         <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/title-section.css">
         <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/products-list.css">
         <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/certificates-item.css">
+        <link rel="stylesheet" href="<?php echo $template_url;?>/css/blocks/wp-page-numbers.css">
         <link rel="stylesheet" href="<?php echo $template_url;?>/css/pages/search.css">
 
     <?php } ?>
@@ -333,7 +335,7 @@
     </div>
     <?php
         $search_string = empty($search_num)
-            ? "Поиск сертификата по номеру"
+            ? "Поиск по номеру сертификата"
             : $search_num;
     ?>
     <form class="search search_collapseable" action="<?php echo $site_url; ?>/naiti-sertifikat-po-nomeru" method="get">

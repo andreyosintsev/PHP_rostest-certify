@@ -31,7 +31,7 @@
                 <div class="search-item__title">
                     Поиск сертификата по названию продукции:
                 </div>
-                <form class="search-item__form" method="get" action="">
+                <form class="search-item__form" method="get">
                     <div class="search-item__magnifier-input">
                         <div class="search-item__magnifier"></div>
                         <input class="search-item__input" type="text" name="s" id="s" placeholder="Например, средства индивидуальной защиты">
@@ -47,7 +47,9 @@
     <main class="main">
         <div class="content">
             <?php if (!$isAuth) { ?>
-                <div class="content__ad"></div>
+                <div class="content__ad">
+                    <?php echo getAdContent('home.ad'); ?>
+                </div>
             <?php } ?>
             <section class="certificates">
                 <div class="title-more certificates__title">
@@ -92,10 +94,10 @@
                             $manufacturerDesc = getManufacturerFull($manufacturer);
                     ?>
                         <div class="manufacturers-item">
-                            <a class="manufacturers-item__link" href="<?php echo $manufacturerLink; ?>" title="Сертификаты <?php echo $manufacturer; ?>">
+                            <a class="manufacturers-item__link" href="<?php echo $manufacturerLink; ?>" title="Сертификаты <?php echo replaceQuotes($manufacturer); ?>">
                                 <div class="manufacturers-item__thumb-title">
                                     <div class="manufacturers-item__thumb">
-                                        <img src="<?php echo $site_url; ?>/logos/<?php echo $manufacturerLogo; ?>" alt="Сертификаты <?php echo $manufacturer; ?>">
+                                        <img src="<?php echo $site_url; ?>/logos/<?php echo $manufacturerLogo; ?>" alt="Сертификаты <?php echo replaceQuotes($manufacturer); ?>">
                                     </div>
                                     <div class="manufacturers-item__title">
                                         <?php echo $manufacturer; ?>
@@ -128,7 +130,7 @@
                         $agencyDesc = getAgencyFull($agency);
                     ?>
                         <div class="agencies-item">
-                            <a class="agencies-item__link" href="<?php echo $agencyLink; ?>" title="Ceртификаты, выданные <?php echo $agency; ?>">
+                            <a class="agencies-item__link" href="<?php echo $agencyLink; ?>" title="Ceртификаты, выданные <?php echo replaceQuotes($agency); ?>">
                                 <div class="agencies-item__title">
                                     <?php echo $agency; ?>
                                 </div>
@@ -160,8 +162,10 @@
                     ?>
                 </div>
             </section>
-            <?php if (!$isAuth) { ?>
-                <div class="content__ad"></div>
+            <?php if (/* !$isAuth */ false) { ?>
+                <div class="content__ad">
+                    <?php echo getAdContent(''); ?>
+                </div>
             <?php } ?>
         </div>
         <aside class="sidebar">

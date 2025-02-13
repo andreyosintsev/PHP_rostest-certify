@@ -42,7 +42,7 @@
                         "content" => mb_ucfirst($searchQuery)
                     ]];
 
-                    get_template_part('partials/breadcrumbs',null, ['breadcrumbs' => $breadcrumbs]);
+                    get_template_part('partials/breadcrumbs', null, ['breadcrumbs' => $breadcrumbs]);
                 ?>
                 <h1 class="hero__title">
                     Поиск по названию продукции
@@ -51,7 +51,7 @@
                     <div class="search-item__title">
                         Поиск сертификата по названию продукции:
                     </div>
-                    <form class="search-item__form" method="get" id="searchform" action="">
+                    <form class="search-item__form" method="get" id="searchform">
                         <div class="search-item__magnifier-input">
                             <div class="search-item__magnifier"></div>
                             <input class="search-item__input"
@@ -67,10 +67,7 @@
         </div>
         <main class="main">
             <div class="content">
-                <?php if (!$isAuth) { ?>
-                    <div class="content__ad"></div>
-                <?php } ?>
-                <section class="certificates">
+                    <section class="certificates">
                     <?php
                         $postIds = searchByTitle(get_search_query());
                         $postIds = sortActual($postIds);
@@ -86,15 +83,25 @@
                         </h2>
                         <div class="certificates__content">
                             <?php
+                            $num = 0;
                             foreach($postIds as $postId) {
                                 get_template_part( 'partials/certificates-item', null, ['postId' => $postId] );
+                                if (++$num > 1) { ?>
+                                    <?php if (!$isAuth) { ?>
+                                        <div class="content__ad">
+                                            <?php echo getAdContent('horizontal.ad'); ?>
+                                        </div>
+                                    <?php } ?>
+                                <?php }
                             }
                             ?>
                         </div>
 
                         <?php if (function_exists ('wp_page_numbers')) wp_page_numbers();
                             if (!$isAuth) { ?>
-                            <div class="content__ad"></div>
+                            <div class="content__ad">
+                                <?php echo getAdContent(''); ?>
+                            </div>
                             <?php }
                         } else { ?>
                             <h2 class="title-section certificates__title ">

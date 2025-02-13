@@ -40,7 +40,9 @@ Template Name: Add new certificate
         <main class="main">
             <div class="content add">
                 <?php if (!$isAuth) { ?>
-                    <div class="content__ad"></div>
+                    <div class="content__ad">
+                        <?php echo getAdContent('horizontal.ad'); ?>
+                    </div>
                 <?php } ?>
                 <div class="add__content">
                     <h2>Порядок работы</h2>

@@ -17,6 +17,14 @@ Template Name: Norms
 <?php
     $site_url            = site_url();
     $page_url            = get_page_uri();
+    $base_url            = $site_url. '/' .$page_url;
+
+    if (isset($_GET['param'])) {
+        header("HTTP/1.1 301 Moved Permanently");
+        header("Location: ". $base_url .'/?norm='. $_GET['param']);
+        exit();
+    }
+
 
     $normSearchString    = $_GET['norm'];
     $isAuth              = isset($_SESSION['auth']);
@@ -37,8 +45,10 @@ Template Name: Norms
             } else {
                 get_template_part('partials/norms-not-found', null, $norms);
             }
-            if (!$isAuth) { ?>
-                <div class="content__ad"></div>
+            if (/* !$isAuth */ false) { ?>
+                <div class="content__ad">
+                    <?php echo getAdContent(''); ?>
+                </div>
             <?php }
         } ?>
         </div>

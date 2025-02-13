@@ -38,10 +38,10 @@
 
                 switch ($breadcrumbName) {
                     case 'ОКП':
-                        $breadcrumbLink = $site_url .'/naiti-sertifikat-po-vidu-produktsii?classificator=okp';
+                        $breadcrumbLink = 'naiti-sertifikat-po-vidu-produktsii?classificator=okp';
                         break;
                     case 'ТН ВЭД ТС':
-                        $breadcrumbLink = $site_url .'/naiti-sertifikat-po-vidu-produktsii?classificator=tnvedts';
+                        $breadcrumbLink = 'naiti-sertifikat-po-vidu-produktsii?classificator=tnvedts';
                         break;
                     default:
                         $breadcrumbLink = get_category_link($cat);
@@ -102,7 +102,9 @@
                                     get_template_part( 'partials/certificates-item', null, ['postId' => get_the_ID()] );
 
                                     if (++$num == 2 && !$isAuth) { ?>
-                                        <div class="content__ad"></div>
+                                        <div class="content__ad">
+                                            <?php echo getAdContent('horizontal.ad'); ?>
+                                        </div>
                                     <?php }
                                 endwhile;
                             ?>
@@ -120,7 +122,9 @@
                     <?php } ?>
                 </section>
                 <?php if (!$isAuth) { ?>
-                    <div class="content__ad"></div>
+                    <div class="content__ad">
+                        <?php echo getAdContent(''); ?>
+                    </div>
                 <?php } ?>
             </div>
             <aside class="sidebar">

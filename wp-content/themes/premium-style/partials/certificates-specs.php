@@ -89,7 +89,7 @@
                         <div class="specs__agency-website">
                             <a class="specs__agency-website-link"
                                href="<?php echo $agencyUrl; ?>"
-                               title="Официальный сайт <?php echo $agencyClean; ?>"
+                               title="Официальный сайт <?php echo replaceQuotes($agencyClean); ?>"
                                target="_blank"
                                rel="nofollow">
                                 <?php echo $agencyUrlDisplayable; ?>
@@ -102,7 +102,7 @@
                     <div class="specs__agency-more">
                         <a class="specs__agency-more-link"
                            href="<?php echo getAgencyLink($agencyClean); ?>"
-                           title="Сертификаты, выданные <?php echo $agencyClean; ?>">
+                           title="Сертификаты, выданные <?php echo replaceQuotes($agencyClean); ?>">
                             Другие сертификаты, выданные органом
                         </a>
                     </div>
@@ -168,7 +168,7 @@
                             <div class="specs__manufacturer-logo">
                                 <img class="specs__manufacturer-logo-image"
                                      src="<?php echo $site_url; ?>/logos/<?php echo $logo; ?>"
-                                     alt="<?php echo $manufacturerClean; ?>"
+                                     alt="<?php echo replaceQuotes($manufacturerClean); ?>"
                                 >
                             </div>
                         <?php } ?>

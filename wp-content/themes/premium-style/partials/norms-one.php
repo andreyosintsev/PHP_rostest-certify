@@ -57,7 +57,7 @@
                     <div class="norms-data__actions">
                         <a class="button norms-data__action"
                            href="<?php echo $site_url; ?>/api/download-norm-count.php?id=<?php echo $norms[0]->ID ?>"
-                           title="Скачать <?php echo $norms[0]->name; ?> - <?php echo $norms[0]->name_full; ?>"
+                           title="Скачать <?php echo $norms[0]->name; ?> - <?php echo replaceQuotes($norms[0]->name_full); ?>"
                            target="_blank"
                            onclick="ym(32820367,'reachGoal','norm-click'); return true;"
                         >

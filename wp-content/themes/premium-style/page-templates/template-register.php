@@ -54,7 +54,9 @@ Template Name: Register
     <main class="main">
         <div class="content">
             <?php if (!$isAuth) { ?>
-                <div class="content__ad"></div>
+                <div class="content__ad">
+                    <?php echo getAdContent('horizontal.ad'); ?>
+                </div>
             <?php } ?>
             <div class="content__foreword">
                 <p>Представлен реестр сертификатов ГОСТ Р, Таможенного союза, и Деклараций соответствия Таможенного союза, автоматически создаваемый на основе документов, представленных на данном сайте.</p>
@@ -151,12 +153,12 @@ Template Name: Register
                         <div class="certificates-table__cell">
                             <a class="certificates-table__link"
                                href="<?php the_permalink()?>"
-                               title="Сертификат на <?php the_title()?>">
+                               title="Сертификат на <?php echo replaceQuotes(get_the_title()); ?>">
                                 <?php echo mb_ucfirst(get_the_title()) ?>
                             </a>
                             <a class="certificates-table__link certificates-table__link_manufacturer"
                                href="<?php echo getManufacturerLink($manufacturer); ?>"
-                               title="Другие сертификаты <?php echo $manufacturer; ?>">
+                               title="Другие сертификаты <?php echo replaceQuotes($manufacturer); ?>">
                                 <?php echo $manufacturer; ?>
                             </a>
                         </div>
@@ -167,8 +169,10 @@ Template Name: Register
                 </div>
                 <?php if (function_exists ('wp_page_numbers')) wp_page_numbers(); ?>
             </div>
-            <?php if (!$isAuth) { ?>
-                <div class="content__ad"></div>
+            <?php if (/* !$isAuth */ false) { ?>
+                <div class="content__ad">
+                    <?php echo getAdContent(''); ?>
+                </div>
             <?php } ?>
         </div>
         <aside class="sidebar">

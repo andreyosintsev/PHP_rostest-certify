@@ -82,35 +82,35 @@ add_action( 'wp_enqueue_scripts', 'premiumstyle_scripts_styles' );
  * Creates a formatted title for the website.
  *
  */
-function premiumstyle_wp_title( $title, $sep ) 
-{
-	global $paged, $page;
-
-	// Skip the title for RSS feed.
-	if ( is_feed() )
-	{
-		return $title;
-	}
-
-	// Add the site name.
-	$title .= get_bloginfo( 'name' );
-
-	// Add the site description for the home/front page.
-	$site_description = get_bloginfo( 'description', 'display' );
-	if ( $site_description && ( is_home() || is_front_page() ) )
-	{
-		$title = "$title $sep $site_description";
-	}
-
-	// Add a page number if necessary.
-	if ( $paged >= 2 || $page >= 2 )
-	{
-		$title = "$title $sep " . sprintf( __( 'Page %s', 'gopiplustheme' ), max( $paged, $page ) );
-	}
-
-	return $title;
-}
-add_filter( 'wp_title', 'premiumstyle_wp_title', 10, 2 );
+//function premiumstyle_wp_title( $title, $sep )
+//{
+//	global $paged, $page;
+//
+//	// Skip the title for RSS feed.
+//	if ( is_feed() )
+//	{
+//		return $title;
+//	}
+//
+//	// Add the site name.
+//	$title .= get_bloginfo( 'name' );
+//
+//	// Add the site description for the home/front page.
+//	$site_description = get_bloginfo( 'description', 'display' );
+//	if ( $site_description && ( is_home() || is_front_page() ) )
+//	{
+//		$title = "$title $sep $site_description";
+//	}
+//
+//	// Add a page number if necessary.
+//	if ( $paged >= 2 || $page >= 2 )
+//	{
+//		$title = "$title $sep " . sprintf( __( 'Page %s', 'gopiplustheme' ), max( $paged, $page ) );
+//	}
+//
+//	return $title;
+//}
+//add_filter( 'wp_title', 'premiumstyle_wp_title', 10, 2 );
 
 /**
  * Sets up the WordPress core custom header arguments and settings.
@@ -682,10 +682,83 @@ remove_action( 'wp_head', 'rsd_link' );
 ?>
 <?php
 /**
+ *  Функция формирования тега Title страниц сайта в зависимости от открытой страницы
+ */
+add_filter('wp_title', 'headTitle', 10, 2 );
+function headTitle($title, $sep) {
+    $blogName = get_bloginfo('name');
+
+    if (is_single()) {
+        return 'Скачать сертификат на '. mb_lcfirst(get_the_title()) . ' | ' . $blogName;
+    }
+    if (is_category() || is_tag()) {
+        return 'Скачать сертификаты на '.
+            cutStringToWords(
+                esc_attr(
+                    mb_strtolower(
+                        splitStringByDash(
+                            single_cat_title('',false)
+                        )[1]
+                    )
+                ),256) . ' | ' . $blogName;
+    }
+    if (is_home()) {
+        return 'Сертификаты соответствия скачать бесплатно - rostest-certify.ru';
+    }
+    if (is_search()) {
+        $s = $_GET['s'];
+        if (empty($s))
+            return 'Найти сертификаты по названию продукции' . ' | ' . $blogName;
+        else
+            return 'Скачать сертификаты на '. mb_lcfirst($s) . ' | ' . $blogName;
+    }
+    if (is_page('naiti-sertifikat-po-vidu-produktsii')) {
+       return "Найти сертификаты соответствия по виду продукции" . ' | ' . $blogName;
+    }
+    if (is_page('kompanii')) {
+        $manufacturer = $_GET['manufacturer'];
+        if (empty($manufacturer))
+            return 'Найти сертификаты по изготовителю' . ' | ' . $blogName;
+        else
+            return 'Скачать сертификаты '. $manufacturer . ' | ' . $blogName;
+    }
+    if (is_page('reestr-sertifikatov')) {
+        return 'Реестр сертификатов и деклараций соответствия' . ' | ' . $blogName;;
+    }
+    if (is_page('organy-po-sertifikacii')) {
+        $agency = $_GET['agency'];
+        if (empty($agency))
+            return 'Реестр органов по сертификации' . ' | ' . $blogName;
+        else
+            return 'Скачать сертификаты выданные '. $agency . ' | ' . $blogName;
+    }
+    if (is_page('gosty')) {
+        $norm = $_GET['norm'];
+        if (empty($norm))
+            return 'ГОСТы на материалы, товары, продукцию и услуги' . ' | ' . $blogName;
+        else
+            return 'Скачать бесплатно '. $norm . ' | ' . $blogName;
+    }
+    if (is_page('naiti-sertifikat-po-nomeru')) {
+        $param = $_GET['param'];
+        if (empty($param))
+            return 'Найти сертификат соответствия по номеру' . ' | ' . $blogName;
+        else
+            return 'Скачать сертификаты с № '. $param . ' | ' . $blogName;
+    }
+    if (is_page('o-sajte')) {
+        return 'О сайте' . ' | ' . $blogName;
+    }
+
+    return $title . $blogName;
+}
+?>
+<?php
+/**
  *  Функция формирования метаполя Description страницы сайта в зависимости от открытой страницы
  */
-add_action("wp_head", "wp_head_meta_description", 1);
-function wp_head_meta_description() {
+add_action("wp_head", "headMetaDescription", 1);
+function headMetaDescription() {
     global $post;
 	if( is_single() ) {
 		$og_number        	= getCertNumber($post->ID);
@@ -705,40 +778,43 @@ function wp_head_meta_description() {
                 ),
                 256) .'">'."\r\n";
 	}
+    if (is_home()) {
+        echo '<meta name="description" content="На этом сайте можно скачать сертификаты ГОСТ Р, ТС и декларации соответствия бесплатно и без регистрации">'."\r\n";
+    }
     if (is_page('naiti-sertifikat-po-vidu-produktsii')) {
         echo '<meta name="description" content="Сертификаты соответствия по видам продукции">'."\r\n";
     }
     if (is_page('naiti-sertifikat-po-nomeru')) {
-        if (!isset($_GET['param'])) echo '<meta name="description" content="Сертификаты соответствия по номеру сертификата">'."\r\n";else
+        if (empty($_GET['param'])) echo '<meta name="description" content="Сертификаты соответствия по номеру сертификата">'."\r\n";else
             echo '<meta name="description" content="Скачать сертификаты с номером '.$_GET['param'].'">'."\r\n";
     }
     if (is_page('kompanii')) {
-        if (!isset($_GET['manufacturer'])) echo '<meta name="description" content="Сертификаты соответствия по организациям-изготовителям">'."\r\n"; else
+        if (empty($_GET['manufacturer'])) echo '<meta name="description" content="Сертификаты соответствия по организациям-изготовителям">'."\r\n"; else
             echo '<meta name="description" content="Скачать сертификаты на продукцию '.$_GET['manufacturer'].'">'."\r\n";
      }
     if (is_page('reestr-sertifikatov')) {
-        echo '<meta name="description" content="Реестр сертификатов и деклараций соответствия">'."\r\n";
+        echo '<meta name="description" content="Реестр сертификатов и деклараций соответствия для бесплатного скачивания">'."\r\n";
     }
 	if (is_page('organy-po-sertifikacii')) {
-	    if (!isset($_GET['agency'])) echo '<meta name="description" content="Сертификаты соответствия по органам по сертификации">'."\r\n"; else
+	    if (empty($_GET['agency'])) echo '<meta name="description" content="Сертификаты соответствия по органам по сертификации">'."\r\n"; else
             echo '<meta name="description" content="Скачать сертификаты выданные органом по сертификации '.$_GET['agency'].'">'."\r\n";
 	}
 	if (is_page('gosty')) {
-		if (!isset($_GET['norm'])) echo '<meta name="description" content="ГОСТы, технические регламенты и другие нормативы на материалы, товары, продукцию и услуги">'."\r\n"; else
-		echo '<meta name="description" content="Скачать '.$_GET['norm'].'">'."\r\n";
+		if (empty($_GET['norm'])) echo '<meta name="description" content="ГОСТы, технические регламенты и другие нормативы на материалы, товары, продукцию и услуги">'."\r\n"; else
+		echo '<meta name="description" content="Скачать '.$_GET['norm'].' бесплатно и без регистрации">'."\r\n";
 	}
 	if (is_page('o-sajte')) {
 		echo '<meta name="description" content="О сайте, отказ от ответственности и обратная связь">'."\r\n";
 	}
 	if (is_search()) {
 		if (empty($_GET['s'])) echo '<meta name="description" content="Поиск сертификатов соответствия на продукцию">'."\r\n"; else
-		echo '<meta name="description" content="Скачать сертификаты соответствия на '.$_GET['s'].'">'."\r\n";
+		echo '<meta name="description" content="Скачать сертификаты соответствия на '. mb_lcfirst($_GET['s']) .'">'."\r\n";
 	}
 }
 ?>
 <?php
 /**
- * Фугкция обновляет количество скачиваний сертификата в метатеге WordPress
+ * Функция обновляет количество скачиваний сертификата в метатеге WordPress
  * и добавляет сведения о скаченном сертификате в историю скачиваний пользователя
  *
  * @param $id - id записи с сертификатом
@@ -1372,7 +1448,7 @@ function getNormLinks(string $compliesWith = '') {
 		if (mb_strpos($compliesWith, $norm->name) !== false) {
             $out .= '<a class="specs__complies-link"
                         href="'. getNormLink($norm->name).'" 
-                        title="Скачать '. $norm->name .' - '. $norm->name_full .'">
+                        title="Скачать '. $norm->name .' - '. replaceQuotes($norm->name_full) .'">
                         <span class="number">'. $norm->name .'</span> - '. $norm->name_full .'</a>';
 		}
     }
@@ -1717,7 +1793,7 @@ function getCategoryLinkHtml($catId): string {
     $catName = get_cat_name($catId);
     [$catNumber, $catName] = splitStringByDash($catName);
 
-    return '<a itemprop="item" href="' . $catLink . '" title="Сертификаты на продукцию: ' . $catName . '">
+    return '<a itemprop="item" href="' . $catLink . '" title="Сертификаты на продукцию: ' . replaceQuotes($catName) . '">
             <span class="ancestor__number">'. $catNumber .'</span> - <span class="ancestor__name">'. $catName .'</span>
             <meta itemprop="name" content="' . cutStringToWords($catName, 30) . '">';
 }
@@ -2534,77 +2610,6 @@ function getAllAgenciesLinks(int $start = 0, int $num = null) {
 ?>
 <?php
 /**
- * Функция устанавливает заголовок <title> страницы Изготовители
- *
- * @param $title - заголовок <title>
- * @param $sep - разделитель
- * @return mixed|string - результирующая строка
- */
-function manufacturerTitle($title, $sep) {
-    if (is_page('kompanii')) {
-        $manufacturer = $_GET['manufacturer'];
-        if (isset($manufacturer))
-            $title = 'Скачать сертификаты '. $manufacturer .' | '. get_bloginfo('name');
-        else
-            $title = 'Найти сертификаты по изготовителю | '. get_bloginfo('name');
-    }
-    return $title;
-}
-add_filter('wp_title', 'manufacturerTitle', 10, 2);
-?>
-<?php
-/**
- * Функция устанавливает заголовок <title> страницы Органы
- *
- * @param $title - заголовок <title>
- * @param $sep - разделитель
- * @return mixed|string - результирующая строка
- */
-function agencyTitle($title, $sep) {
-    if (is_page('organy-po-sertifikacii')) {
-        $agency = $_GET['agency'];
-        if (isset($agency))
-            $title = 'Скачать сертификаты выданные '. $agency .' | '. get_bloginfo('name');
-        else
-            $title = 'Реестр органов по сертификации | '. get_bloginfo('name');
-    }
-    return $title;
-}
-add_filter('wp_title', 'agencyTitle', 10, 2);
-?>
-<?php
-/**
- * Функция устанавливает заголовок <title> страницы ГОСТы
- *
- * @param $title - заголовок <title>
- * @param $sep - разделитель
- * @return mixed|string - результирующая строка
- */
-function normTitle($title, $sep) {
-    if (is_page('gosty')) {
-        $norm = $_GET['norm'];
-        if (isset($norm))
-            $title = 'Скачать бесплатно '. $norm .' - '. current(getNormsByName($norm))->name_full. ' | '. get_bloginfo('name');
-        else
-            $title = 'ГОСТы на материалы, товары, продукцию и услуги | '. get_bloginfo('name');
-    }
-    return $title;
-}
-add_filter('wp_title', 'normTitle', 10, 2);
-function certNumber($title, $sep) {
-    if (is_page('naiti-sertifikat-po-nomeru')) {
-        $param = $_GET['param'];
-        if (isset($param))
-            $title = 'Скачать сертификаты с № '. $param. ' | '. get_bloginfo('name');
-        else
-            $title = 'Найти сертификат соответствия по номеру | '. get_bloginfo('name');
-    }
-    return $title;
-}
-add_filter('wp_title', 'certNumber', 10, 2);
-?>
-<?php
-/**
  * Функция предлагает наиболее редкую цену из возможных вариантов в таблице wp_pricelist
  * DEBUG: в настоящее время заблокирована, всегда возвращает 199
  *
@@ -3271,3 +3276,36 @@ function resultFailed(string $message = '') {
     return $message ? '<div class="add__result add__result_failed">'. htmlspecialchars($message) .'</div>' : '';
 }
 ?>
+<?php
+/**
+ * Функция меняет двойные кавычки на одинарные
+ *
+ * @param $str - исходная строка
+ * @return array|string|string[] - строка, в которой все " заменены на '
+ */
+function replaceQuotes(string $str = '') {
+    if ($str === '') {
+        return '';
+    }
+
+    return str_replace('"', "'", $str);
+}
+?>
+<?php
+/**
+ * Функция загружает рекламу из файла и выводит в разметку
+ *
+ * @param string $fileUrl - строка с URL для рекламы
+ * @return string - HTML-разметка с рекламой
+ */
+function getAdContent(string $fileUrl = ''): string {
+    if ($fileUrl === '') {
+        return '';
+    }
+
+    $fileUrl = site_url() . ADS_PATH . $fileUrl;
+
+    if (@file($fileUrl) === false) return '';
+
+    return  @file_get_contents($fileUrl) ?: '';
+}

@@ -17,6 +17,13 @@ Template Name: Manufacturers
 <?php
     $site_url            = site_url();
     $page_url            = get_page_uri();
+    $base_url            = $site_url. '/' .$page_url;
+
+    if (isset($_GET['param'])) {
+        header("HTTP/1.1 301 Moved Permanently");
+        header("Location: ". $base_url .'/?manufacturer='. $_GET['param']);
+        exit();
+    }
 
     $manufacturerSearchString = $_GET['manufacturer'];
     $isAuth              = isset($_SESSION['auth']);
@@ -71,7 +78,8 @@ Template Name: Manufacturers
         <div class="content">
             <?php if ($manufacturerSearchString == '') { ?>
                 <?php if (!$isAuth) { ?>
-                    <div class="content__ad"></div>
+                    <div class="content__ad">
+                    </div>
                 <?php } ?>
                 <section class="manufacturers">
                     <h2 class="title-section manufacturers__title">
@@ -101,12 +109,12 @@ Template Name: Manufacturers
                                 <div class="manufacturers-item">
                                     <a class="manufacturers-item__link"
                                        href="<?php echo getManufacturerLink($manufacturer); ?>"
-                                       title="Сертификаты <?php echo $manufacturer; ?>"
+                                       title="Сертификаты <?php echo replaceQuotes($manufacturer); ?>"
                                     >
                                         <div class="manufacturers-item__thumb-title">
                                             <div class="manufacturers-item__thumb">
                                                 <img src="<?php echo $site_url; ?>/logos/<?php echo $logo; ?>"
-                                                     alt="Сертификаты <?php echo $manufacturer; ?>">
+                                                     alt="Сертификаты <?php echo replaceQuotes($manufacturer); ?>">
                                             </div>
                                             <div class="manufacturers-item__title">
                                                 <?php echo $manufacturer; ?>
@@ -117,6 +125,7 @@ Template Name: Manufacturers
                             <?php }
                         }
                     ?>
+                    </div>
                 </section>
             <?php } else {
                 $args = array(
@@ -169,11 +178,13 @@ Template Name: Manufacturers
                             get_template_part( 'partials/certificates-item', null, ['postId' => get_the_ID()] );
 
                             if (++$num == 2 && !$isAuth) { ?>
-                                <div class="content__ad"></div>
+                                <div class="content__ad">
+                                    <?php echo getAdContent('horizontal.ad'); ?>
+                                </div>
                             <?php }
                         }
                     ?>
-
+                    </div>
                     <?php if (function_exists ('wp_page_numbers')) wp_page_numbers(); ?>
                 </section>
             <?php } else { ?>

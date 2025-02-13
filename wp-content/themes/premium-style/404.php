@@ -43,7 +43,9 @@
         <main class="main">
             <div class="content">
                 <?php if (!$isAuth) { ?>
-                    <div class="content__ad"></div>
+                    <div class="content__ad">
+                        <?php echo getAdContent('horizontal.ad'); ?>
+                    </div>
                 <?php } ?>
                 <section class="certificates">
                     <p>К сожалению, страница не найдена.</p>

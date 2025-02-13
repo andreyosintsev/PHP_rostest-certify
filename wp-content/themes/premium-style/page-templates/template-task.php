@@ -41,7 +41,9 @@ Template Name: Task
         <main class="main">
             <div class="content task">
                 <?php if (!$isAuth) { ?>
-                    <div class="content__ad"></div>
+                    <div class="content__ad">
+                        <?php echo getAdContent('horizontal.ad'); ?>
+                    </div>
                 <?php } ?>
                 <div class="task__content">
                     <p>

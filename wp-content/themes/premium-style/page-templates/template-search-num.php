@@ -73,7 +73,9 @@ Template Name: Search by Number
                     <p>Чтобы найти номер сертификата или декларации, см. изображения ниже.</p>
                 </section>
                 <?php if (!$isAuth) { ?>
-                    <div class="content__ad"></div>
+                    <div class="content__ad">
+                        <?php echo getAdContent('horizontal.ad'); ?>
+                    </div>
                 <?php } ?>
                 <section class="examples">
                     <h3 class="title-section examples__title">
@@ -123,8 +125,15 @@ Template Name: Search by Number
                         <p>Внимание: поиск осуществляется по цифрам в номере сертификата или декларации.</p>
                         <div class="certificates__content">
                             <?php
+                                $num = 0;
                                 foreach($postIds as $postId) {
                                     get_template_part( 'partials/certificates-item', null, ['postId' => $postId] );
+                                    
+                                    if (++$num == 2 && !$isAuth) { ?>
+                                        <div class="content__ad">
+                                            <?php echo getAdContent('horizontal.ad'); ?>
+                                        </div>
+                                    <?php }
                                 }
                             ?>
                         </div>
@@ -132,8 +141,10 @@ Template Name: Search by Number
                         <?php if (function_exists ('wp_page_numbers')) wp_page_numbers(); ?>
 
                     </section>
-                    <?php if (!$isAuth) { ?>
-                        <div class="content__ad"></div>
+                    <?php if (/* !$isAuth */ false) { ?>
+                        <div class="content__ad">
+                            <?php echo getAdContent(''); ?>
+                        </div>
                     <?php } ?>
                 <?php } else { ?>
 
