@@ -814,6 +814,42 @@ function headMetaDescription() {
 ?>
 <?php
 /**
+ * Функция удаления rel="canonical" по умолчанию
+ *
+ * @return void
+ */
+function remove_default_canonical() {
+    if (isset($_GET['manufacturer']) || isset($_GET['agency']) || isset($_GET['norm'])) {
+        remove_action('wp_head', 'rel_canonical');
+    }
+}
+add_action('wp', 'remove_default_canonical');
+?>
+<?php
+/**
+ * Функция добавления rel="canonical" к страницам изготовителей, органов по сертификации и нормативов,
+ * отображаемым через параметр ?manufacturer, ?agency и ?norm
+ *
+ * @return void
+ */
+function add_custom_canonical_tag() {
+    if ( isset($_GET['manufacturer']) ) {
+        $canonical_url = home_url( '/kompanii/' ) . '?manufacturer=' . urlencode( $_GET['manufacturer'] );
+        echo '<link rel="canonical" href="' . esc_url( $canonical_url ) . '" />' . "\n";
+    }
+    if ( isset($_GET['agency']) ) {
+        $canonical_url = home_url( '/organy-po-sertifikacii/' ) . '?agency=' . urlencode( $_GET['agency'] );
+        echo '<link rel="canonical" href="' . esc_url( $canonical_url ) . '" />' . "\n";
+    }
+    if ( isset($_GET['norm']) ) {
+        $canonical_url = home_url( '/gosty/' ) . '?norm=' . urlencode( $_GET['norm'] );
+        echo '<link rel="canonical" href="' . esc_url( $canonical_url ) . '" />' . "\n";
+    }
+}
+add_action( 'wp_head', 'add_custom_canonical_tag' );
+?>
+<?php
+/**
  * Функция обновляет количество скачиваний сертификата в метатеге WordPress
  * и добавляет сведения о скаченном сертификате в историю скачиваний пользователя
  *
